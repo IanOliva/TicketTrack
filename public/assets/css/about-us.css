@@ -1,0 +1,298 @@
+
+
+p{
+  margin-top: 0!important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+
+
+.clima{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  margin: auto;
+  border: none; 
+  border-radius: 10px; 
+  background-color: rgba(243, 152, 216, 0.2);
+  padding: 5px;
+  width: 40%;
+}
+
+/*icono de termostato para mejorar caja*/
+.material-symbols-outlined{
+  color: orange;
+  
+}
+
+.boton-clima{
+  font-size: 15px;
+}
+
+
+/*hover para cambiar color de termostato
+.material-symbols-outlined:before{
+  position: absolute;
+  content: '';
+  font-size: 30px;
+  z-index: -1;
+  cursor: pointer;
+  transform: scale (0.9);
+  transition: .5s;
+}
+
+.termo .material-symbols-outlined:hover:before{
+  filter: blur(3px);
+  transform: scale (1.2);
+  box-shadow: 0 0 15px orange;
+
+}*/
+
+/*
+#btn-w {
+  margin-top: 40px;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  color: white;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bolder;
+  transition: 0.5s ease;
+}
+
+.boton-clima :hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}*/
+
+#btn-w{
+  border-radius: 10px;
+  background-color: lightpink;
+  text-decoration: none;
+  font-weight: bolder;
+}
+
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  height: 20vh;
+ 
+}
+/*presentamos nuestros servicios*/ 
+.titulo {
+  font-size: 40px;
+  text-transform: uppercase;
+  color: rgb(78, 77, 77);
+  text-decoration: none;
+  text-align: center;
+}
+
+.grilla {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  height: 40vh;
+  margin: 25px;
+  
+} 
+
+.nosotros { 
+  color: antiquewhite;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  
+  text-align: center;
+}
+
+/*seccion de opiniones*/
+.opiniones{
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+  /*height: 60vh;*/
+  margin: 20px 30px;
+  
+}
+
+.heading {
+  /*text-transform: uppercase;*/
+  color: rgb(78, 77, 77);
+  text-decoration: none;
+  text-align: center;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding-bottom: 35px;
+  width: 100%;
+}
+
+.h1{
+  margin-bottom: 4rem;
+  font-size: 2rem;
+  font-weight: 500;
+  color: rgb(78, 77, 77);
+
+  /*color: var(--primary color--)*/
+
+}
+
+.servicio{
+  color: antiquewhite;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  text-align: center;
+  margin-bottom: 30px;
+  
+}
+
+/*boton para contacto*/
+.header-btns a {
+  margin-top: 40px;
+  margin-bottom: 50px;
+  padding: 10px 20px;
+  color: white;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bolder;
+  transition: 0.5s ease;
+}
+
+.header-btns a:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+/*seccion de comentarios enviados*/
+
+/*flechas*/
+
+/*.slide-button{
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transform: translateY(50%);
+}
+
+.slide-button#atras{
+  left: -10px;
+}
+
+
+.slide-button#adelante{
+  right: -10px;
+}
+
+.slide-button :hover{
+  background-color: rgba(235, 121, 174, 0.5)
+} */
+
+/*caja de opiniones*/
+
+/*
+.container{
+  margin-top: 50px;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(10, 1fr);
+  width: 1200px;
+  object-fit: cover;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.container::-webkit-scrollbar{
+  display: none;
+}
+
+
+.caja-contenedor{
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  background-color: var(--white);
+  border-radius: 1rem;
+  cursor: pointer;
+  
+}*/
+
+
+
+.container{
+  padding-top: 40px;
+  position: relative;
+  height: auto;
+  overflow: hidden;
+  
+}
+
+.caja{
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  background-color: var(--white);
+  border-radius: 1rem;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+  background-color:lightpink;
+}
+
+.container .caja-contenedor{
+
+display: flex;
+gap: 3rem;
+animation: scroll 40s linear infinite;
+-webkit-animation: scroll 40s linear infinite;
+width: calc(400px * 10);
+}
+
+.container .caja{
+  width: 400px;
+
+}
+
+.container .usuario{
+  width: 100%;
+}
+
+@keyframes scroll{
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(calc(-400px * 5));
+    transform: translateX(calc(-400px * 5));
+  }
+}
+
+.comentario {
+  
+  font-weight: 100;
+  font-size: small;
+  font-style: normal;
+}

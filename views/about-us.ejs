@@ -1,0 +1,169 @@
+<%- include ('layout', { title: 'About Us', stylesroute: '/assets/css/about-us.css', content:`
+
+    <!--Consumimos una Api de Clima-->
+  <section class="clima">
+  <div class="termo"><span class="material-symbols-outlined">thermostat</span></div>
+  
+  <input type="text" placeholder="Ingrese su ciudad" id="city" value="">
+  <button id="btn-w">Temperatura en tu ciudad</button>
+  <div id="resultado"></div>
+  </section>
+  
+<!--una breve descripción del servicio y porque usar esta página, también agrego la opción de comentarios de usuarios-->
+  <header class="header">
+    <h2><a href="#" class="titulo">NOSOTROS</a></h2>
+
+    <!-- <img src="https://raw.githubusercontent.com/Leonardofsirota/ProyectoCodoACodo/juan/assets/img/TIcketTrack.png?token=GHSAT0AAAAAACR6IEAPUVWYLC74KQSW2UU6ZSFSDIA" alt=""> -->
+  </header>
+
+  <section class="grilla">
+      <p class="nosotros">
+        <br>
+        <br>
+        Hacemos gestión de tickets de soporte. <br>
+        Nuestros agentes pueden: <br>
+        Realizar un seguimiento del estado general de la solicitud <br>
+        Acceder rápidamente al historial completo de las conversaciones entre los clientes y agentes. <br>
+        El ticket de soporte técnico permite organizar las incidencias y recopilar la mayor cantidad de
+        datos de clientes. <br>
+        Resuelven en un período de tiempo más breve <br>
+        Identificamos aquellas solicitudes repetidas para solucionarlas en conjunto. <br> <br>
+
+      </p>
+    </div>
+  </section>
+
+<!--haciendo las cajas para opiniones de usuarios-->
+
+
+  <section class="opiniones" id="opinion">
+    <div class="heading">
+    <h1>QUE ES LO QUE TE GUSTA DE NOSOTROS</h1>
+    <br>
+    <br>
+    <p class="servicio">Queremos brindarte una buena experiencia, <br>
+    por eso ayudanos a mejorar y comentanos como estuvo nuestro servicio. 
+    <br>
+    </p>
+    <div class="header-btns animate__animated animate__fadeInUp">
+      <a target="_blank" href="mailto:ticket.track.servicios@gmail.com">Escribinos</a> <br>
+  </div>
+  
+<!--empiezo a realizar cajas con comentarios-->
+  <div class="container">
+
+  <div class="caja-contenedor">
+
+      <!--<button id="atras" class="slide-button material-symbol-rounded">
+        <span class="material-symbols-outlined">
+          chevron_right
+          </span></button>-->
+
+      <div class="caja">     
+        <span><i class="fa-solid fa-pen-clip"></i></span>
+        <div class="usuario">
+          <h3>María</h3>
+          <span><i class="fa-solid fa-person-dress"></i></span>
+          <div class="star">
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+          </div>
+          <div class="comentario">
+            Fueron muy rápidos en la respuesta y me ayudaron a resolver mi problema.
+          </div>
+        </div>
+      </div>
+
+      <div class="caja">
+        <span><i class="fa-solid fa-pen-clip"></i></span>
+        <div class="usuario">
+          <h3>Ian</h3>
+          <span><i class="fa-solid fa-person"></i></span>
+          <div class="star">
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+          </div>
+          <div class="comentario">
+            Después de intentar con várias páginas de ayuda, llegue a una que me solucionó mi problema. 
+          </div>
+        </div>
+      </div>
+
+      <div class="caja">
+        <span><i class="fa-solid fa-pen-clip"></i></span>
+        <div class="usuario">
+          <h3>Juan</h3>
+          <span><i class="fa-solid fa-person"></i></span>
+          <div class="star">
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+          </div>
+          <div class="comentario">
+            Muy recomendable por la facilidad de ingresar para reclamo y la rápida respuesta. Estoy muy conforme y la recomendaría.
+          </div>
+        </div>
+      </div>
+
+      <div class="caja">
+        <span><i class="fa-solid fa-pen-clip"></i></span>
+        <div class="usuario">
+          <h3>Ciro</h3>
+          <span><i class="fa-solid fa-person"></i></span>
+          <div class="star">
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>            
+          </div>
+          <div class="comentario">
+            No pudieron resolver mi problema pero me dieron buenas recomndaciones.
+          </div>
+        </div>
+      </div>
+
+      <div class="caja">
+        <span><i class="fa-solid fa-pen-clip"></i></span>
+        <div class="usuario">
+          <h3>Daniela</h3>
+          <span><i class="fa-solid fa-person-dress"></i></span>
+          <div class="star">
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+          </div>
+          <div class="comentario">
+          Se tardaron en contestar, no fue de mucha ayuda.
+          </div>
+        </div>
+      </div>
+
+      <div class="caja">
+        <span><i class="fa-solid fa-pen-clip"></i></span>
+        <div class="usuario">
+          <h3>Roberto</h3>
+          <span><i class="fa-solid fa-person"></i></span>
+          <div class="star">
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+            <span><i class="fa-solid fa-star"></i></span>
+          </div>
+          <div class="comentario">
+            Muy recomendable por la facilidad de ingresar para reclamo y la rápida respuesta. Estoy muy conforme y la recomendaría.
+          </div>
+        </div>
+        </div>
+        <!--<button id="adelante" class="slide-button material-symbol-rounded">
+          <span class="material-symbols-outlined">
+            chevron_left
+            </span></button>-->
+      </div>
+    </div>
+
+  </section>
+`
+}) %>

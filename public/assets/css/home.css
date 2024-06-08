@@ -1,0 +1,177 @@
+
+
+/* Estilos base */
+
+body {
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  height: 80vh;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Titulo */
+.titulo {
+  font-size: clamp(2rem, 5vw, 3rem);
+  text-transform: uppercase;
+  color: rgb(78, 77, 77);
+  text-decoration: none;
+}
+
+/* Subtitulo */
+.subTitle {
+  color: antiquewhite;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  max-width: 60%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* Botones */
+.header-btns a {
+  padding: 10px 20px;
+  color: white;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bolder;
+  transition: 0.5s ease;
+}
+
+.header-btns a:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+/* Developers Section */
+h2 {
+  color: white;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Cards Container */
+.cards-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 3rem;
+}
+
+/* Profile Card */
+.profile-card {
+  background-color: #231E39;
+  border-radius: 5px;
+  box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
+  color: #B3B8CD;
+  padding-top: 30px;
+  width: clamp(250px, 50%, 350px);
+  text-align: center;
+}
+
+.profile-card .round {
+  border: 1px solid #03BFCB;
+  border-radius: 50%;
+  padding: 7px;
+  width: 150px;
+  height: 150px;
+}
+
+.primary {
+  background-color: #03BFCB;
+  border: 1px solid #03BFCB;
+  border-radius: 3px;
+  color: #231E39;
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 10px 25px;
+  transition: all .5s ease;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.primary:hover {
+  background-color: transparent;
+  color: #02899C;
+}
+
+/* Skills */
+.skills {
+  background-color: #1F1A36;
+  text-align: left;
+  padding: 15px;
+  margin-top: 30px;
+}
+
+.skills ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.skills ul li {
+  border: 1px solid #2D2747;
+  border-radius: 2px;
+  display: inline-block;
+  font-size: 12px;
+  margin: 0 7px 7px 0;
+  padding: 7px;
+}
+
+.maps iframe{
+  width: 500px;
+  height: 500px; 
+  border:0;
+  
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .header {
+    height: auto;
+    padding: 2rem 1rem;
+  }
+
+  .cards-container {
+    padding: 2rem 1rem;
+  }
+
+  .profile-card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem;
+  }
+
+  .cards-container {
+    padding: 1rem;
+  }
+
+  .profile-card {
+    width: 100%;
+  }
+
+  .maps iframe{
+    width: 250px;
+    height: 250px; 
+    border:0;
+  }
+}

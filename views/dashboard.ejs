@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <title>Admin Dashboard Panel</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/assets/img/ticket-favicon.ico" type="image/x-icon" />
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="/assets/css/dashboard.css" />
+    <!----===== Icons ===== -->
+    <script src="https://kit.fontawesome.com/84f1588987.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- barra lateral -->
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="/assets/img/ticket-logo.png" alt="ticket track logo">
+            </div>
+            <span class="logo_name">TicketTrack</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="link-name">Dahsboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="link-name">Usuarios</span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="logout-mode">
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span class="link-name">Cerrar sesión</span>
+                    </a>
+                </li>
+
+                <li class="mode">
+                    <a href="#">
+                        <i class="fa-regular fa-moon"></i>
+                        <span class="link-name">Modo oscuro</span>
+                    </a>
+
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="fa-solid fa-bars sidebar-toggle"></i>
+
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Buscar..." />
+            </div>
+
+            <img src="/assets/img/profile.jpg" alt="" />
+        </div>
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span class="text">Dashboard</span>
+                </div>
+                <!-- esta box es para la cantidad de tickets -->
+                <div class="boxes">
+                    <div class="box box1">
+                        <i class="fa-solid fa-ticket"></i>
+                        <span class="text">Total tickets</span>
+                        <span class="number">50,120</span>
+                    </div>
+                    <div class="box box2">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                        <span class="text">En espera</span>
+                        <span class="number">20,120</span>
+                    </div>
+                    <div class="box box3">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <span class="text">Resueltos</span>
+                        <span class="number">10,120</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity">
+                <div class="title">
+                    <i class="fa-regular fa-clock"></i>
+                    <span class="text">Recent Activity</span>
+                </div>
+                <!-- tabla -->
+                <table class="dash-table">
+                    <thead>
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Descripción</th>
+                            <th>Prioridad</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr>
+                            <td>Ticket 1</td>
+                            <td>Descripción del ticket 1</td>
+                            <td>Alta</td>
+                            <td>En espera</td>
+                        </tr>
+                        <tr>
+                            <td>Ticket 2</td>
+                            <td>Descripción del ticket 1</td>
+                            <td>Alta</td>
+                            <td>En espera</td>
+                        </tr>
+                        <tr>
+                            <td>Ticket 3</td>
+                            <td>Descripción del ticket 1</td>
+                            <td>Alta</td>
+                            <td>En espera</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+
+</html>

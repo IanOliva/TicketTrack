@@ -1,0 +1,155 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+.navbar-nb {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center;
+    height: 80px;
+    width: 100%;
+    padding: 0 10vw;
+    backdrop-filter: blur(16px) saturate(180%);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    color: white;
+}
+
+.brand-container {
+
+    gap: 1rem;
+    font-size: xx-large;
+    font-weight: bolder;
+    color: white;
+}
+
+.brand-container>a {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    padding: 0 !important;
+    
+}
+
+.brand-container>a p {
+    margin: 0 !important;
+}
+
+.brand-container>a:hover {
+    background: none !important;
+    border-radius: none !important;
+}
+
+.brand-container span {
+    color: var(--colorTrack) !important;
+}
+
+.brand-container img {
+    width: 50px;
+    /* height: 100%; */
+}
+
+.nav-links-nb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar-nb a {
+    display: block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: bolder;
+    transition: 0.5s ease;
+    border-radius: 5px;
+}
+
+.navbar-nb a:hover {
+    background: blueviolet;
+    border-radius: 25% 10%;
+}
+
+
+i {
+    font-size: 1.3rem;
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    padding: 10px;
+    background-color: #321e52de;
+    color: white;
+    z-index: 99;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 1rem 1rem 0 0;
+  }
+  
+  footer p:nth-child(1){
+    font-weight: bolder;
+  }
+  
+  footer p {
+    margin: 0 !important;
+  }
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .nav-links-nb {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      position: absolute;
+      top: 80px;
+      left: 0;
+      gap: 0;
+      padding: 20px;
+      align-items: center;
+      transition: 0.5s ease;
+      background: linear-gradient(135deg, #71b7e6, #9b59b6);
+    }
+  
+    .nav-links-nb a {
+      text-align: center;
+      padding: 1rem;
+      width: 50%;
+      color: white;
+      font-size: 1.5rem;
+
+    }
+  
+    .nav-toggle {
+      display: block;
+    }
+  
+    .nav-links-nb.active {
+      display: flex;
+    }
+  }
