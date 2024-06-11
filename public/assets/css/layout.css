@@ -9,6 +9,10 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+
 
 .navbar-nb {
     display: flex !important;
