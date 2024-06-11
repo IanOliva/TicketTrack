@@ -33,7 +33,7 @@ sidebarToggle.addEventListener("click", () => {
 
 //consumir la ruta que obtiene los tickets de la db
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('/api/registros')
+    fetch('/api-tickets/registros')
       .then(response => response.json())
       .then(data => {
         const tableBody = document.getElementById('table-body');
