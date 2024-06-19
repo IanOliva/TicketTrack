@@ -33,21 +33,39 @@ sidebarToggle.addEventListener("click", () => {
 
 //consumir la ruta que obtiene los tickets de la db
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('/api-tickets/registros')
-      .then(response => response.json())
-      .then(data => {
-        const tableBody = document.getElementById('table-body');
-        data.forEach(ticket => {
-          const tr = document.createElement('tr');
-          // poner nombres de las columnas de la tabla
-          tr.innerHTML = `
-            <td>${ticket.title}</td>
-            <td>${ticket.description}</td>
-            <td>${ticket.priority}</td>
-            <td>${ticket.fecha}</td>
-          `;
-          tableBody.appendChild(tr);
-        });
-      })
-      .catch(error => console.error('Error al obtener los datos:', error));
+    fetch('/api-tickets/dashboard-info')
+  .then(response => response.json())
+  .then(data => {
+    const tableBody = document.getElementById('table-body');
+    const totalTickets = document.getElementById('ticket-count');
+    const totalWaiting = document.getElementById('waiting-count');
+    const totalResolved = document.getElementById('resolved-count');
+
+    // Vaciar el cuerpo de la tabla antes de agregar nuevas filas
+    tableBody.innerHTML = '';
+
+    // Agregar filas para cada ticket
+    data.tickets.forEach(ticket => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ticket.title}</td>
+        <td>${ticket.description}</td>
+        <td>${ticket.priority}</td>
+        <td>${ticket.fecha}</td>
+        <td>${ticket.estate}</td>
+      `;
+      tableBody.appendChild(tr);
+    });
+
+    // Mostrar el total de tickets
+    totalTickets.innerHTML = `${data.totalTickets}`;
+
+    // Mostrar el total de tickets en espera
+    totalWaiting.innerHTML = `${data.totalWaiting}`;
+
+    // Mostrar el total de tickets resueltos
+    totalResolved.innerHTML = `${data.totalResolved}`;
+
+  })
+  .catch(error => console.error('Error al obtener los datos:', error));
   });

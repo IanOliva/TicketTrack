@@ -40,7 +40,7 @@
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fa-solid fa-users"></i>
+                        <i class="fa-solid fa-comments"></i>
                         <span class="link-name">Comentarios</span>
                     </a>
                 </li>
@@ -48,7 +48,7 @@
 
             <ul class="logout-mode">
                 <li>
-                    <a href="/api/logout">
+                    <a href="/api-users/logout">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         <span class="link-name">Cerrar sesión</span>
                     </a>
@@ -91,17 +91,17 @@
                     <div class="box box1">
                         <i class="fa-solid fa-ticket"></i>
                         <span class="text">Total tickets</span>
-                        <span class="number">50,120</span>
+                        <span class="number" id="ticket-count">50,120</span>
                     </div>
                     <div class="box box2">
                         <i class="fa-solid fa-hourglass-half"></i>
                         <span class="text">En espera</span>
-                        <span class="number">20,120</span>
+                        <span class="number" id="waiting-count">20,120</span>
                     </div>
                     <div class="box box3">
                         <i class="fa-regular fa-circle-check"></i>
                         <span class="text">Resueltos</span>
-                        <span class="number">10,120</span>
+                        <span class="number" id="resolved-count">10,120</span>
                     </div>
                 </div>
             </div>
@@ -118,6 +118,7 @@
                             <th>Titulo</th>
                             <th>Descripción</th>
                             <th>Prioridad</th>
+                            <th>Fecha</th>
                             <th>Estado</th>
                         </tr>
                     </thead>
