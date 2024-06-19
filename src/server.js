@@ -1,11 +1,10 @@
 const express = require('express');
 const path = require('path');
-const dotenv = require('dotenv');
-const apiUsers = require('./routes/api-users');
-const apiTickets = require('./routes/api-tickets');
-const { authenticateToken } = require('./middlewares/auth'); 
+const ticketRoutes = require('../routes/ticketsRoutes');
+const userRoutes = require('../routes/usersRoutes');
+const { authenticateToken } = require('../middlewares/auth');
 const cookieParser = require('cookie-parser');
-
+const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
@@ -17,10 +16,16 @@ app.use(cookieParser());
 
 // Configurar EJS como el motor de plantillas
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views')); 
 
-// Middleware to serve static files (HTML, CSS, JS)
-app.use(express.static(path.join(__dirname, 'public')));
+// Middleware para servir archivos estáticos (HTML, CSS, JS)
+app.use(express.static(path.join(__dirname, '../public'))); 
+
+// Usar las rutas de la API de tickets
+app.use('/api-tickets', ticketRoutes);
+
+// Usar las rutas de la API de usuarios
+app.use('/api-users', userRoutes);
 
 // Ruta para servir la vista home.ejs como principal desde la carpeta views
 app.get('/', (req, res) => {
@@ -37,6 +42,12 @@ app.get('/dashboard', authenticateToken, (req, res) => {
   res.render('dashboard', { title: 'Dashboard', user: req.user });
 });
 
+//ruta para servir la vista del usuario normal desde la carpeta views, solo si está autenticado
+app.get('/user-dashboard', authenticateToken, (req, res) => {
+  res.render('user-dashboard', { title: 'User', user: req.user });
+})
+
+
 // Ruta para servir la vista login.ejs desde la carpeta views
 app.get('/login', (req, res) => {
   res.render('login', { title: 'Login' });
@@ -47,13 +58,7 @@ app.get('/support', (req, res) => {
   res.render('support', { title: 'Support' });
 });
 
-// Usar las rutas de la API de usuarios
-app.use('/api-users', apiUsers);
-
-// Usar las rutas de la API de tickets
-app.use('/api-tickets', apiTickets);
-
-// Start the server
+// Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

@@ -1,38 +1,13 @@
-const express = require('express');
+const db = require('../db/database');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const mysql = require('mysql2');
 const { authenticateToken } = require('../middlewares/auth');
-const dotenv = require('dotenv');
 
-dotenv.config();
-
-const router = express.Router();
-
-// Configurar la conexión a MySQL
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME
-});
-
-db.connect((err) => {
-  if (err) {
-    console.error('Error al conectar a la base de datos:', err);
-    return;
-  }
-  console.log('Conectado a la base de datos MySQL users');
-});
-
-
-
-// Ruta de registro
-router.post('/register', async (req, res) => {
-  const { username, email, password } = req.body;
+const userRegister = (req, res) => {
+    const { username, email, password } = req.body;
 
   // Hash de la contraseña
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword =  bcrypt.hash(password, 10);
 
   const query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
   db.execute(query, [username, email, hashedPassword], (err, results) => {
@@ -42,10 +17,10 @@ router.post('/register', async (req, res) => {
     }
     res.status(201).send('Usuario registrado');
   });
-});
+}
 
-// Ruta de inicio de sesión
-router.post('/login', (req, res) => {
+
+const userLogin = (req, res) => {
   const { email, password } = req.body;
 
   const query = 'SELECT * FROM users WHERE email = ?';
@@ -69,16 +44,21 @@ router.post('/login', (req, res) => {
     });
 
     res.cookie('token', token, { httpOnly: true }); // Configura la cookie con el token
-    res.redirect('/dashboard'); // Redirige al dashboard
+    
+    // Redirigir según el valor de is_admin
+    if (user.is_admin === "true") {
+      res.redirect('/dashboard');
+    } else {
+      res.redirect('/user-dashboard');
+    }
   });
-});
+};
 
 
-// Ruta para cerrar sesión
-router.get('/logout', (req, res) => {
-  res.clearCookie('token'); // Eliminar la cookie del token
-  res.redirect('/'); // Redirigir al usuario a la página principal
-});
+const userLogout = (req, res) => {
+  res.clearCookie('token'); // Elimina la cookie del token
+  res.redirect('/'); // Redirige al usuario a la página principal
+};
 
 
-module.exports = router;
+module.exports = { userRegister, userLogin, userLogout };
