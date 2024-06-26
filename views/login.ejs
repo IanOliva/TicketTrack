@@ -1,5 +1,7 @@
-<%- include('layout', { title: 'Login', stylesroute: '/assets/css/login.css' , content: `
+<%- include ('components/header.ejs') %>
 
+<body>
+  <%- include ('components/navbar.ejs') %>
 
 <section class=" py-2 py-md-5">
   <div class="container">
@@ -43,5 +45,5 @@
 </section>
 
 
-` 
-}) %>
+<%- include('./components/footer') %>
+</body>

@@ -1,6 +1,9 @@
-<%- include ('layout', { title: 'Soporte', stylesroute: '/assets/css/support.css', content: `
+<%- include ('components/header.ejs') %>
 
-<section class="faq-section">
+<body>
+
+  <%- include ('components/navbar.ejs') %>
+  <section class="faq-section">
     <h2 class="faq-title">Preguntas Frecuentes</h2>
     <div class="faq-container">
       <details class="faq-item">
@@ -57,5 +60,7 @@
     </div>
   </section>
 
-`
-}) %>
+  <%- include('./components/footer') %>
+
+
+</body>
