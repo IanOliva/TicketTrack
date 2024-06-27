@@ -4,21 +4,26 @@ const jwt = require('jsonwebtoken');
 // const { authenticateToken } = require('../middlewares/auth');
 
 // controlador de registro
-const userRegister = (req, res) => {
-    const { username, email, password } = req.body;
+const userRegister = async (req, res) => {
+  const { username, email, password } = req.body;
 
-  // Hash de la contraseña
-  const hashedPassword =  bcrypt.hash(password, 10);
+  try {
+    // Hash de la contraseña
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  const query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
-  db.execute(query, [username, email, hashedPassword], (err, results) => {
-    if (err) {
-      console.error('Error durante el registro del usuario:', err);
-      return res.status(500).send('Error durante el registro del usuario');
-    }
-    res.status(201).send('Usuario registrado');
-  });
-}
+    const query = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
+    db.execute(query, [username, email, hashedPassword], (err, results) => {
+      if (err) {
+        console.error('Error durante el registro del usuario:', err);
+        return res.status(500).send('Error durante el registro del usuario');
+      }
+      res.status(201).send('Usuario registrado');
+    });
+  } catch (error) {
+    console.error('Error durante el hash de la contraseña:', error);
+    res.status(500).send('Error durante el registro del usuario');
+  }
+};
 
 // controlador de login
 const userLogin = (req, res) => {

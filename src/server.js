@@ -56,6 +56,12 @@ app.get('/login', (req, res) => {
   res.render('login', { title: 'Login' , css: '' });
 });
 
+
+// Ruta para servir la vista register.ejs desde la carpeta views || sin css porque esta hecho con bootstrap
+app.get('/register', (req, res) => {
+  res.render('register', { title: 'Register' , css: '' });
+});
+
 // Ruta para servir la vista support.ejs desde la carpeta views
 app.get('/faqs', (req, res) => {
   res.render('faqs', { title: 'Faqs', css: '/assets/css/faqs.css' });
