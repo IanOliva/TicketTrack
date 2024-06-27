@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const { authenticateToken } = require('../middlewares/auth');
-const { userRegister, userLogin, userLogout } = require('../controllers/userController');
+const { userRegister, userLogin, userLogout, getUserDashboard } = require('../controllers/userController');
+const { getAdminDashboard } = require('../controllers/ticketController');
 
 
 // Ruta de registro
@@ -14,5 +13,10 @@ router.post('/login', userLogin);
 
 // Ruta para cerrar sesión
 router.get('/logout', userLogout);
+
+// Ruta para el dashboard
+router.get('/user-dashboard', authenticateToken, getUserDashboard );
+
+router.get('/dashboard', authenticateToken, getAdminDashboard );
 
 module.exports = router;

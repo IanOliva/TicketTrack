@@ -1,5 +1,9 @@
-<%- include('layout', { title: 'Home', stylesroute: '/assets/css/home.css' , content: `
-  
+<%- include ('components/header.ejs') %>
+
+
+<body>
+  <%- include ('components/navbar.ejs') %>
+
 <header class="header">
   <h1 class="titulo animate__animated animate__fadeInDown">
     ¡Bienvenido a nuestro sistema de tickets!
@@ -98,4 +102,9 @@
     referrerpolicy="no-referrer-when-downgrade"></iframe>
 
 </div>
-` }) %>
+
+<%- include('./components/footer') %>
+
+<script src="https://kit.fontawesome.com/977a02dee3.js" crossorigin="anonymous"></script>
+<script src="/js/layout.js"></script>
+</body>
