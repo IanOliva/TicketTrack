@@ -20,4 +20,14 @@ function authenticateToken(req, res, next) {
   });
 }
 
-module.exports = { authenticateToken };
+// Middleware para verificar si el usuario al ingresar a la ruta es administrador
+
+function checkAdmin(req, res, next) {
+  if (req.user && req.user.is_admin == "true") {
+    next();
+  } else {
+    res.redirect('/');
+  }
+}
+
+module.exports = { authenticateToken , checkAdmin };
