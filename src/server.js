@@ -50,12 +50,10 @@ app.get('/user-dashboard', authenticateToken, (req, res) => {
   res.render('user-dashboard', { title: 'User Dashboard' , css: '/assets/css/user-dashboard.css' });
 });
 
-
 // Ruta para servir la vista login.ejs desde la carpeta views || sin css porque esta hecho con bootstrap
 app.get('/login', (req, res) => {
   res.render('login', { title: 'Login' , css: '' });
 });
-
 
 // Ruta para servir la vista register.ejs desde la carpeta views || sin css porque esta hecho con bootstrap
 app.get('/register', (req, res) => {
