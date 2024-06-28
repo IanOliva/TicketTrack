@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const ticketRoutes = require('../routes/ticketsRoutes');
 const userRoutes = require('../routes/usersRoutes');
-const { authenticateToken } = require('../middlewares/auth');
+const { authenticateToken, checkAdmin } = require('../middlewares/auth');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 
@@ -41,7 +41,7 @@ app.get('/about-us', (req, res) => {
 });
 
 // Ruta para servir la vista dashboard.ejs desde la carpeta views, solo si está autenticado
-app.get('/dashboard', authenticateToken, (req, res) => {
+app.get('/dashboard', authenticateToken, checkAdmin, (req, res) => {
   res.render('dashboard', { title: 'Dashboard', css: '/assets/css/dashboard.css' });
 });
 
