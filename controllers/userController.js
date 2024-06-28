@@ -65,6 +65,7 @@ const userLogin = (req, res) => {
     // Redirigir según el valor de is_admin
     if (user.is_admin === "true") {
       res.redirect('/dashboard');
+
     } else {
       res.render('user-dashboard', { user, title: 'User Dashboard', css: '/assets/css/user-dashboard.css' });
     }
@@ -80,7 +81,7 @@ const userLogout = (req, res) => {
 // controlador de dashboard, obtener la info del usuario
 const getUserDashboard = (req, res) => {
   
-  const queryUser = 'SELECT username, email, is_admin FROM users WHERE id = ?';
+  const queryUser = 'SELECT username, email, is_admin FROM users WHERE user_id = ?';
   
   db.execute(queryUser, [req.user.userId], (err, results) => {
     if (err) {
