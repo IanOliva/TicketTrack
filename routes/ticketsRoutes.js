@@ -5,6 +5,6 @@ const { authenticateToken } = require('../middlewares/auth');
 
 router.get('/dashboard', authenticateToken, ticketController.getAdminDashboard);
 
-// router.get('/user-dashboard', authenticateToken, ticketController.getUserDashboard);
+router.get('/user-dashboard', authenticateToken, ticketController.getUserDashboard);
 
 module.exports = router;
