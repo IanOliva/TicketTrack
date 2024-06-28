@@ -61,7 +61,6 @@ const userLogin = (req, res) => {
     // Configura la cookie con el token
     res.cookie("token", token, { httpOnly: true });
 
-    
     if (user.is_admin === "true") {
       res.redirect("/dashboard");
     } else {
