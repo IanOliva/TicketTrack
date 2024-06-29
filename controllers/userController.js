@@ -28,10 +28,10 @@ const userRegister = async (req, res) => {
 
 // controlador de login
 const userLogin = (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
-  const query = "SELECT * FROM users WHERE email = ?";
-  db.execute(query, [email], async (err, results) => {
+  const query = "SELECT * FROM users WHERE username = ?";
+  db.execute(query, [username], async (err, results) => {
     if (err) {
       console.error("Error durante el inicio de sesión:", err);
       return res.status(500).send("Error durante el inicio de sesión");
@@ -52,7 +52,8 @@ const userLogin = (req, res) => {
         userId: user.user_id,
         username: user.username,
         email: user.email,
-        is_admin: user.is_admin,
+        is_admin: user.is_admin, 
+        url_img: user.url_img,
       },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
@@ -60,6 +61,9 @@ const userLogin = (req, res) => {
 
     // Configura la cookie con el token
     res.cookie("token", token, { httpOnly: true });
+
+    // Guardar datos en la sesión
+    req.session.is_admin = user.is_admin;
 
     if (user.is_admin === "true") {
       res.redirect("/dashboard");
@@ -72,6 +76,7 @@ const userLogin = (req, res) => {
 // controlador de cerrar sesion
 const userLogout = (req, res) => {
   res.clearCookie("token"); // Elimina la cookie del token
+  req.session.is_admin = null;
   res.redirect("/"); // Redirige al usuario a la página principal
 };
 

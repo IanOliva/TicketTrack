@@ -1,0 +1,70 @@
+<div class="overview">
+    <div class="title">
+        <i class="fa-solid fa-chart-simple"></i>
+        <span class="text">Tickets</span>
+    </div>
+    <!-- esta box es para la cantidad de tickets -->
+    <div class="boxes">
+        <div class="box box1">
+            <i class="fa-solid fa-list-check"></i>
+            <span class="text">Total</span>
+            <span class="number" id="ticket-count"> </span>
+        </div>
+        <div class="box box2">
+            <i class="fa-solid fa-hourglass-half"></i>
+            <span class="text">En espera</span>
+            <span class="number" id="waiting-count"></span>
+        </div>
+        <div class="box box3">
+            <i class="fa-regular fa-circle-check"></i>
+            <span class="text">Resueltos</span>
+            <span class="number" id="resolved-count"></span>
+        </div>
+        <div class="box box4">
+            <i class="fa-solid fa-chart-line"></i>
+            <span class="text">Tiempo Estimado</span>
+            <span class="number" id="promedio"></span>
+        </div>
+        <div class="box box5">
+            <i class="fa-regular fa-calendar-xmark"></i>
+            <span class="text">Más Antiguo</span>
+            <span class="number" id="atraso"></span>
+        </div>
+    </div>
+</div>
+
+<div class="activity">
+    <div class="title">
+        <i class="fa-regular fa-clock"></i>
+        <span class="text">Recientes</span>
+
+    </div>
+    <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Buscar..." />
+    </div>
+    <!-- tabla -->
+    <table class="dash-table">
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Descripción</th>
+                <th>Prioridad</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <tr>
+                <td>error al obtener los datos</td>
+                <td>error al obtener los datos</td>
+                <td>error al obtener los datos</td>
+                <td>error al obtener los datos</td>
+                <td>error al obtener los datos</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<script src="./js/dash-home.js"></script>

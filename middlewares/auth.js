@@ -23,11 +23,24 @@ function authenticateToken(req, res, next) {
 // Middleware para verificar si el usuario al ingresar a la ruta es administrador
 
 function checkAdmin(req, res, next) {
-  if (req.user && req.user.is_admin == "true") {
-    next();
+  if (req.user) {
+    if (req.user.is_admin === "true") {
+      return next();
+    } else {
+      return res.redirect('/user-dashboard');
+    }
   } else {
-    res.redirect('/');
+    res.redirect('/login');
   }
 }
 
-module.exports = { authenticateToken , checkAdmin };
+// Middleware para verificar si no es admin
+function checkUser(req, res, next) {
+  if (req.user && req.user.is_admin === "false") {
+    return next();
+  } else {
+    return res.redirect('/dashboard');
+  }
+}
+
+module.exports = { authenticateToken , checkAdmin, checkUser };

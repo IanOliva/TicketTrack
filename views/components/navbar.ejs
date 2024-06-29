@@ -10,11 +10,27 @@
   </button>
   <div class="nav-links-nb">
     <a href="/">Inicio</a>
-    
-    <a href="/dashboard">Sistema</a>
-    <a href="/user-dashboard" >Mis Tickets</a>
-
     <a href="/about-us">Nosotros</a>
     <a href="/faqs">Faqs</a>
+
+    |
+
+    <% if ( !session.is_admin || session.is_admin === null) { %>
+      <a href="/login"><i class="fa-solid fa-user"></i></a>
+    <% } %>
+    <% if (session.is_admin === "true") { %>
+      <a href="/dashboard">Panel Admin</a>
+      <a href="/api-users/logout">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </a>
+    <% } %>
+    
+    <% if (session.is_admin === "false") { %>
+      <a href="/user-dashboard">Mis Tickets</a>
+      <a href="/api-users/logout">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </a>
+    <% } %>
+
   </div>
 </nav>

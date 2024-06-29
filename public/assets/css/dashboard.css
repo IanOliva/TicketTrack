@@ -18,6 +18,9 @@
     --box1-color: #4DA3FF;
     --box2-color: #FFE6AC;
     --box3-color: #E7D1FC;
+    --box4-color: #b6ffb6;
+    --box5-color: #ff9393;
+
     --title-icon-color: #fff;
     
     /* ====== Transition ====== */
@@ -40,6 +43,8 @@ body.dark{
     --box1-color: #3A3B3C;
     --box2-color: #3A3B3C;
     --box3-color: #3A3B3C;
+    --box4-color: #3A3B3C;
+    --box5-color: #3A3B3C;
     --title-icon-color: #CCC;
 }
 /* === Custom Scroll Bar CSS === */
@@ -70,7 +75,7 @@ nav{
     left: 0;
     height: 100%;
     width: 250px;
-    padding: 10px 14px;
+    padding: 7px 14px;
     background-color: var(--panel-color);
     border-right: 1px solid var(--border-color);
     transition: var(--tran-05);
@@ -161,7 +166,7 @@ body.dark .nav-links li a:hover .link-name{
     color: var(--text-color);
 }
 .menu-items .logout-mode{
-    padding-top: 10px;
+    padding: 0 10px;
     border-top: 1px solid var(--border-color);
 }
 .menu-items .mode{
@@ -238,14 +243,14 @@ nav.close ~ .dashboard .top{
     color: var(--text-color);
     cursor: pointer;
 }
-.dashboard .top .search-box{
+.dashboard .search-box{
     position: relative;
     height: 45px;
     max-width: 600px;
     width: 100%;
     margin: 0 30px;
 }
-.top .search-box input{
+.search-box input{
     position: absolute;
     border: 1px solid var(--border-color);
     background-color: var(--panel-color);
@@ -258,7 +263,7 @@ nav.close ~ .dashboard .top{
     font-weight: 400;
     outline: none;
 }
-.top .search-box i{
+.search-box i{
     position: absolute;
     left: 15px;
     font-size: 22px;
@@ -267,9 +272,11 @@ nav.close ~ .dashboard .top{
     transform: translateY(-50%);
     color: var(--black-light-color);
 }
-.top img{
-    width: 40px;
+.nav-links img{
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
+    object-fit: cover; 
 }
 .dashboard .dash-content{
     padding-top: 50px;
@@ -308,7 +315,7 @@ nav.close ~ .dashboard .top{
     flex-direction: column;
     align-items: center;
     border-radius: 12px;
-    width: calc(100% / 3 - 15px);
+    width: calc(100% / 5 - 15px);
     padding: 15px 20px;
     background-color: var(--box1-color);
     transition: var(--tran-05);
@@ -333,6 +340,12 @@ nav.close ~ .dashboard .top{
 }
 .boxes .box.box3{
     background-color: var(--box3-color);
+}
+.boxes .box.box4{
+    background-color: var(--box4-color);
+}
+.boxes .box.box5{
+    background-color: var(--box5-color);
 }
 .dash-content .activity .activity-data{
     display: flex;

@@ -25,35 +25,43 @@
         </div>
 
         <div class="menu-items">
-            <ul class="nav-links">
+            <ul class="nav-links dash-links">
                 <li>
                     <a href="#">
+                        <i><img class="width:1rem" src="<%= user.url_img %>" alt="" /></i>
+                        <span class="link-name badge text-bg-secondary" style="text-transform: capitalize;">
+                            <%= user.username %>
+                        </span>
+                    </a>
+                </li>
+                <hr>
+                <li>
+                    <a href="#" data-url="/dash-home">
                         <i class="fa-solid fa-house"></i>
-                        <span class="link-name">Dahsboard</span>
+                        <span class="link-name">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#" data-url="/dash-tickets">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span class="link-name">Tickets</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-url="/dash-users">
                         <i class="fa-solid fa-users"></i>
                         <span class="link-name">Usuarios</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#" data-url="/dash-comments">
                         <i class="fa-solid fa-comments"></i>
                         <span class="link-name">Comentarios</span>
                     </a>
                 </li>
             </ul>
 
-            <ul class="logout-mode">
-                <li>
-                    <a href="/api-users/logout">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        <span class="link-name">Cerrar sesión</span>
-                    </a>
-                </li>
-
+            <ul class="nav-links">
                 <li class="mode">
                     <a href="#">
                         <i class="fa-regular fa-moon"></i>
@@ -64,6 +72,13 @@
                         <span class="switch"></span>
                     </div>
                 </li>
+
+                <li>
+                    <a href="/api-users/logout">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span class="link-name">Salir</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -71,72 +86,41 @@
     <section class="dashboard">
         <div class="top">
             <i class="fa-solid fa-bars sidebar-toggle"></i>
-
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Buscar..." />
-            </div>
-
-            <img src="/assets/img/profile.jpg" alt="" />
         </div>
 
-        <div class="dash-content">
-            <div class="overview">
-                <div class="title">
-                    <i class="fa-solid fa-chart-simple"></i>
-                    <span class="text">Dashboard</span>
-                </div>
-                <!-- esta box es para la cantidad de tickets -->
-                <div class="boxes">
-                    <div class="box box1">
-                        <i class="fa-solid fa-ticket"></i>
-                        <span class="text">Total tickets</span>
-                        <span class="number" id="ticket-count"> </span>
-                    </div>
-                    <div class="box box2">
-                        <i class="fa-solid fa-hourglass-half"></i>
-                        <span class="text">En espera</span>
-                        <span class="number" id="waiting-count">20,120</span>
-                    </div>
-                    <div class="box box3">
-                        <i class="fa-regular fa-circle-check"></i>
-                        <span class="text">Resueltos</span>
-                        <span class="number" id="resolved-count">10,120</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="activity">
-                <div class="title">
-                    <i class="fa-regular fa-clock"></i>
-                    <span class="text">Recent Activity</span>
-                </div>
-                <!-- tabla -->
-                <table class="dash-table">
-                    <thead>
-                        <tr>
-                            <th>Titulo</th>
-                            <th>Descripción</th>
-                            <th>Prioridad</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body">
-                        <tr>
-                            <td>Ticket 1</td>
-                            <td>Descripción del ticket 1</td>
-                            <td>Alta</td>
-                            <td>En espera</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
+        <div class="dash-content" id="dash-content">
+            <%- include ('components/dash-home.ejs') %>
         </div>
     </section>
 
     <script src="/js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.dash-links a').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    let url = this.getAttribute('data-url');
+
+                    if (url) {
+                        fetch(url)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.text();
+                            })
+                            .then(data => {
+                                const dashContent = document.getElementById('dash-content');
+                                dashContent.innerHTML = data;
+                            })
+                            .catch(error => {
+                                alert('Error loading component: ' + error.message);
+                            });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
