@@ -1,0 +1,40 @@
+
+
+p{
+  margin-top: 0!important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+
+
+
+.boton-clima{
+  font-size: 15px;
+}
+
+
+.nosotros { 
+  color: antiquewhite;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  
+  text-align: center;
+}
+
+/*seccion de opiniones*/
+.opiniones{
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+  /*height: 60vh;*/
+  margin: 20px 30px;
+  
+}
