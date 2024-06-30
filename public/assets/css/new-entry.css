@@ -19,15 +19,8 @@ body {
 }
 
 
-.nosotros { 
-  color: antiquewhite;
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
-  
-  text-align: center;
-}
-
 /*seccion de opiniones*/
-.opiniones{
+.entrada{
   padding: 30px;
   display: flex;
   justify-content: center;
@@ -37,4 +30,11 @@ body {
   /*height: 60vh;*/
   margin: 20px 30px;
   
+}
+
+.btn-w{
+  border-radius: 10px;
+  background-color: lightpink;
+  text-decoration: none;
+  font-weight: bolder;
 }
