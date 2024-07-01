@@ -53,22 +53,6 @@
                     Seleccione prioridad
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <label for="pokeAvatar" class="form-label">PokeAvatar</label>
-                  <select class="form-select" id="pokeAvatar" name="pokeAvatar" required>
-                    <option selected disabled value="">Yo te Elijo!</option>
-                    <option value="1">pikachu</option>
-                    <option value="2">baulbasur</option>
-                    <option value="3">charizar</option>
-                    <option value="4">snorlax</option>
-                  </select>
-                  <div class="valid-feedback">
-                    Completado!
-                  </div>
-                  <div class="invalid-feedback">
-                    Elija PokeAvatar
-                  </div>
-                </div>
                 <div class="col-md-12">
                   <label for="motivo" class="form-label">Motivo</label>
                   <input type="text" class="form-control" id="validationCustom02" name="motivo" required>
@@ -127,46 +111,48 @@
 
       <%- include('./components/footer') %>
 
-        <script src="/js/userDashboard.js"></script>
-
-        <script>
-
-          (function () {
-            "use strict";
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll(".needs-validation");
-
-            // Loop over them and prevent submission
-            Array.prototype.slice.call(forms).forEach(function (form) {
-              form.addEventListener(
-                "submit",
-                function (event) {
-                  if (!form.checkValidity()) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                  }
-
-                  form.classList.add("was-validated");
-                },
-                false
-              );
-            });
-          })();
-
-
-          function eventoReal() {
-            const botonReal = document.getElementById("submitFormularioModal");
-            botonReal.click();
-          }
-
-          document.getElementById("formTicketModal").addEventListener("submit", (event) => {
-            event.preventDefault();
-
-            var formModal = document.getElementById("formTicketModal");
-            var datosDelForm = tomarDatosDelForm(formModal);
-            mostrarTicketCreadoRecien(datosDelForm);
-
-          });
-        </script>
   </body>
+
+  <script src="/js/userDashboard.js"></script>
+  <script src="/js/layout.js"></script>
+
+  <script>
+
+    (function () {
+      "use strict";
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll(".needs-validation");
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener(
+          "submit",
+          function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+
+            form.classList.add("was-validated");
+          },
+          false
+        );
+      });
+    })();
+
+
+    function eventoReal() {
+      const botonReal = document.getElementById("submitFormularioModal");
+      botonReal.click();
+    }
+
+    document.getElementById("formTicketModal").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      var formModal = document.getElementById("formTicketModal");
+      var datosDelForm = tomarDatosDelForm(formModal);
+      mostrarTicketCreadoRecien(datosDelForm);
+
+    });
+  </script>

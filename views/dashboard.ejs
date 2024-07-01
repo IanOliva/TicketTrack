@@ -36,19 +36,19 @@
                 </li>
                 <hr>
                 <li>
-                    <a href="#" data-url="/dash-home">
+                    <a href="#" data-url="/api-tickets/dash-home">
                         <i class="fa-solid fa-house"></i>
                         <span class="link-name">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-url="/dash-tickets">
+                    <a href="#" data-url="/api-tickets/dash-tickets">
                         <i class="fa-solid fa-receipt"></i>
                         <span class="link-name">Tickets</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-url="/dash-users">
+                    <a href="#" data-url="/api-users/dash-users">
                         <i class="fa-solid fa-users"></i>
                         <span class="link-name">Usuarios</span>
                     </a>
@@ -88,9 +88,7 @@
             <i class="fa-solid fa-bars sidebar-toggle"></i>
         </div>
 
-        <div class="dash-content" id="dash-content">
-            <%- include ('components/dash-home.ejs') %>
-        </div>
+        <div class="dash-content" id="dash-content"></div>
     </section>
 
     <script src="/js/dashboard.js"></script>
@@ -100,12 +98,11 @@
                 link.addEventListener('click', function (e) {
                     e.preventDefault();
                     let url = this.getAttribute('data-url');
-
                     if (url) {
                         fetch(url)
                             .then(response => {
                                 if (!response.ok) {
-                                    throw new Error('Network response was not ok');
+                                    throw new Error('No se encuentra la ruta del componente');
                                 }
                                 return response.text();
                             })

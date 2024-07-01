@@ -1,1 +1,52 @@
-<H1>aca muestro USUARIOS</H1>
+<body>
+    <div class="usuarios">
+        <div class="title">
+            <i class="fa-solid fa-users"></i>
+            <span class="text">Usuarios</span>
+
+        </div>
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Buscar..." />
+        </div>
+
+        <div class="users">
+            <% data.users.forEach((u)=> { %>
+
+                
+                  
+                <div class="card" style="width: 18rem;">
+                    <% if (u.url_img) { %>
+                        <img src="<%= u.url_img %>" class="card-img-top">
+                    <% } else { %>
+                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="card-img-top" >
+                    <% } %>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <% if (u.is_admin === "true") { %>
+                                <i class="fa-solid fa-crown"></i>
+                            <% } else { %>
+                                <i class="fa-solid fa-user"></i>
+                            <% } %>
+                            <%= u.username %>
+                        </h5>
+                        <p class="card-text">
+                            <%= u.email %>
+                        </p>
+                        <div class="total">
+                            <span> <% if (!u.cantTickets || u.cantTickets == 0) { %>
+                                0
+                            <% } else { %>
+                                u.cantTickets
+                            <% } %> </span>
+                            <p>Tickets Realizados</p>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -4,9 +4,9 @@ const getAdminDashboard = (req, res) => {
   const queryTickets = "SELECT * FROM tickets";
   const queryCount = "SELECT COUNT(*) AS totalTickets FROM tickets";
   const queryWaiting =
-    "SELECT COUNT(*) AS totalWaiting FROM tickets WHERE estate = 'En espera'";
+    "SELECT COUNT(*) AS totalWaiting FROM tickets WHERE estate = 1"; //en espera
   const queryResolved =
-    "SELECT COUNT(*) AS totalResolved FROM tickets WHERE estate = 'Resuelto'";
+    "SELECT COUNT(*) AS totalResolved FROM tickets WHERE estate = 2"; // resueltos
 
   db.query(queryTickets, (err, ticketResults) => {
     if (err) {
@@ -59,10 +59,11 @@ const getAdminDashboard = (req, res) => {
           let totalDiasTranscurridos = 0;
           ticketResults.forEach((ticket) => {
             var diasTranscurridos;
-            if (ticket.estate === "resuelto") {
+            if (ticket.estate === 2) {
+              //resuelto
               diasTranscurridos = calcularDiasEntreFechas(
-                ticket.fecha,
-                ticket.fechaCierre
+                ticket.fechaOpen,
+                ticket.fechaClose
               );
               ticket.diasTranscurridos = diasTranscurridos;
               totalDiasTranscurridos += diasTranscurridos;
@@ -71,16 +72,18 @@ const getAdminDashboard = (req, res) => {
 
           // Calcula el promedio de días transcurridos
           const totalTickets = ticketResults.filter(
-            (a) => a.estate === "resuelto"
-          ).length;
+            (a) => a.estate === 2
+          ).length; // 2 resuelto
+
           const promedioDiasTranscurridos =
             totalDiasTranscurridos / totalTickets;
 
           const mostOlder = (lista) => {
             let actual = new Date();
             lista.forEach((t) => {
-              if (t.estate !== "resuelto" && t.fecha < actual) {
-                actual = t.fecha;
+              if (t.estate === 1 && t.fechaOpen < actual) {
+                // 1 en espera
+                actual = t.fechaOpen;
               }
             });
             return actual;
@@ -94,8 +97,7 @@ const getAdminDashboard = (req, res) => {
             return cantDias;
           };
 
-          const response = {
-            tickets: ticketResults,
+          const data = {
             totalTickets: countResults[0].totalTickets,
             totalWaiting: waitingResults[0].totalWaiting,
             totalResolved: resolvedResults[0].totalResolved,
@@ -103,7 +105,7 @@ const getAdminDashboard = (req, res) => {
             diasAtraso: calcularDiasAtraso(mostOlder(ticketResults)),
           };
 
-          res.json(response);
+          res.render("components/dash-home", { data })
         });
       });
     });
@@ -121,4 +123,26 @@ const getUserDashboard = (req, res) => {
   });
 };
 
-module.exports = { getAdminDashboard, getUserDashboard };
+const getAllTickets = (req, res) => {
+  const queryTickets = "SELECT * FROM tickets";
+  
+  db.query(queryTickets, (err, ticketResults) => {
+    if (err) {
+      console.error("Error al obtener registros:", err);
+      return res.status(500).send("Error al obtener registros");
+    }
+
+    const data = {
+      tickets: ticketResults,
+    };
+
+    // Renderiza la vista 'components/dash-tickets.ejs' y pasa 'data' como dato
+    res.render("components/dash-tickets", { data });
+  });
+};
+
+module.exports = {
+  getAdminDashboard,
+  getUserDashboard,
+  getAllTickets,
+};

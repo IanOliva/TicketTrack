@@ -1,14 +1,14 @@
 const prioridadPorID = {
-  baja: { palabra: "baja", color: 'primary' }, // Verde
-  media: { palabra: "media", color: 'warning' }, // Naranja
-  alta: { palabra: "alta", color: 'danger' }, // Rojo
+  1: { palabra: "baja", color: 'primary' }, // Verde
+  2: { palabra: "media", color: 'warning' }, // Naranja
+  3: { palabra: "alta", color: 'danger' }, // Rojo
 };
 
 const estadoTicketID = {
-  "en espera": { palabra: "En Espera", color: "#808080" }, // Gris
-  resuelto: { palabra: "Resuelto", color: "#008000" }, // Verde
-  //2: { palabra: "Cancelado", color: "#ff0000" }, // Naranja
-  //3: { palabra: "Terminado", color: "#00e7ff" }, // Cian
+  1: { palabra: "En Espera", color: "#808080" }, // Gris
+  2: { palabra: "Resuelto", color: "#008000" }, // Verde
+  3: { palabra: "Cancelado", color: "#ff0000" }, // Naranja
+  4: { palabra: "Terminado", color: "#00e7ff" }, // Cian
 };
 
 //obtener los tickets del json y mostrarlos
@@ -35,17 +35,17 @@ function mostrarTickets(lista) {
   lista.map(function (t) { 
     var ticketCard = `
         <div class="card-nb" data-id="${t.id_icket}" data-bs-theme="dark" >
-          <div class="alert alert-${prioridadPorID[t.priority].color}" style="display: flex !important;justify-content: space-between;">
-            <p id="t-detalle" style="font-size:1rem" > ${t.title}</p>
+          <div class="alert alert-${prioridadPorID[t.prioridad].color}" style="display: flex !important;justify-content: space-between;">
+            <p id="t-detalle" style="font-size:1rem" > ${t.motivo}</p>
             <p id="t-id">Nº ${t.id_ticket}</p>
           </div>
 
             <div class="card-body-nb">
-              <p id="t-detalle"> ${t.description}</p>
+              <p id="t-detalle"> ${t.descripcion}</p>
             </div>
             <div class="card-footer-nb">
               <button type="submit" class="btn btn-primary cargarHtml"  data-id="${
-                t.idTicket
+                t.id_Ticket
               }">Detalles</button>
               <p id="estado" style="color: ${
                 estadoTicketID[t.estate].color
@@ -63,7 +63,7 @@ function enviarAWebTicket() {
   ticketsContainer.addEventListener("click", (event) => {
     if (event.target.classList.contains("cargarHtml")) {
       let varTicketId = event.target.getAttribute("data-id");
-      window.location.href = `/section/ticket-detail.html?idTicket=${varTicketId}`;
+      window.location.href = `/section/ticket-detail.html?id_Ticket=${varTicketId}`;
     }
   });
 }
@@ -72,7 +72,7 @@ function enviarAWebTicket() {
 function cargarTicketSeleccionado(lista) {
   var urlParams = new URLSearchParams(window.location.search);
   var ticketId = urlParams.get("idTicket");
-  var ticket = lista.find((t) => t.idTicket == ticketId);
+  var ticket = lista.find((t) => t.id_Ticket == ticketId);
 
   console.log(ticket);
 
@@ -83,11 +83,11 @@ function cargarTicketSeleccionado(lista) {
               <div class="detail-card-header">
                   <div class="cajaAlineadoraCabecera">
                       <p style="text-transform: capitalize;"><strong>Prioridad</strong></p>
-                      ${prioridadPorID[ticket.idPrioridad].palabra}
+                      ${prioridadPorID[ticket.prioridad].palabra}
                   </div>
                   <div class="cajaAlineadoraCabecera">
                       <p><strong>Ticket</strong></p>
-                      Nº ${ticket.idTicket}
+                      Nº ${ticket.id_Ticket}
                   </div>
                   <div class="cajaAlineadoraCabecera">
                       <p><strong>Usuario</strong></p>
@@ -96,11 +96,11 @@ function cargarTicketSeleccionado(lista) {
               </div>
               <hr class="border border-primary border-3 opacity-75 w-10" style="margin-bottom:0!important;">
               <div class="fechaCarga"><p>Creado ${formatearFecha(
-                ticket.fechaCarga
+                ticket.fechaOpen
               )}</p></div>
               <div class="detail-card-body">
                   <h5><strong>${ticket.motivo}</strong></h5>
-                  <p><strong>Detalle</strong><br> ${ticket.detalle}</p>
+                  <p><strong>Detalle</strong><br> ${ticket.descripcion}</p>
                   <hr class="border border-primary border-3 opacity-75 w-10">
                   <div class="botonesAcciones">
                       <button onClick=window.history.back(); type="button" class="btn btn-dark">Volver</button>
@@ -156,16 +156,16 @@ function obtenerFechaActual() {
 }
 
 //Espera una lista de tickets asi los acomoda y trae el ultimo primero
-function calcularUltimoIdTicket(tickets) {
+function calcularUltimoid(tickets) {
   // Ordenamos con SORT
-  tickets.sort((a, b) => new Date(b.idTicket) - new Date(a.idTicket));
+  tickets.sort((a, b) => new Date(b.id_Ticket) - new Date(a.id_Ticket));
 
-  var divIdTicketElement = document.getElementById("idTicketModal");
-  var inputFormIdTicket = document.getElementById("idTicketCalculado");
-  var ticketCalculado = parseInt(tickets[0].idTicket) + 1;
+  var dividTicketElement = document.getElementById("idTicketModal");
+  var inputFormidTicket = document.getElementById("idTicketCalculado");
+  var ticketCalculado = parseInt(tickets[0].id_Ticket) + 1;
 
-  divIdTicketElement.innerHTML = "Ticket Nº " + ticketCalculado;
-  inputFormIdTicket.value = ticketCalculado.toString();
+  dividTicketElement.innerHTML = "Ticket Nº " + ticketCalculado;
+  inputFormidTicket.value = ticketCalculado.toString();
 }
 
 function tomarDatosDelForm(form) {
@@ -173,7 +173,7 @@ function tomarDatosDelForm(form) {
   const formData = new FormData(form);
   const jsonData = {
     userId: "",
-    idTicket: parseInt(formData.get("idTicketCalculado"), 16),
+    id_Ticket: parseInt(formData.get("idTicketCalculado"), 16),
     idPrioridad: parseInt(formData.get("idPrioridad"), 16),
     isEstado: parseInt(formData.get("idEstado"), 16),
     user: formData.get("user"),
@@ -181,7 +181,6 @@ function tomarDatosDelForm(form) {
     detalle: formData.get("detalle"),
     fechaCarga: new Date().toISOString(), // Formato de fecha estándar
     idUsuarioQueResolvio: null,
-    pokeAvatar: formData.get("pokeAvatar"),
   };
 
   // Devolver los datos como JSON string
@@ -212,7 +211,7 @@ function mostrarTicketCreadoRecien(paqueteDatos) {
     divDatos.style.display = "none";
 
     // Simular envío de formulario y redirigir a tickets.html
-    window.location.href = "ticket-crud.html";
+    window.location.href = "/user-dashboard";
   }, 4000);
 }
 

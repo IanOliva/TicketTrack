@@ -1,1 +1,51 @@
-<H1>aca muestro tickets</H1>
+<body>
+    <div class="activity">
+        <div class="title">
+            <i class="fa-regular fa-clock"></i>
+            <span class="text">Recientes</span>
+
+        </div>
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Buscar..." />
+        </div>
+
+        <table class="dash-table">
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Descripción</th>
+                    <th>Prioridad</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+
+                <% data.tickets.forEach((t)=> { %>
+                    <tr>
+                        <td>
+                            <%= t.motivo %>
+                        </td>
+                        <td>
+                            <%= t.descripcion %>
+                        </td>
+                        <td>
+                            <%= t.prioridad %>
+                        </td>
+                        <td>
+                            <%= t.fechaOpen %>
+                        </td>
+                        <td>
+                            <%= t.estate %>
+                        </td>
+                    </tr>
+                    <% }); %>
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

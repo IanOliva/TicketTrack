@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 // const { authenticateToken } = require('../middlewares/auth');
 
 // controlador de registro
-const userRegister = async (req, res) => {
+const userRegister = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   try {
@@ -18,6 +18,7 @@ const userRegister = async (req, res) => {
         console.error("Error durante el registro del usuario:", err);
         return res.status(500).send("Error durante el registro del usuario");
       }
+      res.redirect("/login");
       res.status(201).send("Usuario registrado");
     });
   } catch (error) {
@@ -52,7 +53,7 @@ const userLogin = (req, res) => {
         userId: user.user_id,
         username: user.username,
         email: user.email,
-        is_admin: user.is_admin, 
+        is_admin: user.is_admin,
         url_img: user.url_img,
       },
       process.env.JWT_SECRET,
@@ -80,4 +81,22 @@ const userLogout = (req, res) => {
   res.redirect("/"); // Redirige al usuario a la página principal
 };
 
-module.exports = { userRegister, userLogin, userLogout };
+const getAllUsers = (req, res) => {
+  const queryUsers = "SELECT * FROM users";
+  
+  db.query(queryUsers, (err, usersResults) => {
+    if (err) {
+      console.error("Error al obtener registros:", err);
+      return res.status(500).send("Error al obtener registros");
+    }
+
+    const data = {
+      users: usersResults,
+    };
+
+    // Renderiza la vista 'components/dash-tickets.ejs' y pasa 'data' como dato
+    res.render("components/dash-users", { data });
+  });
+};
+
+module.exports = { userRegister, userLogin, userLogout, getAllUsers };

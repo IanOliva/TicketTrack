@@ -87,6 +87,9 @@ app.get('/dash-comments', authenticateToken, (req, res) => {
   res.render('components/dash-comments', { title: 'Comments', css: '/assets/css/dash-comments.css', session: req.session });
 });
 
+app.get('/dash-evento', authenticateToken, (req, res) => {
+  res.render('components/dash-comments', { title: 'Evento', css: '/assets/css/dash-comments.css', session: req.session });
+});
 
 // Iniciar el servidor
 app.listen(PORT, () => {
