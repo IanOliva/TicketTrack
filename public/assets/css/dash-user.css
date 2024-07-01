@@ -9,6 +9,7 @@
 
 .card-img-top {
     width: 5rem;
+    height: 5rem;
     border-radius: 50%;
     margin: 0 auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -19,6 +20,8 @@
     text-align: center;
     border-radius: 2em;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(16px) saturate(180%)!important;
+    position: relative;
 }
 
 .card-title {
@@ -29,6 +32,13 @@
 .cant-tickets {
     border-radius: 2em;
     padding: 0.5em 1.5em;
+}
+
+.card i{
+    position: absolute;
+    top: 7%;
+    position: absolute;
+    right: 6%;
 }
 
 .fa-crown {
@@ -45,4 +55,5 @@
 }
 
 ;
+
 

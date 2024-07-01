@@ -1,0 +1,35 @@
+<div class="overview">
+    <div class="title">
+        <i class="fa-solid fa-chart-simple"></i>
+        <span class="text">Panel de Administrador</span>
+    </div>
+    <%= message %>
+    <div class="boxes">
+        <div class="box box1">
+            <i class="fa-solid fa-list-check"></i>
+            <span class="text">Total</span>
+            <span class="number" id="ticket-count"> <%= message %> </span>
+        </div>
+        <div class="box box2">
+            <i class="fa-solid fa-hourglass-half"></i>
+            <span class="text">En espera</span>
+            <span class="number" id="waiting-count"><%= message %></span>
+        </div>
+        <div class="box box3">
+            <i class="fa-regular fa-circle-check"></i>
+            <span class="text">Resueltos</span>
+            <span class="number" id="resolved-count"><%= message %></span>
+        </div>
+        <div class="box box4">
+            <i class="fa-solid fa-chart-line"></i>
+            <span class="text">Tiempo Estimado</span>
+            <span class="number" id="promedio"><%= message %></span>
+        </div>
+        <div class="box box5">
+            <i class="fa-regular fa-calendar-xmark"></i>
+            <span class="text">Más Antiguo</span>
+            <span class="number" id="atraso"><%= message %></span>
+        </div>
+    </div>
+    
+</div>

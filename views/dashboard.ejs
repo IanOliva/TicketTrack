@@ -27,7 +27,7 @@
         <div class="menu-items">
             <ul class="nav-links dash-links">
                 <li>
-                    <a href="#">
+                    <a href="#" data-url="/api-users/dash-admin">
                         <i><img class="width:1rem" src="<%= user.url_img %>" alt="" /></i>
                         <span class="link-name badge text-bg-secondary" style="text-transform: capitalize;">
                             <%= user.username %>
@@ -85,7 +85,7 @@
 
     <section class="dashboard">
         <div class="top">
-            <i class="fa-solid fa-bars sidebar-toggle"></i>
+            <i id="hamburguerIco" class="fa-solid fa-bars sidebar-toggle"></i>
         </div>
 
         <div class="dash-content" id="dash-content"></div>
@@ -102,7 +102,9 @@
                         fetch(url)
                             .then(response => {
                                 if (!response.ok) {
-                                    throw new Error('No se encuentra la ruta del componente');
+                                    return response.text().then(text => {
+                                        throw new Error(`Error ${response.status}: ${response.statusText}\n${text}`);
+                                    });
                                 }
                                 return response.text();
                             })

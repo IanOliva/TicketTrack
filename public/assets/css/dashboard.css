@@ -16,10 +16,10 @@
 
 :root{
     /* ===== Colors ===== */
-    --primary-color: #0E4BF1;
+    --primary-color: #852800;
     --panel-color: #FFF;
     --text-color: #000;
-    --black-light-color: #707070;
+    --black-light-color: #ffffff;  
     --border-color: #e6e5e5;
     --toggle-color: #DDD;
     --box1-color: #4DA3FF;
@@ -38,7 +38,6 @@
 
 body{
     min-height: 100vh;
-    background-color: var(--primary-color);
 }
 body.dark{
     --primary-color: #3A3B3C;
@@ -83,7 +82,7 @@ nav{
     height: 100%;
     width: 250px;
     padding: 7px 14px;
-    background-color: var(--panel-color);
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
     border-right: 1px solid var(--border-color);
     transition: var(--tran-05);
 }
@@ -218,7 +217,7 @@ body.dark .switch:before{
 .dashboard{
     position: relative;
     left: 250px;
-    background-color: var(--panel-color);
+    background: linear-gradient(135deg, #71b7e6, rgb(204, 120, 237));
     min-height: 100vh;
     width: calc(100% - 250px);
     padding: 10px 14px;
@@ -229,21 +228,20 @@ nav.close ~ .dashboard{
     width: calc(100% - 73px);
 }
 .dashboard .top{
-    position: fixed;
-    top: 0;
-    left: 250px;
-    display: flex;
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    /* display: flex;
     width: calc(100% - 250px);
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
     padding: 10px 14px;
     background-color: var(--panel-color);
     transition: var(--tran-05);
     z-index: 10;
 }
 nav.close ~ .dashboard .top{
-    left: 73px;
-    width: calc(100% - 73px);
+    left: 0;
 }
 .dashboard .top .sidebar-toggle{
     font-size: 26px;

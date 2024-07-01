@@ -82,8 +82,9 @@ const userLogout = (req, res) => {
 };
 
 const getAllUsers = (req, res) => {
-  const queryUsers = "SELECT *, (select count(*) from tickets where tickets.idUsuario = users.user_id)as cantTickets FROM users";
-  
+  const queryUsers =
+    "SELECT *, (select count(*) from tickets where tickets.idUsuario = users.user_id)as cantTickets FROM users";
+
   db.query(queryUsers, (err, usersResults) => {
     if (err) {
       console.error("Error al obtener registros:", err);
@@ -99,4 +100,21 @@ const getAllUsers = (req, res) => {
   });
 };
 
-module.exports = { userRegister, userLogin, userLogout, getAllUsers };
+const getAdminData = (req, res) => {
+  const message = "admin panel";
+  res.render("components/dash-admin", { message });
+};
+
+const getUser_Panel = (req, res) => {
+  const message = "admin panel";
+  res.render("components/dash-admin", { message });
+};
+
+module.exports = {
+  userRegister,
+  userLogin,
+  userLogout,
+  getAdminData,
+  getAllUsers,
+  getUser_Panel,
+};

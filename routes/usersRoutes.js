@@ -22,4 +22,8 @@ router.get('/dashboard', authenticateToken, getAdminDashboard );
 
 router.get('/dash-users', authenticateToken, userController.getAllUsers);
 
+router.get('/dash-admin', authenticateToken, userController.getAdminData);
+
+router.get('/user-panel', authenticateToken, userController.getUser_Panel);
+
 module.exports = router;
