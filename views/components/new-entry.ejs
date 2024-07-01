@@ -1,0 +1,33 @@
+<%- include ('components/header.ejs') %>
+
+<body>
+  <%- include ('components/navbar.ejs') %>
+    <!--Ingrese comentario-->
+    
+      <header class="header">
+        <h2><a href="#" class="titulo">INGRESA TU COMENTARIO</a></h2>
+      <section class="entrada">
+        <h3>Escribe una nueva entrada</h3>
+
+        <form method="post" action="">
+
+        <div class="Formulario">
+          <label for="title">NOMBRE</label>
+          <input type="text" name="title" id="title" class="cuadro-formulario" placeholder="Ingresa un nuevo comentario" required>
+        </div>
+        
+        <div class="Formulario">
+          <label for="contenido">Ingresa el Texto</label>
+          <textarea name="contenido" id="contenido" class="cuadro-formulario" required></textarea>
+        </div>
+
+        <div class="Formulario">
+          <input type="submit" value="Envio" class="btn-w">
+
+        </div>
+      </form>
+      </section>
+    
+      <%- include('./components/footer') %>
+</body>
+  

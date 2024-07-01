@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const morgan = require('morgan');
 const ticketRoutes = require('../routes/ticketsRoutes');
 const userRoutes = require('../routes/usersRoutes');
 const { authenticateToken, checkAdmin, checkUser } = require('../middlewares/auth');
@@ -30,6 +31,9 @@ app.set('views', path.join(__dirname, '../views'));
 // Middleware para servir archivos estáticos (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname, '../public')));
 
+// Middleware para comentario
+app.use(morgan('dev'))
+
 // Usar las rutas de la API de tickets
 app.use('/api-tickets', ticketRoutes);
 
@@ -40,6 +44,9 @@ app.use('/api-users', userRoutes);
 app.get('/', (req, res) => {
   res.render('home', { title: 'Home', css: '/assets/css/home.css', session: req.session });
 });
+
+//Ruta para comentarios
+app.use(require('./routes/entries.routes'));
 
 // Ruta para la vista about-us.ejs
 app.get('/about-us', (req, res) => {
