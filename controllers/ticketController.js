@@ -43,40 +43,39 @@ const getAdminDashboard = (req, res) => {
             // Parsear las fechas asegurando que estén en el formato adecuado
             const inicio = new Date(fechaInicio);
             const cierre = new Date(fechaCierre);
-
+        
             // Verificar si las fechas son válidas
             if (isNaN(inicio) || isNaN(cierre)) {
-              return 0; // Si alguna fecha no es válida, retornar 0 días
+                return 0; // Si alguna fecha no es válida, retornar 0 días
             }
-
+        
             const diffTime = Math.abs(cierre - inicio);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
+        
             return diffDays;
-          };
+        };
+        
 
           // Calcula los días para cada ticket y suma para promedio
           let totalDiasTranscurridos = 0;
           ticketResults.forEach((ticket) => {
-            var diasTranscurridos;
-            if (ticket.estate === 2) {
-              //resuelto
-              diasTranscurridos = calcularDiasEntreFechas(
-                ticket.fechaOpen,
-                ticket.fechaClose
-              );
-              ticket.diasTranscurridos = diasTranscurridos;
-              totalDiasTranscurridos += diasTranscurridos;
+            if (ticket.estate === 2) { // Verificar estado igual a 2 (resuelto)
+                const diasTranscurridos = calcularDiasEntreFechas(
+                    ticket.fechaOpen,
+                    ticket.fechaUpdate
+                );
+                
+                totalDiasTranscurridos += diasTranscurridos;
             }
-          });
+        });
+          
 
           // Calcula el promedio de días transcurridos
           const totalTickets = ticketResults.filter(
             (a) => a.estate === 2
           ).length; // 2 resuelto
 
-          const promedioDiasTranscurridos =
-            totalDiasTranscurridos / totalTickets;
+          const promedioDiasTranscurridos = totalDiasTranscurridos / totalTickets;
 
           const mostOlder = (lista) => {
             let actual = new Date();

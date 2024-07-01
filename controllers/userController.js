@@ -82,7 +82,7 @@ const userLogout = (req, res) => {
 };
 
 const getAllUsers = (req, res) => {
-  const queryUsers = "SELECT * FROM users";
+  const queryUsers = "SELECT *, (select count(*) from tickets where tickets.idUsuario = users.user_id)as cantTickets FROM users";
   
   db.query(queryUsers, (err, usersResults) => {
     if (err) {
