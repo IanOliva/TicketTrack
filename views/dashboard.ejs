@@ -13,7 +13,6 @@
     <!----===== Icons ===== -->
     <script src="https://kit.fontawesome.com/84f1588987.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
     <!-- barra lateral -->
     <nav>
@@ -21,11 +20,19 @@
             <div class="logo-image">
                 <img src="/assets/img/ticket-logo.png" alt="ticket track logo">
             </div>
-            <span class="logo_name">TicketTrack</span>
+            <a style=" text-decoration: none;" href="/"><span class="logo_name">TicketTrack</span></a>
         </div>
 
         <div class="menu-items">
             <ul class="nav-links dash-links">
+
+                <li>
+                    <a href="#" class="top sidebar-toggle">
+                        <i class="fa-solid fa-circle-chevron-right"></i>
+                        <span class="link-name">cerrar</span>
+                    </a>
+                </li>
+
                 <li>
                     <a href="#" data-url="/api-users/dash-admin">
                         <i><img class="width:1rem" src="<%= user.url_img %>" alt="" /></i>
@@ -63,9 +70,9 @@
 
             <ul class="nav-links">
                 <li class="mode">
-                    <a href="#">
-                        <i class="fa-regular fa-moon"></i>
-                        <span class="link-name">Modo oscuro</span>
+                    <a href="#" >
+                        <div class="cambioModo"><i class="fa-regular fa-moon"></i></div>
+                        <span class="link-name nombreModo">Modo oscuro</span>
                     </a>
 
                     <div class="mode-toggle">
@@ -84,10 +91,6 @@
     </nav>
 
     <section class="dashboard">
-        <div class="top">
-            <i id="hamburguerIco" class="fa-solid fa-bars sidebar-toggle"></i>
-        </div>
-
         <div class="dash-content" id="dash-content"></div>
     </section>
 

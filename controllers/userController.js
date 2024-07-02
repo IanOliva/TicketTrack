@@ -1,6 +1,8 @@
 const db = require("../db/database");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { getAdminDashboard } = require("./ticketController");
+
 // const { authenticateToken } = require('../middlewares/auth');
 
 // controlador de registro
@@ -19,7 +21,6 @@ const userRegister = async (req, res, next) => {
         return res.status(500).send("Error durante el registro del usuario");
       }
       res.redirect("/login");
-      res.status(201).send("Usuario registrado");
     });
   } catch (error) {
     console.error("Error durante el hash de la contraseña:", error);
@@ -57,7 +58,7 @@ const userLogin = (req, res) => {
         url_img: user.url_img,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "60min" }
     );
 
     // Configura la cookie con el token
@@ -101,13 +102,51 @@ const getAllUsers = (req, res) => {
 };
 
 const getAdminData = (req, res) => {
-  const message = "admin panel";
-  res.render("components/dash-admin", { message });
+  const queryUsers = "SELECT * FROM users WHERE user_id = ?";
+
+  db.query(queryUsers, [req.user.userId], (err, dataPersonal) => {
+    if (err) {
+      console.error("Error al obtener registros:", err);
+      return res.status(500).send("Error al obtener registros");
+    }
+
+    const queryTickets = "SELECT * FROM tickets WHERE idUsuario = ?";
+
+    db.query(queryTickets, [req.user.userId], (err, ticketsUsuario) => {
+      if (err) {
+        console.error("Error al obtener tickets:", err);
+        return res.status(500).send("Error al obtener tickets");
+      }
+
+      const queryResolvedTickets =
+        "SELECT count(*) as total FROM tickets WHERE resueltoPor = ?";
+
+      db.query(
+        queryResolvedTickets,
+        [req.user.userId],
+        (err, ticketsResueltos) => {
+          if (err) {
+            console.error("Error al obtener tickets resueltos:", err);
+            return res.status(500).send("Error al obtener tickets resueltos");
+          }
+
+          const data = {
+            datosUsuario: dataPersonal[0],
+            ticketsUsuario: ticketsUsuario,
+            ticketsResueltos: ticketsResueltos[0],
+          };
+          console.log(data);
+
+          // Renderiza la vista 'components/dash-admin.ejs' y pasa 'data' como dato
+          res.render("components/dash-admin", { data });
+        }
+      );
+    });
+  });
 };
 
 const getUser_Panel = (req, res) => {
-  const message = "admin panel";
-  res.render("components/dash-admin", { message });
+  res.render("components/dash-admin", { getAdminDashboard });
 };
 
 module.exports = {

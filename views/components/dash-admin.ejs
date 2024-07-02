@@ -1,35 +1,64 @@
-<div class="overview">
-    <div class="title">
-        <i class="fa-solid fa-chart-simple"></i>
-        <span class="text">Panel de Administrador</span>
-    </div>
-    <%= message %>
-    <div class="boxes">
-        <div class="box box1">
-            <i class="fa-solid fa-list-check"></i>
-            <span class="text">Total</span>
-            <span class="number" id="ticket-count"> <%= message %> </span>
+<body>
+    <section class="devs">
+        <div class="profile-card">
+            <h3>Juan Corso</h3>
+            <img class="round" src="<%= data.datosUsuario.url_img %>" alt="user" />
+            <h4>
+                <%= data.datosUsuario.username %>
+            </h4>
+            <h6>
+                <%= data.datosUsuario.email %>
+            </h6>
+            <!-- <p>
+                Datos
+            </p> -->
+            <div class="skills">
+                <h6>Tickets Propios</h6>
+                <!-- <ul>
+                    <li>Desarrollador Front-End</li>
+                    <li>JavaScript</li>
+                    <li>Stack Net</li>
+                    <li>Sql Server</li>
+                    <li>Reporting Services</li>
+                </ul> -->
+
+                <% data.ticketsUsuario.forEach((t)=> { %>
+                    <tr>
+                        <td>
+                            <%= t.motivo %>
+                        </td>
+                        <td>
+                            <%= t.descripcion %>
+                        </td>
+                        <td>
+                            <%= t.prioridad %>
+                        </td>
+                        <td>
+                            <%= t.fechaOpen %>
+                        </td>
+                        <td>
+                            <%= t.estate %>
+                        </td>
+                    </tr>
+                    <% }); %>
+
+            </div>
+
+            <div class="skills">
+                <h6>Tickets Resueltos</h6>
+                <ul>
+                    <li><%= data.ticketsResueltos.total %></li>
+                    <!-- <li>JavaScript</li>
+                    <li>Stack Net</li>
+                    <li>Sql Server</li>
+                    <li>Reporting Services</li> -->
+                </ul>
+            </div>
         </div>
-        <div class="box box2">
-            <i class="fa-solid fa-hourglass-half"></i>
-            <span class="text">En espera</span>
-            <span class="number" id="waiting-count"><%= message %></span>
-        </div>
-        <div class="box box3">
-            <i class="fa-regular fa-circle-check"></i>
-            <span class="text">Resueltos</span>
-            <span class="number" id="resolved-count"><%= message %></span>
-        </div>
-        <div class="box box4">
-            <i class="fa-solid fa-chart-line"></i>
-            <span class="text">Tiempo Estimado</span>
-            <span class="number" id="promedio"><%= message %></span>
-        </div>
-        <div class="box box5">
-            <i class="fa-regular fa-calendar-xmark"></i>
-            <span class="text">Más Antiguo</span>
-            <span class="number" id="atraso"><%= message %></span>
-        </div>
-    </div>
-    
-</div>
+    </section>
+
+</body>
+
+<script>
+
+</script>

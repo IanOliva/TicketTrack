@@ -47,13 +47,13 @@ app.get('/about-us', (req, res) => {
 });
 
 // Ruta para servir la vista dashboard.ejs desde la carpeta views, solo si está autenticado
-app.get('/dashboard', authenticateToken, checkAdmin, (req, res) => {
+app.get('/dashboard', authenticateToken,checkAdmin, (req, res) => {
   res.render('dashboard', { title: 'Dashboard', css: '/assets/css/dashboard.css', session: req.session , user: req.user});
 });
 
 // Ruta para servir la vista user-dashboard.ejs desde la carpeta views, solo si está autenticado
 app.get('/user-dashboard', authenticateToken, checkUser, (req, res) => {
-  res.render('user-dashboard', { title: 'User Dashboard' , css: '/assets/css/user-dashboard.css',session: req.session  });
+  res.render('user-dashboard', { title: 'User Dashboard' , css: '/assets/css/user-dashboard.css',session: req.session , user: req.user });
 });
 
 // Ruta para servir la vista login.ejs desde la carpeta views || sin css porque esta hecho con bootstrap
@@ -71,24 +71,24 @@ app.get('/faqs', (req, res) => {
   res.render('faqs', { title: 'Faqs', css: '/assets/css/faqs.css', session: req.session });
 });
 
-app.get('/dash-home', authenticateToken, (req, res) => {
-  res.render('components/dash-home', { title: 'Home', css: '/assets/css/dash-home.css', session: req.session });
+app.get('/dash-home', authenticateToken,checkAdmin, (req, res) => {
+  res.render('components/dash-home', { title: 'Home', session: req.session });
 });
 
-app.get('/dash-tickets', authenticateToken, (req, res) => {
-  res.render('components/dash-tickets', { title: 'Tickets', css: '/assets/css/dash-tickets.css', session: req.session });
+app.get('/dash-tickets', authenticateToken,checkAdmin, (req, res) => {
+  res.render('components/dash-tickets', { title: 'Tickets', session: req.session });
 });
 
-app.get('/dash-users', authenticateToken, (req, res) => {
-  res.render('components/dash-users', { title: 'Users', css: '/assets/css/dash-users.css', session: req.session });
+app.get('/dash-users', authenticateToken,checkAdmin, (req, res) => {
+  res.render('components/dash-users', { title: 'Users', session: req.session });
 });
 
-app.get('/dash-comments', authenticateToken, (req, res) => {
-  res.render('components/dash-comments', { title: 'Comments', css: '/assets/css/dash-comments.css', session: req.session });
+app.get('/dash-admin', authenticateToken,checkAdmin, (req, res) => {
+  res.render('components/dash-admin', { title: 'Admin', session: req.session });
 });
 
-app.get('/dash-evento', authenticateToken, (req, res) => {
-  res.render('components/dash-comments', { title: 'Evento', css: '/assets/css/dash-comments.css', session: req.session });
+app.get('/dash-comments', authenticateToken,checkAdmin, (req, res) => {
+  res.render('components/dash-comments', { title: 'Users', session: req.session });
 });
 
 // Iniciar el servidor
