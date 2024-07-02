@@ -20,7 +20,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET, // Debes agregar SESSION_SECRET en tu archivo .env
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false } // Cambia a true si usas HTTPS
+  cookie: { secure: false }, // Cambia a true si usas HTTPS
 }));
 
 // Configurar EJS como el motor de plantillas
@@ -72,23 +72,19 @@ app.get('/faqs', (req, res) => {
 });
 
 app.get('/dash-home', authenticateToken,checkAdmin, (req, res) => {
-  res.render('components/dash-home', { title: 'Home', session: req.session });
 });
 
 app.get('/dash-tickets', authenticateToken,checkAdmin, (req, res) => {
-  res.render('components/dash-tickets', { title: 'Tickets', session: req.session });
 });
 
 app.get('/dash-users', authenticateToken,checkAdmin, (req, res) => {
-  res.render('components/dash-users', { title: 'Users', session: req.session });
 });
 
-app.get('/dash-admin', authenticateToken,checkAdmin, (req, res) => {
-  res.render('components/dash-admin', { title: 'Admin', session: req.session });
+app.get('/dash-admin', checkAdmin, (req, res) => {
 });
 
 app.get('/dash-comments', authenticateToken,checkAdmin, (req, res) => {
-  res.render('components/dash-comments', { title: 'Users', session: req.session });
+  res.render('components/dash-comments', { title: 'Users'  });
 });
 
 // Iniciar el servidor

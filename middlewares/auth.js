@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { userLogout } = require('../controllers/userController');
 
 // Middleware para la autentificación, si al ingresar al sistema no hay token, 
 // se redirije a la ruta de login, de lo contrario, se validará el token y se le redirigira a la ruta dashboard
@@ -13,7 +14,7 @@ function authenticateToken(req, res, next) {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      return res.redirect('/login'); // Token inválido
+      return userLogout(req, res); // Token inválido
     }
     req.user = user; // Almacena la información del usuario decodificado en req.user
     next(); // Continúa con el siguiente middleware o controlador

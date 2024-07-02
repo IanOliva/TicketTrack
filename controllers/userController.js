@@ -56,9 +56,11 @@ const userLogin = (req, res) => {
         email: user.email,
         is_admin: user.is_admin,
         url_img: user.url_img,
+        existeSesion: 1,
+
       },
       process.env.JWT_SECRET,
-      { expiresIn: "60min" }
+      { expiresIn: "1w" }
     );
 
     // Configura la cookie con el token
@@ -79,7 +81,8 @@ const userLogin = (req, res) => {
 const userLogout = (req, res) => {
   res.clearCookie("token"); // Elimina la cookie del token
   req.session.is_admin = null;
-  res.redirect("/"); // Redirige al usuario a la página principal
+  req.session.existeSesion = null;
+  res.redirect("/login"); // Redirige al usuario a la página principal
 };
 
 const getAllUsers = (req, res) => {
@@ -135,8 +138,7 @@ const getAdminData = (req, res) => {
             ticketsUsuario: ticketsUsuario,
             ticketsResueltos: ticketsResueltos[0],
           };
-          console.log(data);
-
+          
           // Renderiza la vista 'components/dash-admin.ejs' y pasa 'data' como dato
           res.render("components/dash-admin", { data });
         }
