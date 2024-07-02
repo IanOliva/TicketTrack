@@ -84,19 +84,20 @@ const userLogout = (req, res) => {
 
 // controlador para modificar usuario
 const userUpdate = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { user_id } = req.params;
+  const { username, password } = req.body;
 
   try {
     // Hash de la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const query = "UPDATE users SET username = ?, email = ?, password = ? WHERE email = ?";
-    db.execute(query, [username, email, hashedPassword, email], (err, results) => {
+    const query = "UPDATE users SET username = ?, password = ? WHERE user_id = ?";
+    db.execute(query, [username, hashedPassword, user_id], (err, results) => {
       if (err) {
         console.error("Error durante la actualización del usuario:", err);
         return res.status(500).send("Error durante la actualización del usuario");
       }
-      res.send("Usuario actualizado correctamente"); // Redirigir a una página de perfil o donde desees
+      res.send("Usuario actualizado correctamente"); // Redirigir a una página de perfil o donde sea
     });
   } catch (error) {
     console.error("Error durante el hash de la contraseña:", error);
