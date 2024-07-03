@@ -1,9 +1,6 @@
 const db = require("../db/database");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { getAdminDashboard } = require("./ticketController");
-
-// const { authenticateToken } = require('../middlewares/auth');
 
 // controlador de registro
 const userRegister = async (req, res, next) => {
@@ -56,8 +53,6 @@ const userLogin = (req, res) => {
         email: user.email,
         is_admin: user.is_admin,
         url_img: user.url_img,
-        existeSesion: 1,
-
       },
       process.env.JWT_SECRET,
       { expiresIn: "1w" }
@@ -68,6 +63,7 @@ const userLogin = (req, res) => {
 
     // Guardar datos en la sesión
     req.session.is_admin = user.is_admin;
+    req.session.userId = user.user_id;
 
     if (user.is_admin === "true") {
       res.redirect("/dashboard");
@@ -81,7 +77,6 @@ const userLogin = (req, res) => {
 const userLogout = (req, res) => {
   res.clearCookie("token"); // Elimina la cookie del token
   req.session.is_admin = null;
-  req.session.existeSesion = null;
   res.redirect("/login"); // Redirige al usuario a la página principal
 };
 
@@ -94,11 +89,14 @@ const userUpdate = async (req, res) => {
     // Hash de la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const query = "UPDATE users SET username = ?, password = ? WHERE user_id = ?";
+    const query =
+      "UPDATE users SET username = ?, password = ? WHERE user_id = ?";
     db.execute(query, [username, hashedPassword, user_id], (err, results) => {
       if (err) {
         console.error("Error durante la actualización del usuario:", err);
-        return res.status(500).send("Error durante la actualización del usuario");
+        return res
+          .status(500)
+          .send("Error durante la actualización del usuario");
       }
       res.send("Usuario actualizado correctamente"); // Redirigir a una página de perfil o donde sea
     });
@@ -141,10 +139,11 @@ const getAllUsers = (req, res) => {
   });
 };
 
-const getAdminData = (req, res) => {
+const renderDashHome = (req, res) => {
+  const userId = req.userData.userId;
   const queryUsers = "SELECT * FROM users WHERE user_id = ?";
 
-  db.query(queryUsers, [req.user.userId], (err, dataPersonal) => {
+  db.query(queryUsers,[userId], (err, dataPersonal) => {
     if (err) {
       console.error("Error al obtener registros:", err);
       return res.status(500).send("Error al obtener registros");
@@ -152,7 +151,7 @@ const getAdminData = (req, res) => {
 
     const queryTickets = "SELECT * FROM tickets WHERE idUsuario = ?";
 
-    db.query(queryTickets, [req.user.userId], (err, ticketsUsuario) => {
+    db.query(queryTickets, [userId] , (err, ticketsUsuario) => {
       if (err) {
         console.error("Error al obtener tickets:", err);
         return res.status(500).send("Error al obtener tickets");
@@ -171,21 +170,20 @@ const getAdminData = (req, res) => {
           }
 
           const data = {
+            title: 'Dashboard Home',
             datosUsuario: dataPersonal[0],
             ticketsUsuario: ticketsUsuario,
             ticketsResueltos: ticketsResueltos[0],
           };
-          
-          // Renderiza la vista 'components/dash-admin.ejs' y pasa 'data' como dato
-          res.render("components/dash-admin", { data });
+
+          res.render("dashboard", {
+            content: 'components/dash-home', // Esto es una referencia a la vista parcial que se cargará
+            data, // Pasamos los datos obtenidos a la vista
+          });
         }
       );
     });
   });
-};
-
-const getUser_Panel = (req, res) => {
-  res.render("components/dash-admin", { getAdminDashboard });
 };
 
 module.exports = {
@@ -194,7 +192,6 @@ module.exports = {
   userLogout,
   userUpdate,
   userDelete,
-  getAdminData,
   getAllUsers,
-  getUser_Panel,
+  renderDashHome,
 };

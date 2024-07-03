@@ -1,15 +1,15 @@
-const jwt = require('jsonwebtoken');
-const { userLogout } = require('../controllers/userController');
+const jwt = require("jsonwebtoken");
+const { userLogout } = require("../controllers/userController");
 
-// Middleware para la autentificación, si al ingresar al sistema no hay token, 
+// Middleware para la autentificación, si al ingresar al sistema no hay token,
 // se redirije a la ruta de login, de lo contrario, se validará el token y se le redirigira a la ruta dashboard
 
 function authenticateToken(req, res, next) {
   const token = req.cookies.token; // Extrae el token de las cookies
 
   if (!token) {
-       // No hay token, redirije a la ruta de login
-    return res.redirect('/login');
+    // No hay token, redirije a la ruta de login
+    return res.redirect("/login");
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
@@ -28,10 +28,10 @@ function checkAdmin(req, res, next) {
     if (req.user.is_admin === "true") {
       return next();
     } else {
-      return res.redirect('/user-dashboard');
+      return res.redirect("/user-dashboard");
     }
   } else {
-    res.redirect('/login');
+    res.redirect("/login");
   }
 }
 
@@ -40,8 +40,28 @@ function checkUser(req, res, next) {
   if (req.user && req.user.is_admin === "false") {
     return next();
   } else {
-    return res.redirect('/dashboard');
+    return res.redirect("/dashboard");
   }
 }
 
-module.exports = { authenticateToken , checkAdmin, checkUser };
+const getUserData = async (req, res, next) => {
+  try {
+    // Check if userId is stored in the session
+    if (!req.session.userId) {
+      return res.status(401).send("Unauthorized access");
+    } else {
+      const userId = req.session.userId;
+      // Attach user data to the request object
+      req.userData = {
+        userId,
+      };
+
+      next();
+    }
+  } catch (err) {
+    console.error("Error fetching user data:", err);
+    res.status(500).send("Error fetching user data");
+  }
+};
+
+module.exports = { authenticateToken, checkAdmin, checkUser, getUserData };

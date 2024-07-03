@@ -1,0 +1,31 @@
+body{
+    background: linear-gradient(200deg, #231e39, rgb(46, 11, 59))!important;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+}
+
+.header {
+    color: #a79cd1;
+    width: 100vw;
+    height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+img {
+    position: relative;
+    left: -46px;
+    width: 250px;
+}

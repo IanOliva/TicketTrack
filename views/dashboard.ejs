@@ -35,34 +35,31 @@
                 </li>
 
                 <li>
-                    <a href="#" data-url="/api-users/dash-admin">
-                        <i><img class="width:1rem" src="<%= user.url_img %>" alt="" /></i>
-                        <span class="link-name badge text-bg-secondary" style="text-transform: capitalize;">
-                            <%= user.username %>
-                        </span>
+                    <a href="/api-users/dash-admin" >
+                       Admin
                     </a>
                 </li>
                 <hr>
                 <li>
-                    <a href="#" data-url="/api-tickets/dash-home">
+                    <a href="/api-users/dash-home" >
                         <i class="fa-solid fa-house"></i>
                         <span class="link-name">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-url="/api-tickets/dash-tickets">
+                    <a href="/api-tickets/dash-tickets" >
                         <i class="fa-solid fa-receipt"></i>
                         <span class="link-name">Tickets</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-url="/api-users/dash-users">
+                    <a href="/api-users/dash-users" >
                         <i class="fa-solid fa-users"></i>
                         <span class="link-name">Usuarios</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-url="/dash-comments">
+                    <a href="/dash-comments" >
                         <i class="fa-solid fa-comments"></i>
                         <span class="link-name">Comentarios</span>
                     </a>
@@ -93,38 +90,11 @@
 
     <section class="dashboard">
         <div class="dash-content" id="dash-content">
+            <%- include (content) %>
         </div>
     </section>
 
     <script src="/js/dashboard.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.dash-links a').forEach(function (link) {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    let url = this.getAttribute('data-url');
-                    if (url) {
-                        fetch(url)
-                            .then(response => {
-                                if (!response.ok) {
-                                    return response.text().then(text => {
-                                        throw new Error(`Error ${response.status}: ${response.statusText}\n${text}`);
-                                    });
-                                }
-                                return response.text();
-                            })
-                            .then(data => {
-                                const dashContent = document.getElementById('dash-content');
-                                dashContent.innerHTML = data;
-                            })
-                            .catch(error => {
-                                alert('Error loading component: ' + error.message);
-                            });
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>

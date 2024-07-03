@@ -140,8 +140,108 @@ const getAllTickets = (req, res) => {
   });
 };
 
+const getAdminDashboardView = (req, res) => {
+  const queryTickets = "SELECT * FROM tickets";
+  const queryCount = "SELECT COUNT(*) AS totalTickets FROM tickets";
+  const queryWaiting =
+    "SELECT COUNT(*) AS totalWaiting FROM tickets WHERE estate = 1"; //en espera
+  const queryResolved =
+    "SELECT COUNT(*) AS totalResolved FROM tickets WHERE estate = 2"; // resueltos
+
+  db.query(queryTickets, (err, ticketResults) => {
+    if (err) {
+      console.error("Error al obtener registros:", err);
+      return res.status(500).send("Error al obtener registros");
+    }
+
+    db.query(queryCount, (err, countResults) => {
+      if (err) {
+        console.error("Error al obtener la suma de tickets:", err);
+        return res.status(500).send("Error al obtener la suma de tickets");
+      }
+
+      db.query(queryWaiting, (err, waitingResults) => {
+        if (err) {
+          console.error("Error al obtener la suma de tickets en espera:", err);
+          return res
+            .status(500)
+            .send("Error al obtener la suma de tickets en espera");
+        }
+
+        db.query(queryResolved, (err, resolvedResults) => {
+          if (err) {
+            console.error(
+              "Error al obtener la suma de tickets resueltos:",
+              err
+            );
+            return res
+              .status(500)
+              .send("Error al obtener la suma de tickets resueltos");
+          }
+
+          const calcularDiasEntreFechas = (fechaInicio, fechaCierre) => {
+            const inicio = new Date(fechaInicio);
+            const cierre = new Date(fechaCierre);
+            if (isNaN(inicio) || isNaN(cierre)) {
+                return 0;
+            }
+            const diffTime = Math.abs(cierre - inicio);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays;
+          };
+
+          let totalDiasTranscurridos = 0;
+          ticketResults.forEach((ticket) => {
+            if (ticket.estate === 2) {
+                const diasTranscurridos = calcularDiasEntreFechas(
+                    ticket.fechaOpen,
+                    ticket.fechaUpdate
+                );
+                totalDiasTranscurridos += diasTranscurridos;
+            }
+          });
+
+          const totalTickets = ticketResults.filter(
+            (a) => a.estate === 2
+          ).length;
+
+          const promedioDiasTranscurridos = totalDiasTranscurridos / totalTickets;
+
+          const mostOlder = (lista) => {
+            let actual = new Date();
+            lista.forEach((t) => {
+              if (t.estate === 1 && t.fechaOpen < actual) {
+                actual = t.fechaOpen;
+              }
+            });
+            return actual;
+          };
+
+          const calcularDiasAtraso = (fechaInicio) => {
+            const inicio = new Date(fechaInicio);
+            const cantDias = calcularDiasEntreFechas(inicio, new Date());
+            return cantDias;
+          };
+
+          const data = {
+            totalTickets: countResults[0].totalTickets,
+            totalWaiting: waitingResults[0].totalWaiting,
+            totalResolved: resolvedResults[0].totalResolved,
+            promedio: Math.ceil(promedioDiasTranscurridos),
+            diasAtraso: calcularDiasAtraso(mostOlder(ticketResults)),
+          };
+
+          res.render('admin-dashboard', { data, title: 'Admin Dashboard', css: '/assets/css/dashboard.css', session: req.session , user: req.user });
+        });
+      });
+    });
+  });
+};
+
+
 module.exports = {
   getAdminDashboard,
   getUserDashboard,
   getAllTickets,
+  getAdminDashboardView,
 };

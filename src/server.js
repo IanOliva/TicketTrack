@@ -47,8 +47,8 @@ app.get('/about-us', (req, res) => {
 });
 
 // Ruta para servir la vista dashboard.ejs desde la carpeta views, solo si está autenticado
-app.get('/dashboard', authenticateToken,checkAdmin, (req, res) => {
-  res.render('dashboard', { title: 'Dashboard', css: '/assets/css/dashboard.css', session: req.session , user: req.user});
+app.get('/dashboard', authenticateToken, checkAdmin, (req, res) => {
+  res.render('dashboard', { title: 'Dashboard', css: '/assets/css/dashboard.css', session: req.session , user: req.user });
 });
 
 // Ruta para servir la vista user-dashboard.ejs desde la carpeta views, solo si está autenticado
@@ -71,21 +71,9 @@ app.get('/faqs', (req, res) => {
   res.render('faqs', { title: 'Faqs', css: '/assets/css/faqs.css', session: req.session });
 });
 
-app.get('/dash-home', authenticateToken,checkAdmin, (req, res) => {
-});
-
-app.get('/dash-tickets', authenticateToken,checkAdmin, (req, res) => {
-});
-
-app.get('/dash-users', authenticateToken,checkAdmin, (req, res) => {
-});
-
-app.get('/dash-admin', checkAdmin, (req, res) => {
-});
-
-app.get('/dash-comments', authenticateToken,checkAdmin, (req, res) => {
-  res.render('components/dash-comments', { title: 'Users'  });
-});
+app.use((req, res) => {
+  res.status(404).render('404', { title: '404', css: '/assets/css/404.css', session: req.session });
+})
 
 // Iniciar el servidor
 app.listen(PORT, () => {
