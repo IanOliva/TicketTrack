@@ -85,6 +85,43 @@ const userLogout = (req, res) => {
   res.redirect("/login"); // Redirige al usuario a la página principal
 };
 
+// controlador para modificar usuario
+const userUpdate = async (req, res) => {
+  const { user_id } = req.params;
+  const { username, password } = req.body;
+
+  try {
+    // Hash de la contraseña
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const query = "UPDATE users SET username = ?, password = ? WHERE user_id = ?";
+    db.execute(query, [username, hashedPassword, user_id], (err, results) => {
+      if (err) {
+        console.error("Error durante la actualización del usuario:", err);
+        return res.status(500).send("Error durante la actualización del usuario");
+      }
+      res.send("Usuario actualizado correctamente"); // Redirigir a una página de perfil o donde sea
+    });
+  } catch (error) {
+    console.error("Error durante el hash de la contraseña:", error);
+    res.status(500).send("Error durante la actualización del usuario");
+  }
+};
+
+// controlador para eliminar usuario
+
+const userDelete = (req, res) => {
+  const { user_id } = req.params;
+
+  const query = "DELETE FROM users WHERE user_id = ?";
+  db.execute(query, [user_id], (err, results) => {
+    if (err) {
+      console.error("Error durante la eliminación del usuario:", err);
+      return res.status(500).send("Error durante la eliminación del usuario");
+    }
+    res.send("Usuario eliminado correctamente");
+  });
+};
 const getAllUsers = (req, res) => {
   const queryUsers =
     "SELECT *, (select count(*) from tickets where tickets.idUsuario = users.user_id)as cantTickets FROM users";
@@ -155,6 +192,8 @@ module.exports = {
   userRegister,
   userLogin,
   userLogout,
+  userUpdate,
+  userDelete,
   getAdminData,
   getAllUsers,
   getUser_Panel,

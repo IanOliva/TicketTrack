@@ -14,6 +14,14 @@ router.post('/login', userController.userLogin);
 // Ruta para cerrar sesión
 router.get('/logout', userController.userLogout);
 
+//Ruta para modificar usuario
+
+router.put('/user-update/:user_id', userController.userUpdate);
+
+//Ruta para borrar usuario
+
+router.delete('/user-delete/:user_id', userController.userDelete);
+
 // Ruta para el dashboard
 
 router.get('/user-dashboard', authenticateToken, getUserDashboard );
