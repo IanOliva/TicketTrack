@@ -109,7 +109,6 @@ const userUpdate = async (req, res) => {
 };
 
 // controlador para eliminar usuario
-
 const userDelete = (req, res) => {
   const { user_id } = req.params;
 
@@ -122,24 +121,7 @@ const userDelete = (req, res) => {
     res.send("Usuario eliminado correctamente");
   });
 };
-const getAllUsers = (req, res) => {
-  const queryUsers =
-    "SELECT *, (select count(*) from tickets where tickets.idUsuario = users.user_id)as cantTickets FROM users";
 
-  db.query(queryUsers, (err, usersResults) => {
-    if (err) {
-      console.error("Error al obtener registros:", err);
-      return res.status(500).send("Error al obtener registros");
-    }
-
-    const data = {
-      users: usersResults,
-    };
-
-    // Renderiza la vista 'components/dash-tickets.ejs' y pasa 'data' como dato
-    res.render("components/dash-users", { data });
-  });
-};
 
 module.exports = {
   userRegister,
@@ -147,5 +129,4 @@ module.exports = {
   userLogout,
   userUpdate,
   userDelete,
-  getAllUsers,
 };
