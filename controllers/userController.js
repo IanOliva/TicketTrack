@@ -70,7 +70,7 @@ const userLogin = (req, res) => {
     if (user.is_admin === "true") {
       res.redirect("/dashboard/dash-admin");
     } else {
-      res.redirect("/user-dashboard");
+      res.redirect("/dashboard/user");
     }
   });
 };

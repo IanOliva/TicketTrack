@@ -14,7 +14,7 @@ router.get("/logout", userController.userLogout);
 
 //Ruta para modificar usuario
 
-router.put("/user-update/:user_id",authenticateToken,  userController.userUpdate);
+router.put("/user-update/:user_id", authenticateToken,  userController.userUpdate);
 
 //Ruta para borrar usuario
 router.delete("/user-delete/:user_id", authenticateToken, userController.userDelete);

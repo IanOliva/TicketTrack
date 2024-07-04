@@ -106,7 +106,42 @@
         </div>
 
         <h1 class="title">Tickets Recientes</h1>
-        <div id="cont-tickets" class="container-nb"></div>
+        <div id="cont-tickets" class="container-nb">
+          <% data.tickets.forEach((t)=> { %>
+
+            <div class="card-nb" data-id="<%= t.id_ticket %>" data-bs-theme="dark">
+              <div class="alert alert-valorAlerta
+                style=" display: flex !important;justify-content: space-between;">
+                <p id="t-detalle" style="font-size:1rem">
+                  <%= t.motivo %>
+                </p>
+                <p id="t-id">
+                  <%= t.id_ticket %>
+                </p>
+
+              </div>
+
+              <div class="card-body-nb">
+                <p id="t-detalle">
+                  <%= t.descripcion %>
+                </p>
+              </div>
+              <div class="card-footer-nb">
+                <button type="submit" class="btn btn-primary cargarHtml" data-id="<%= t.id_ticket %>">Detalles</button>
+                <p id="estado" style="color: red;font-size:'1.2rem;text-transform: capitalize;font-weight: 700;">
+                  valorPalabra</p>
+              </div>
+            </div>
+
+
+
+            <% }); 
+          %>
+        </div>
+
+
+
+
       </section>
 
       <%- include('./components/partials/footer.ejs') %>

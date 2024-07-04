@@ -3,6 +3,6 @@ const router = express.Router();
 const ticketController  = require('../controllers/ticketController');
 const { authenticateToken } = require('../middlewares/auth');
 
-router.get('/user-dashboard', authenticateToken, ticketController.getUserDashboard);
+//controlador para manejar los tickets
 
 module.exports = router;

@@ -1,10 +1,36 @@
 <div class="overview">
     <div class="title">
         <i class="fa-solid fa-chart-simple"></i>
-        <span class="text">Api dash home</span>
+        <span class="text">Resumen de Tickets</span>
     </div>
-    <p>valores</p>
-   
+    <!-- esta box es para la cantidad de tickets -->
+    <div class="boxes">
+        <div class="box box1">
+            <i class="fa-solid fa-list-check"></i>
+            <span class="text">Total</span>
+            <span class="number" id="ticket-count"> <%= data.totalTickets %> </span>
+        </div>
+        <div class="box box2">
+            <i class="fa-solid fa-hourglass-half"></i>
+            <span class="text">En espera</span>
+            <span class="number" id="waiting-count"><%= data.totalWaiting %></span>
+        </div>
+        <div class="box box3">
+            <i class="fa-regular fa-circle-check"></i>
+            <span class="text">Resueltos</span>
+            <span class="number" id="resolved-count"><%= data.totalResolved %></span>
+        </div>
+        <div class="box box4">
+            <i class="fa-solid fa-chart-line"></i>
+            <span class="text">Tiempo Estimado</span>
+            <span class="number" id="promedio"><%= data.promedio %></span>
+        </div>
+        <div class="box box5">
+            <i class="fa-regular fa-calendar-xmark"></i>
+            <span class="text">Más Antiguo</span>
+            <span class="number" id="atraso"><%= data.diasAtraso %></span>
+        </div>
+    </div>
 </div>
 
 <script src="./js/dash-home.js"></script>

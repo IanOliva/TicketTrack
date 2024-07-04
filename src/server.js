@@ -49,19 +49,9 @@ app.get('/', (req, res) => {
   res.render('home', { title: 'Home', css: '/assets/css/home.css', session: req.session });
 });
 
-// Ruta para la vista about-us.ejs NO ES NECESARIO LLAMARLA ACA SI EL CONTROLADOR HACE LA MISMA FUNCION
-// app.get('/about-us', (req, res) => {
-//   res.render('about-us', { title: 'About Us', css: '/assets/css/about-us.css', session: req.session });
-// });
-
 // Ruta para servir la vista support.ejs desde la carpeta views
 app.get('/faqs', (req, res) => {
   res.render('faqs', { title: 'Faqs', css: '/assets/css/faqs.css', session: req.session });
-});
-
-// Ruta para servir la vista user-dashboard.ejs desde la carpeta views, solo si está autenticado
-app.get('/user-dashboard', authenticateToken, checkUser, (req, res) => {
-  res.render('user-dashboard', { title: 'User Dashboard' , css: '/assets/css/user-dashboard.css',session: req.session , user: req.user });
 });
 
 // Ruta para servir la vista login.ejs desde la carpeta views || sin css porque esta hecho con bootstrap
