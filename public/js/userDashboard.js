@@ -164,7 +164,7 @@ function mostrarTicketCreadoRecien(paqueteDatos) {
     divDatos.style.display = "none";
 
     // Simular envío de formulario y redirigir a tickets.html
-    window.location.href = "/user-dashboard";
+    window.location.href = "/dashboard/user";
   }, 4000);
 }
 
