@@ -16,7 +16,10 @@
                           height="100">
                       </a>
                     </div>
-                    <h2 class="fs-6 fw-normal text-center mb-4">Ingresa al sistema</h2>
+                    <h2
+                      class="fs-6 fw-normal text-center mb-4 d-flex justify-content-center align-items-center flex-column">
+                      Ingresa al sistema
+                    </h2>
                     <form action="/api-users/login" method="post">
                       <div class="row gy-2 overflow-hidden">
                         <div class="col-12">
@@ -52,6 +55,22 @@
             </div>
           </div>
         </section>
+
+        <% if (message) { %>
+          <div class="toast-container position-fixed top-0 end-0 p-5 mt-5" data-bs-delay="2000">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header">
+                <i class=" rounded me-2 fa-solid fa-circle-exclamation"></i>
+                <strong class="me-auto">TicketTrack</strong>
+                <small>informe del sistema</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body">
+                <%- message %>
+              </div>
+            </div>
+          </div>
+        <% } %>
       </div>
 
 
@@ -59,3 +78,14 @@
   </body>
 
   <script src="/js/layout.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const toastLiveExample = document.getElementById('liveToast');
+      const toastBootstrap = new bootstrap.Toast(toastLiveExample, {
+        delay: 2000
+      });
+      toastBootstrap.show();
+
+    });
+
+  </script>

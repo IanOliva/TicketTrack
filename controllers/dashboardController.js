@@ -17,7 +17,7 @@ const dashUser = (req, res) => {
       tickets: userTicketsResults,
     };
 
-    res.render('user-dashboard',{ title: 'Usuario', css: '/assets/css/user-dashboard.css', session: req.session , data: data});
+    res.render('user-dashboard',{ title: 'Usuario', css: '/assets/css/user-dashboard.css', session: req.session , data: data, message : req.session.message,});
   });
 };
 

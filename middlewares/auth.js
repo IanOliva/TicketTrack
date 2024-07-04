@@ -49,7 +49,8 @@ const getUserData =async (req, res, next) => {
   try {
     // Check if userId is stored in the session
     if (!req.session.userId) {
-      return res.status(401).send("Unauthorized access");
+      req.session.message = "Sesión cerrada";
+      return res.redirect("/login");
     } else {
       const userId = req.session.userId;
       const username = req.session.username;

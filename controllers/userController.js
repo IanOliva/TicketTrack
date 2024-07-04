@@ -17,7 +17,8 @@ const userRegister = async (req, res, next) => {
         console.error("Error durante el registro del usuario:", err);
         return res.status(500).send("Error durante el registro del usuario");
       }
-      res.redirect("/login");
+      req.session.message = "Bienvenido " + username;
+      return res.redirect("/login");
     });
   } catch (error) {
     console.error("Error durante el hash de la contraseña:", error);

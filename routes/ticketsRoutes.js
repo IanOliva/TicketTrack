@@ -3,6 +3,8 @@ const router = express.Router();
 const ticketController  = require('../controllers/ticketController');
 const { authenticateToken } = require('../middlewares/auth');
 
-//controlador para manejar los tickets
+router.post('/create', authenticateToken, ticketController.create);
+
+router.delete('/borrar/:ticket_id', authenticateToken, ticketController.borrar);
 
 module.exports = router;
