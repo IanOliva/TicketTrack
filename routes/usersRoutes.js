@@ -19,6 +19,4 @@ router.put("/user-update/:user_id",authenticateToken,  userController.userUpdate
 //Ruta para borrar usuario
 router.delete("/user-delete/:user_id", authenticateToken, userController.userDelete);
 
-router.get('/dash-home', getUserData, authenticateToken, userController.renderDashHome);
-
 module.exports = router;

@@ -64,9 +64,11 @@ const userLogin = (req, res) => {
     // Guardar datos en la sesión
     req.session.is_admin = user.is_admin;
     req.session.userId = user.user_id;
+    req.session.username = user.username;
+    req.session.url_img = user.url_img;
 
     if (user.is_admin === "true") {
-      res.redirect("/dashboard");
+      res.redirect("/dashboard/dash-admin");
     } else {
       res.redirect("/user-dashboard");
     }
@@ -139,53 +141,6 @@ const getAllUsers = (req, res) => {
   });
 };
 
-const renderDashHome = (req, res) => {
-  const userId = req.userData.userId;
-  const queryUsers = "SELECT * FROM users WHERE user_id = ?";
-
-  db.query(queryUsers,[userId], (err, dataPersonal) => {
-    if (err) {
-      console.error("Error al obtener registros:", err);
-      return res.status(500).send("Error al obtener registros");
-    }
-
-    const queryTickets = "SELECT * FROM tickets WHERE idUsuario = ?";
-
-    db.query(queryTickets, [userId] , (err, ticketsUsuario) => {
-      if (err) {
-        console.error("Error al obtener tickets:", err);
-        return res.status(500).send("Error al obtener tickets");
-      }
-
-      const queryResolvedTickets =
-        "SELECT count(*) as total FROM tickets WHERE resueltoPor = ?";
-
-      db.query(
-        queryResolvedTickets,
-        [req.user.userId],
-        (err, ticketsResueltos) => {
-          if (err) {
-            console.error("Error al obtener tickets resueltos:", err);
-            return res.status(500).send("Error al obtener tickets resueltos");
-          }
-
-          const data = {
-            title: 'Dashboard Home',
-            datosUsuario: dataPersonal[0],
-            ticketsUsuario: ticketsUsuario,
-            ticketsResueltos: ticketsResueltos[0],
-          };
-
-          res.render("dashboard", {
-            content: 'components/dash-home', // Esto es una referencia a la vista parcial que se cargará
-            data, // Pasamos los datos obtenidos a la vista
-          });
-        }
-      );
-    });
-  });
-};
-
 module.exports = {
   userRegister,
   userLogin,
@@ -193,5 +148,4 @@ module.exports = {
   userUpdate,
   userDelete,
   getAllUsers,
-  renderDashHome,
 };

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { userLogout } = require("../controllers/userController");
+const { response } = require("express");
 
 // Middleware para la autentificación, si al ingresar al sistema no hay token,
 // se redirije a la ruta de login, de lo contrario, se validará el token y se le redirigira a la ruta dashboard
@@ -44,16 +45,21 @@ function checkUser(req, res, next) {
   }
 }
 
-const getUserData = async (req, res, next) => {
+const getUserData =async (req, res, next) => {
   try {
     // Check if userId is stored in the session
     if (!req.session.userId) {
       return res.status(401).send("Unauthorized access");
     } else {
       const userId = req.session.userId;
+      const username = req.session.username;
+      const urlImg = req.session.url_img;
+
       // Attach user data to the request object
       req.userData = {
         userId,
+        username,
+        urlImg,
       };
 
       next();

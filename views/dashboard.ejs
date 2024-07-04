@@ -15,82 +15,10 @@
 </head>
 
 <body>
-    <!-- barra lateral -->
-    <nav>
-        <div class="logo-name">
-            <div class="logo-image">
-                <img src="/assets/img/ticket-logo.png" alt="ticket track logo">
-            </div>
-            <a style=" text-decoration: none;" href="/"><span class="logo_name">TicketTrack</span></a>
-        </div>
-
-        <div class="menu-items">
-            <ul class="nav-links dash-links">
-
-                <li>
-                    <a href="#" class="top sidebar-toggle">
-                        <i class="fa-solid fa-circle-chevron-right"></i>
-                        <span class="link-name">cerrar</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/api-users/dash-admin" >
-                       Admin
-                    </a>
-                </li>
-                <hr>
-                <li>
-                    <a href="/api-users/dash-home" >
-                        <i class="fa-solid fa-house"></i>
-                        <span class="link-name">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/api-tickets/dash-tickets" >
-                        <i class="fa-solid fa-receipt"></i>
-                        <span class="link-name">Tickets</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/api-users/dash-users" >
-                        <i class="fa-solid fa-users"></i>
-                        <span class="link-name">Usuarios</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/dash-comments" >
-                        <i class="fa-solid fa-comments"></i>
-                        <span class="link-name">Comentarios</span>
-                    </a>
-                </li>
-            </ul>
-
-            <ul class="nav-links">
-                <li class="mode">
-                    <a href="#">
-                        <div class="cambioModo"><i class="fa-regular fa-moon"></i></div>
-                        <span class="link-name nombreModo">Modo oscuro</span>
-                    </a>
-
-                    <div class="mode-toggle">
-                        <span class="switch"></span>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="/api-users/logout">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        <span class="link-name">Salir</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
+    <%- include('components/dash-nav.ejs') %>
     <section class="dashboard">
         <div class="dash-content" id="dash-content">
-            <%- include (content) %>
+            <%- include(content) %>
         </div>
     </section>
 

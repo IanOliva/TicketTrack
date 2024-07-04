@@ -2,7 +2,9 @@ const express = require('express');
 const path = require('path');
 const ticketRoutes = require('../routes/ticketsRoutes');
 const userRoutes = require('../routes/usersRoutes');
-const { authenticateToken, checkAdmin, checkUser } = require('../middlewares/auth');
+const dashboardRoutes = require('../routes/dashboardRoutes');
+
+const { authenticateToken, checkUser } = require('../middlewares/auth');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const session = require('express-session');
@@ -36,6 +38,9 @@ app.use('/api-tickets', ticketRoutes);
 // Usar las rutas de la API de usuarios
 app.use('/api-users', userRoutes);
 
+// Usar las rutas de la API de dashboard
+app.use('/dashboard', dashboardRoutes);
+
 // Ruta para servir la vista home.ejs como principal desde la carpeta views
 app.get('/', (req, res) => {
   res.render('home', { title: 'Home', css: '/assets/css/home.css', session: req.session });
@@ -44,11 +49,6 @@ app.get('/', (req, res) => {
 // Ruta para la vista about-us.ejs
 app.get('/about-us', (req, res) => {
   res.render('about-us', { title: 'About Us', css: '/assets/css/about-us.css', session: req.session });
-});
-
-// Ruta para servir la vista dashboard.ejs desde la carpeta views, solo si está autenticado
-app.get('/dashboard', authenticateToken, checkAdmin, (req, res) => {
-  res.render('dashboard', { title: 'Dashboard', css: '/assets/css/dashboard.css', session: req.session , user: req.user });
 });
 
 // Ruta para servir la vista user-dashboard.ejs desde la carpeta views, solo si está autenticado
