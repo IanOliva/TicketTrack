@@ -1,0 +1,43 @@
+<body>
+    <div class="activity">
+        <div class="title">
+            <i class="fa-regular fa-clock"></i>
+            <span class="text">Comentarios Recientes</span>
+
+        </div>
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Buscar..." />
+        </div>
+
+        <table class="dash-table">
+            <thead>
+                <tr>
+                    <th>Autor</th>
+                    <th>Rating</th>
+                    <th>Text</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+
+                <% data.comments.forEach((c)=> { %>
+                    <tr data_id=" <%= c.comment_id %>">
+                        <td>
+                            <%= c.name %>
+                        </td>
+                        <td>
+                            <%= c.rating %>
+                        </td>
+                        <td>
+                            <%= c.text %>
+                        </td>
+                    </tr>
+                    <% }); %>
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

@@ -1,9 +1,6 @@
 const db = require("../db/database");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { getAdminDashboard } = require("./ticketController");
-
-// const { authenticateToken } = require('../middlewares/auth');
 
 // controlador de registro
 const userRegister = async (req, res, next) => {
@@ -20,7 +17,8 @@ const userRegister = async (req, res, next) => {
         console.error("Error durante el registro del usuario:", err);
         return res.status(500).send("Error durante el registro del usuario");
       }
-      res.redirect("/login");
+      req.session.message = "Bienvenido " + username;
+      return res.redirect("/login");
     });
   } catch (error) {
     console.error("Error durante el hash de la contraseña:", error);
@@ -58,7 +56,7 @@ const userLogin = (req, res) => {
         url_img: user.url_img,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "60min" }
+      { expiresIn: "1w" }
     );
 
     // Configura la cookie con el token
@@ -66,11 +64,14 @@ const userLogin = (req, res) => {
 
     // Guardar datos en la sesión
     req.session.is_admin = user.is_admin;
+    req.session.userId = user.user_id;
+    req.session.username = user.username;
+    req.session.url_img = user.url_img;
 
     if (user.is_admin === "true") {
-      res.redirect("/dashboard");
+      res.redirect("/dashboard/dash-admin");
     } else {
-      res.redirect("/user-dashboard");
+      res.redirect("/dashboard/user");
     }
   });
 };
@@ -79,7 +80,7 @@ const userLogin = (req, res) => {
 const userLogout = (req, res) => {
   res.clearCookie("token"); // Elimina la cookie del token
   req.session.is_admin = null;
-  res.redirect("/"); // Redirige al usuario a la página principal
+  res.redirect("/login"); // Redirige al usuario a la página principal
 };
 
 // controlador para modificar usuario
@@ -91,11 +92,14 @@ const userUpdate = async (req, res) => {
     // Hash de la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const query = "UPDATE users SET username = ?, password = ? WHERE user_id = ?";
+    const query =
+      "UPDATE users SET username = ?, password = ? WHERE user_id = ?";
     db.execute(query, [username, hashedPassword, user_id], (err, results) => {
       if (err) {
         console.error("Error durante la actualización del usuario:", err);
-        return res.status(500).send("Error durante la actualización del usuario");
+        return res
+          .status(500)
+          .send("Error durante la actualización del usuario");
       }
       res.send("Usuario actualizado correctamente"); // Redirigir a una página de perfil o donde sea
     });
@@ -106,7 +110,6 @@ const userUpdate = async (req, res) => {
 };
 
 // controlador para eliminar usuario
-
 const userDelete = (req, res) => {
   const { user_id } = req.params;
 
@@ -119,72 +122,7 @@ const userDelete = (req, res) => {
     res.send("Usuario eliminado correctamente");
   });
 };
-const getAllUsers = (req, res) => {
-  const queryUsers =
-    "SELECT *, (select count(*) from tickets where tickets.idUsuario = users.user_id)as cantTickets FROM users";
 
-  db.query(queryUsers, (err, usersResults) => {
-    if (err) {
-      console.error("Error al obtener registros:", err);
-      return res.status(500).send("Error al obtener registros");
-    }
-
-    const data = {
-      users: usersResults,
-    };
-
-    // Renderiza la vista 'components/dash-tickets.ejs' y pasa 'data' como dato
-    res.render("components/dash-users", { data });
-  });
-};
-
-const getAdminData = (req, res) => {
-  const queryUsers = "SELECT * FROM users WHERE user_id = ?";
-
-  db.query(queryUsers, [req.user.userId], (err, dataPersonal) => {
-    if (err) {
-      console.error("Error al obtener registros:", err);
-      return res.status(500).send("Error al obtener registros");
-    }
-
-    const queryTickets = "SELECT * FROM tickets WHERE idUsuario = ?";
-
-    db.query(queryTickets, [req.user.userId], (err, ticketsUsuario) => {
-      if (err) {
-        console.error("Error al obtener tickets:", err);
-        return res.status(500).send("Error al obtener tickets");
-      }
-
-      const queryResolvedTickets =
-        "SELECT count(*) as total FROM tickets WHERE resueltoPor = ?";
-
-      db.query(
-        queryResolvedTickets,
-        [req.user.userId],
-        (err, ticketsResueltos) => {
-          if (err) {
-            console.error("Error al obtener tickets resueltos:", err);
-            return res.status(500).send("Error al obtener tickets resueltos");
-          }
-
-          const data = {
-            datosUsuario: dataPersonal[0],
-            ticketsUsuario: ticketsUsuario,
-            ticketsResueltos: ticketsResueltos[0],
-          };
-          console.log(data);
-
-          // Renderiza la vista 'components/dash-admin.ejs' y pasa 'data' como dato
-          res.render("components/dash-admin", { data });
-        }
-      );
-    });
-  });
-};
-
-const getUser_Panel = (req, res) => {
-  res.render("components/dash-admin", { getAdminDashboard });
-};
 
 module.exports = {
   userRegister,
@@ -192,7 +130,4 @@ module.exports = {
   userLogout,
   userUpdate,
   userDelete,
-  getAdminData,
-  getAllUsers,
-  getUser_Panel,
 };

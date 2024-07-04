@@ -3,12 +3,8 @@ const router = express.Router();
 const ticketController  = require('../controllers/ticketController');
 const { authenticateToken } = require('../middlewares/auth');
 
-router.get('/dashboard', authenticateToken);
+router.post('/create', authenticateToken, ticketController.create);
 
-router.get('/dash-home', authenticateToken, ticketController.getAdminDashboard);
-
-router.get('/dash-tickets', authenticateToken, ticketController.getAllTickets);
-
-router.get('/user-dashboard', authenticateToken, ticketController.getUserDashboard);
+router.delete('/borrar/:ticket_id', authenticateToken, ticketController.borrar);
 
 module.exports = router;

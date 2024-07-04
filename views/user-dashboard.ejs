@@ -1,130 +1,171 @@
-<%- include ('components/header.ejs') %>
+<%- include ('components/partials/header.ejs') %>
 
   <body>
-    <%- include ('components/navbar.ejs') %>
-      <!-- Button trigger modal -->
-      <button id="botonModal" type="button" class="btn btn-primary d-none" data-bs-toggle="modal"
-        data-bs-target="#exampleModal"></button>
+    <%- include ('components/partials/navbar.ejs') %>
 
-      <!-- Modal -->
-      <div class="modal fade" style="color:white" data-bs-theme="dark" id="exampleModal" tabindex="-1"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg d-flex justify-content-center" id="modalPadre">
-          <div class="modal-content" id="modalContenido">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="idTicketModal">Crea tu Ticket!</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <% if (message) { %>
+        <div class="toast-container position-fixed top-0 end-0 p-5 mt-5" data-bs-delay="2000">
+          <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <i class=" rounded me-2 fa-solid fa-circle-exclamation"></i>
+              <strong class="me-auto">TicketTrack</strong>
+              <small>informe del sistema</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-
-              <!-- FORMULARIO -->
-              <form id="formTicketModal" class="row g-3 needs-validation" novalidate>
-                <div class="col-md-4 d-none">
-                  <label for="idTicketCalculado" class="form-label">idTicket</label>
-                  <input type="text" class="form-control" id="idTicketCalculado" name="idTicketCalculado" value=""
-                    required>
-                </div>
-                <div class="col-md-4 d-none">
-                  <label for="idEstado" class="form-label">idEstado</label>
-                  <input type="text" class="form-control" id="idEstado" name="idEstado" value="0" required>
-                </div>
-                <div class="col-md-4">
-                  <label for="user" class="form-label">Usuario</label>
-                  <input type="text" class="form-control" id="user" name="user" required>
-                  <div class="valid-feedback">
-                    Completado!
-                  </div>
-                  <div class="invalid-feedback">
-                    Ingrese un usuario.
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <label for="idPrioridad" class="form-label">Prioridad</label>
-                  <select class="form-select" id="prioridad" name="idPrioridad" required>
-                    <option selected disabled value="">Seleccione</option>
-                    <option value="1">Alta</option>
-                    <option value="2">Media</option>
-                    <option value="3">Baja</option>
-                  </select>
-                  <div class="valid-feedback">
-                    Completado!
-                  </div>
-                  <div class="invalid-feedback">
-                    Seleccione prioridad
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <label for="motivo" class="form-label">Motivo</label>
-                  <input type="text" class="form-control" id="validationCustom02" name="motivo" required>
-                  <div class="valid-feedback">
-                    Completado!
-                  </div>
-                  <div class="invalid-feedback">
-                    Ingrese un motivo.
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <label for="detalle" class="form-label">Descripcion del Pedido</label>
-                  <textarea type="text" class="form-control" style="height: 100px" id="detalle" name="detalle"
-                    required></textarea>
-                  <div class="valid-feedback">
-                    Completado!
-                  </div>
-                  <div class="invalid-feedback">
-                    Ingrese detalle del pedido
-                  </div>
-                </div>
-
-                <!--onclick="enviarFormulario()"-->
-                <!-- ENVIAR REALMENTE EL FORM -->
-                <div class="col-12" style="display: none;">
-                  <button class="btn btn-primary" type="submit" id="submitFormularioModal"></button>
-                </div>
-              </form>
-              <!-- final form -->
-
-            </div>
-            <div class="modal-footer" style="justify-content: space-between!important;">
-              <div class="fechaAfter">
-                <p id="fechaActual"></p>
-              </div>
-              <div>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" onclick="eventoReal()" class="btn btn-primary"
-                  id="dispararBtnRealEnviar">Enviar</button>
-              </div>
+            <div class="toast-body">
+              <%- message %>
             </div>
           </div>
         </div>
-      </div>
+        <% } %>
 
-      <section class="ticket-section">
+          <!-- Button trigger modal -->
+          <button id="botonModal" type="button" class="btn btn-primary d-none" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"></button>
 
-        <div class="addTicketButton">
-          <div class="sombraIcono"><i class="fa-solid fa-circle-plus"></i></div>
-          <span>Agregar</span>
-        </div>
+          <!-- Modal -->
+          <div class="modal fade" style="color:white" data-bs-theme="dark" id="exampleModal" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg d-flex justify-content-center" id="modalPadre">
+              <div class="modal-content" id="modalContenido">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="idTicketModal">Crea tu Ticket!</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
 
-        <h1 class="title">Tickets Recientes</h1>
-        <div id="cont-tickets" class="container-nb"></div>
-      </section>
+                  <!-- FORMULARIO -->
+                  <form action="/api-tickets/create" method="post" id="formTicketModal" class="row g-3 needs-validation"
+                    validate>
+                    <div class="col-md-4 d-none">
+                      <label for="idTicketCalculado" class="form-label">idTicket</label>
+                      <input type="text" class="form-control" id="idTicketCalculado" name="idTicketCalculado" value=""
+                        required>
+                    </div>
+                    <div class="col-md-4 d-none">
+                      <label for="idEstado" class="form-label">idEstado</label>
+                      <input type="text" class="form-control" id="idEstado" name="idEstado" value="0" required>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="user" class="form-label">Usuario</label>
+                      <input type="text" class="form-control" id="user" name="user" required>
+                      <div class="valid-feedback">
+                        Completado!
+                      </div>
+                      <div class="invalid-feedback">
+                        Ingrese un usuario.
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="idPrioridad" class="form-label">Prioridad</label>
+                      <select class="form-select" id="prioridad" name="idPrioridad" required>
+                        <option selected disabled value="">Seleccione</option>
+                        <option value="1">Alta</option>
+                        <option value="2">Media</option>
+                        <option value="3">Baja</option>
+                      </select>
+                      <div class="valid-feedback">
+                        Completado!
+                      </div>
+                      <div class="invalid-feedback">
+                        Seleccione prioridad
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <label for="motivo" class="form-label">Motivo</label>
+                      <input type="text" class="form-control" id="validationCustom02" name="motivo" required>
+                      <div class="valid-feedback">
+                        Completado!
+                      </div>
+                      <div class="invalid-feedback">
+                        Ingrese un motivo.
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <label for="detalle" class="form-label">Descripcion del Pedido</label>
+                      <textarea type="text" class="form-control" style="height: 100px" id="detalle" name="detalle"
+                        required></textarea>
+                      <div class="valid-feedback">
+                        Completado!
+                      </div>
+                      <div class="invalid-feedback">
+                        Ingrese detalle del pedido
+                      </div>
+                    </div>
 
-      <%- include('./components/footer') %>
+                    <!--onclick="enviarFormulario()"-->
+                    <!-- ENVIAR REALMENTE EL FORM -->
+                    <div class="col-12" style="display: none;">
+                      <button class="btn btn-primary" type="submit" id="submitFormularioModal"></button>
+                    </div>
+                  </form>
+                  <!-- final form -->
 
+                </div>
+                <div class="modal-footer" style="justify-content: space-between!important;">
+                  <div class="fechaAfter">
+                    <p id="fechaActual"></p>
+                  </div>
+                  <div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" onclick="eventoReal()" class="btn btn-primary"
+                      id="dispararBtnRealEnviar">Enviar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <section class="ticket-section">
+            <div class="addTicketButton">
+              <div class="sombraIcono"><i class="fa-solid fa-circle-plus"></i></div>
+              <span>Agregar</span>
+            </div>
+            <h1 class="title">Tickets Recientes</h1>
+            <div id="cont-tickets" class="container-nb">
+              <% data.tickets.forEach((t)=> { %>
+                <div class="card-nb" data-id="<%= t.id_ticket %>" data-bs-theme="dark">
+                  <div class="alert alert-valorAlerta"
+                    style="display: flex !important; justify-content: space-between;">
+                    <p id="t-detalle" style="font-size:1rem">
+                      <%= t.motivo %>
+                    </p>
+                    <p id="t-id">
+                      <%= t.id_ticket %>
+                    </p>
+                  </div>
+                  <div class="card-body-nb">
+                    <p id="t-detalle">
+                      <%= t.descripcion %>
+                    </p>
+                  </div>
+                  <div class="card-footer-nb">
+                    <form id="deleteForm" action="/api-tickets/borrar/<%= t.id_ticket %>" method="DELETE">
+                      <input type="hidden" name="_method" value="DELETE">
+                      <input type="hidden" name="id_ticket" id="id_ticket">
+                      <button type="submit" class="btn btn-primary borrarBtn"
+                        data-id="<%= t.id_ticket %>">Borrar</button>
+                    </form>
+                    <p id="estado" style="color: red; font-size: 1.2rem; text-transform: capitalize; font-weight: 700;">
+                      valorPalabra
+                    </p>
+                  </div>
+                </div>
+                <% }); %>
+            </div>
+          </section>
+          <%- include('./components/partials/footer.ejs') %>
   </body>
 
   <script src="/js/userDashboard.js"></script>
   <script src="/js/layout.js"></script>
-
   <script>
-
     (function () {
       "use strict";
 
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
       var forms = document.querySelectorAll(".needs-validation");
 
-      // Loop over them and prevent submission
       Array.prototype.slice.call(forms).forEach(function (form) {
         form.addEventListener(
           "submit",
@@ -133,14 +174,12 @@
               event.preventDefault();
               event.stopPropagation();
             }
-
             form.classList.add("was-validated");
           },
           false
         );
       });
     })();
-
 
     function eventoReal() {
       const botonReal = document.getElementById("submitFormularioModal");
@@ -153,6 +192,15 @@
       var formModal = document.getElementById("formTicketModal");
       var datosDelForm = tomarDatosDelForm(formModal);
       mostrarTicketCreadoRecien(datosDelForm);
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const toastLiveExample = document.getElementById('liveToast');
+      const toastBootstrap = new bootstrap.Toast(toastLiveExample, {
+        delay: 2000
+      });
+      toastBootstrap.show();
 
     });
+
   </script>

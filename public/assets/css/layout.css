@@ -13,7 +13,6 @@ body {
   background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
 
-
 .navbar-nb {
     display: flex !important;
     justify-content: space-between !important;
@@ -30,7 +29,6 @@ body {
 }
 
 .brand-container {
-
     gap: 1rem;
     font-size: xx-large;
     font-weight: bolder;

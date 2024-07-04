@@ -21,7 +21,7 @@
     /* ===== Colors ===== */
     --primary-color: #231e39;
     --panel-color: #FFF;
-    --text-color: #231e39;
+    --text-color: #ff5100;
     --black-light-color: #ffffff;
     --border-color: #e6e5e5;
     --toggle-color: #DDD;
@@ -47,7 +47,7 @@ body {
 body.dark {
     --primary-color: #3A3B3C;
     --panel-color: #242526;
-    --text-color: #CCC;
+    --text-color: #d1c8ec;
     --black-light-color: #CCC;
     --border-color: #4D4C4C;
     --toggle-color: #FFF;

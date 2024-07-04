@@ -11,53 +11,6 @@ const estadoTicketID = {
   4: { palabra: "Terminado", color: "#00e7ff" }, // Cian
 };
 
-//obtener los tickets del json y mostrarlos
-document.addEventListener("DOMContentLoaded", () => {
-  fetch("/api-tickets/user-dashboard")
-    .then((response) => response.json())
-    .then((data) => {
-      mostrarTickets(data); // Aquí pasamos los datos obtenidos
-    })
-    .catch((error) => {
-      console.error("Error al obtener los tickets:", error);
-      mostrarTickets([]); // Llamamos a mostrarTickets con una lista vacía en caso de error
-    });
-});
-
-// Función para mostrar los tickets en HTML
-function mostrarTickets(lista) {
-  var ticketsContainer = document.getElementById("cont-tickets");
-
-  // Limpiamos el contenido previo del contenedor
-  ticketsContainer.innerHTML = "";
-
-  // Para cada ticket obtenido del JSON se crea un HTML
-  lista.map(function (t) { 
-    var ticketCard = `
-        <div class="card-nb" data-id="${t.id_icket}" data-bs-theme="dark" >
-          <div class="alert alert-${prioridadPorID[t.prioridad].color}" style="display: flex !important;justify-content: space-between;">
-            <p id="t-detalle" style="font-size:1rem" > ${t.motivo}</p>
-            <p id="t-id">Nº ${t.id_ticket}</p>
-          </div>
-
-            <div class="card-body-nb">
-              <p id="t-detalle"> ${t.descripcion}</p>
-            </div>
-            <div class="card-footer-nb">
-              <button type="submit" class="btn btn-primary cargarHtml"  data-id="${
-                t.id_Ticket
-              }">Detalles</button>
-              <p id="estado" style="color: ${
-                estadoTicketID[t.estate].color
-              };font-size:1.2rem;text-transform: capitalize;font-weight: 700;">${
-      estadoTicketID[t.estate].palabra
-    }</p>
-            </div>
-        </div>`;
-    ticketsContainer.innerHTML += ticketCard;
-  });
-}
-
 function enviarAWebTicket() {
   let ticketsContainer = document.getElementById("cont-tickets");
   ticketsContainer.addEventListener("click", (event) => {
@@ -211,7 +164,7 @@ function mostrarTicketCreadoRecien(paqueteDatos) {
     divDatos.style.display = "none";
 
     // Simular envío de formulario y redirigir a tickets.html
-    window.location.href = "/user-dashboard";
+    window.location.href = "/dashboard/user";
   }, 4000);
 }
 
