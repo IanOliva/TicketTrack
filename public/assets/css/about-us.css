@@ -56,7 +56,7 @@ body {
   gap: 3rem;
   /*height: 60vh;*/
   margin: 20px 30px;
-  
+  margin-bottom: 5rem !important;
 }
 
 .heading {
@@ -166,7 +166,7 @@ width: calc(400px * 10);
 .rating {
   display: flex;
   justify-content: center;
-  flex-direction: row; /* Aseguramos que las estrellas se muestren en fila de izquierda a derecha */
+  flex-direction: row-reverse; /* Aseguramos que las estrellas se muestren en fila de izquierda a derecha */
 }
 
 .rating input {

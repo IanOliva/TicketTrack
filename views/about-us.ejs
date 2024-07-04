@@ -1,7 +1,7 @@
-<%- include ('components/header.ejs') %>
+<%- include ('components/partials/header.ejs') %>
 
   <body>
-    <%- include ('components/navbar.ejs') %>
+    <%- include ('components/partials/navbar.ejs') %>
 
       <!--una breve descripción del servicio y porque usar esta página, también agrego la opción de comentarios de usuarios-->
       <header class="header">
@@ -83,16 +83,16 @@
                     </div>
                   </fieldset>
                   <div class="rating">
-                    <input type="radio" id="star1" name="rating" value="1" required />
-                    <label for="star1" title="1 estrella"><i class="fa fa-star"></i></label>
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label for="star2" title="2 estrellas"><i class="fa fa-star"></i></label>
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label for="star3" title="3 estrellas"><i class="fa fa-star"></i></label>
+                    <input type="radio" id="star5" name="rating" value="5" required />
+                    <label for="star5" title="5 estrella"><i class="fa fa-star"></i></label>
                     <input type="radio" id="star4" name="rating" value="4" />
                     <label for="star4" title="4 estrellas"><i class="fa fa-star"></i></label>
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label for="star5" title="5 estrellas"><i class="fa fa-star"></i></label>
+                    <input type="radio" id="star3" name="rating" value="3" />
+                    <label for="star3" title="3 estrellas"><i class="fa fa-star"></i></label>
+                    <input type="radio" id="star2" name="rating" value="2" />
+                    <label for="star2" title="2 estrellas"><i class="fa fa-star"></i></label>
+                    <input type="radio" id="star1" name="rating" value="1" />
+                    <label for="star1" title="1 estrellas"><i class="fa fa-star"></i></label>
                   </div>
                  <div class="mb-3">
                   <label for="" class="form-label">Comentario</label>
@@ -133,7 +133,7 @@
         </div>
       </section>
 
-      <%- include('./components/footer') %>
+      <%- include('./components/partials/footer') %>
   </body>
 
   <script src="/js/layout.js"></script>

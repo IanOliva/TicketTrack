@@ -1,6 +1,6 @@
 const db = require("../db/database");
 
-const renderDashHome = (req, res) => {
+const dashAdmin = (req, res) => {
   const userId = req.userData.userId;
   const username =  req.userData.username;
   const urlImg =  req.userData.urlImg;
@@ -37,12 +37,21 @@ const renderDashHome = (req, res) => {
           ticketsResueltos: ticketsResueltos[0],
         };
 
-        res.render("dashboard", { username : [username] , urlImg : [urlImg] , content: "components/dash-admin", data });
+        res.render("dashboard", { username : [username] , urlImg : [urlImg] , content: "components/dashboard/dash-admin", data });
       });
     });
   });
 };
 
+const dashHome = (req, res) => {
+  const userId = req.userData.userId;
+  const username =  req.userData.username;
+  const urlImg =  req.userData.urlImg;
+  
+  res.render("dashboard", {  username : [username] , urlImg : [urlImg] , content: "components/dashboard/dash-home" });
+};
+
 module.exports = {
-  renderDashHome,
+  dashAdmin,
+  dashHome,
 };

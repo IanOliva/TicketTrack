@@ -37,6 +37,7 @@ app.use('/api-tickets', ticketRoutes);
 
 // Usar las rutas de la API de usuarios
 app.use('/api-users', userRoutes);
+
 // Usar las rutas de la API de comentarios
 app.use('/api-comments', commentRoutes);
 
@@ -65,12 +66,12 @@ app.get('/user-dashboard', authenticateToken, checkUser, (req, res) => {
 
 // Ruta para servir la vista login.ejs desde la carpeta views || sin css porque esta hecho con bootstrap
 app.get('/login', (req, res) => {
-  res.render('login', { title: 'Login' , css: '' , session: req.session });
+  res.render('login', { title: 'Login' , css: '/assets/css/login-register.css' , session: req.session });
 });
 
 // Ruta para servir la vista register.ejs desde la carpeta views || sin css porque esta hecho con bootstrap
 app.get('/register', (req, res) => {
-  res.render('register', { title: 'Register' , css: '' , session: req.session });
+  res.render('register', { title: 'Register' , css: '/assets/css/login-register.css' , session: req.session });
 });
 
 app.use((req, res) => {
