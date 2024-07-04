@@ -1,161 +1,148 @@
 <%- include ('components/header.ejs') %>
 
-<body>
-  <%- include ('components/navbar.ejs') %>
+  <body>
+    <%- include ('components/navbar.ejs') %>
 
-  <!--una breve descripción del servicio y porque usar esta página, también agrego la opción de comentarios de usuarios-->
-  <header class="header">
-    <h2><a href="#" class="titulo">NOSOTROS</a></h2>
-    <p class="subTitle">
-      Hacemos gestión de tickets de soporte. Nuestros agentes pueden: Realizar
-      un seguimiento del estado general de la solicitud Acceder rápidamente al
-      historial completo de las conversaciones entre los clientes y agentes. El
-      ticket de soporte técnico permite organizar las incidencias y recopilar la
-      mayor cantidad de datos de clientes. Resuelven en un período de tiempo más
-      breve Identificamos aquellas solicitudes repetidas para solucionarlas en
-      conjunto.
-    </p>
-  </header>
+      <!--una breve descripción del servicio y porque usar esta página, también agrego la opción de comentarios de usuarios-->
+      <header class="header">
+        <h2><a href="#" class="titulo">NOSOTROS</a></h2>
+        <p class="subTitle">
+          Hacemos gestión de tickets de soporte. Nuestros agentes pueden: Realizar
+          un seguimiento del estado general de la solicitud Acceder rápidamente al
+          historial completo de las conversaciones entre los clientes y agentes. El
+          ticket de soporte técnico permite organizar las incidencias y recopilar la
+          mayor cantidad de datos de clientes. Resuelven en un período de tiempo más
+          breve Identificamos aquellas solicitudes repetidas para solucionarlas en
+          conjunto.
+        </p>
+      </header>
 
-  <!--haciendo las cajas para opiniones de usuarios-->
+      <!--haciendo las cajas para opiniones de usuarios-->
 
-  <section class="opiniones" id="opinion">
-    <div class="heading">
-      <h1>QUE ES LO QUE TE GUSTA DE NOSOTROS</h1>
-      <br />
-      <br />
-      <p class="servicio">
-        Queremos brindarte una buena experiencia, <br />
-        por eso ayudanos a mejorar y comentanos como estuvo nuestro servicio.
-        <br />
-      </p>
-      <div class="header-btns animate__animated animate__fadeInUp">
-        <a target="_blank" href="mailto:ticket.track.servicios@gmail.com"
-          >Escribinos</a
-        >
-        <br />
-      </div>
-    </div>
+      <section class="opiniones" id="opinion">
+        <div class="heading">
+          <h1>QUE ES LO QUE TE GUSTA DE NOSOTROS</h1>
 
-    <!--empiezo a realizar cajas con comentarios-->
-    <div class="container">
-      <div class="caja-contenedor">
-        <!--<button id="atras" class="slide-button material-symbol-rounded">
-            <span class="material-symbols-outlined">
-              chevron_right
-              </span></button>-->
+          <p class="servicio">
+            Queremos brindarte una buena experiencia, por eso ayudanos a mejorar y
+            deja tu opinion de nuestro servicio.
+          </p>
+          <div class="header-btns animate__animated animate__fadeInUp">
+            <a target="_blank" href="mailto:ticket.track.servicios@gmail.com">Escribenos</a>
 
-        <div class="caja">
-          <span><i class="fa-solid fa-pen-clip"></i></span>
-          <div class="usuario">
-            <h3>María</h3>
-            <span><i class="fa-solid fa-person-dress"></i></span>
-            <div class="star">
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-            </div>
-            <div class="comentario">
-              Fueron muy rápidos en la respuesta y me ayudaron a resolver mi
-              problema.
+          </div>
+        </div>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Deja un comentario aqui
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                  Escribe tu comentario
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              <!-- form para cargar la info -->
+                <form action="/api-comments/create" method="post">
+                  <div class="row mb-3">
+                    <label for="inputName3" class="col-sm-2 col-form-label">Nombre</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputName3" name="name" required>
+                    </div>
+                  </div>
+
+                  <fieldset class="row mb-3">
+                    <legend class="col-form-label col-sm-2 pt-0">Genero</legend>
+                    <div class="col-sm-10">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="0" required>
+                        <label class="form-check-label" for="gridRadios1">
+                          Masculino
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="1">
+                        <label class="form-check-label" for="gridRadios2">
+                          Femenino
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="2">
+                        <label class="form-check-label" for="gridRadios3">
+                          Otro
+                        </label>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <div class="rating">
+                    <input type="radio" id="star1" name="rating" value="1" required />
+                    <label for="star1" title="1 estrella"><i class="fa fa-star"></i></label>
+                    <input type="radio" id="star2" name="rating" value="2" />
+                    <label for="star2" title="2 estrellas"><i class="fa fa-star"></i></label>
+                    <input type="radio" id="star3" name="rating" value="3" />
+                    <label for="star3" title="3 estrellas"><i class="fa fa-star"></i></label>
+                    <input type="radio" id="star4" name="rating" value="4" />
+                    <label for="star4" title="4 estrellas"><i class="fa fa-star"></i></label>
+                    <input type="radio" id="star5" name="rating" value="5" />
+                    <label for="star5" title="5 estrellas"><i class="fa fa-star"></i></label>
+                  </div>
+                 <div class="mb-3">
+                  <label for="" class="form-label">Comentario</label>
+                  <textarea class="form-control" name="text" id="" rows="3" required></textarea>
+                 </div>
+                 
+                  <button type="submit" class="btn btn-primary w-100">Enviar</button>
+                </form>
+
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="caja">
-          <span><i class="fa-solid fa-pen-clip"></i></span>
-          <div class="usuario">
-            <h3>Ian</h3>
-            <span><i class="fa-solid fa-person"></i></span>
-            <div class="star">
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-            </div>
-            <div class="comentario">
-              Después de intentar con várias páginas de ayuda, llegue a una que
-              me solucionó mi problema.
-            </div>
+        <!--empiezo a realizar cajas con comentarios-->
+        <div class="container">
+          <div class="caja-contenedor">
+            <% comments.forEach(comment=> { %>
+              <div class="caja">
+                <span><i class="fa-solid fa-pen-clip"></i></span>
+                <div class="usuario">
+                  <h3>
+                    <%= comment.name %>
+                  </h3>
+                  <span><i class="fa-solid <%= comment.genIcon %>"></i></span>
+                  <div class="star">
+                    <% for (let i=0; i < comment.rating; i++) { %>
+                      <span><i class="fa-solid fa-star"></i></span>
+                      <% } %>
+                  </div>
+                  <div class="comentario">
+                    <%= comment.text %>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
           </div>
         </div>
+      </section>
 
-        <div class="caja">
-          <span><i class="fa-solid fa-pen-clip"></i></span>
-          <div class="usuario">
-            <h3>Juan</h3>
-            <span><i class="fa-solid fa-person"></i></span>
-            <div class="star">
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-            </div>
-            <div class="comentario">
-              Muy recomendable por la facilidad de ingresar para reclamo y la
-              rápida respuesta. Estoy muy conforme y la recomendaría.
-            </div>
-          </div>
-        </div>
+      <%- include('./components/footer') %>
+  </body>
 
-        <div class="caja">
-          <span><i class="fa-solid fa-pen-clip"></i></span>
-          <div class="usuario">
-            <h3>Ciro</h3>
-            <span><i class="fa-solid fa-person"></i></span>
-            <div class="star">
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-            </div>
-            <div class="comentario">
-              No pudieron resolver mi problema pero me dieron buenas
-              recomndaciones.
-            </div>
-          </div>
-        </div>
+  <script src="/js/layout.js"></script>
 
-        <div class="caja">
-          <span><i class="fa-solid fa-pen-clip"></i></span>
-          <div class="usuario">
-            <h3>Daniela</h3>
-            <span><i class="fa-solid fa-person-dress"></i></span>
-            <div class="star">
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-            </div>
-            <div class="comentario">
-              Se tardaron en contestar, no fue de mucha ayuda.
-            </div>
-          </div>
-        </div>
+  <script>
+    const myModal = document.getElementById("myModal");
+    const myInput = document.getElementById("myInput");
 
-        <div class="caja">
-          <span><i class="fa-solid fa-pen-clip"></i></span>
-          <div class="usuario">
-            <h3>Roberto</h3>
-            <span><i class="fa-solid fa-person"></i></span>
-            <div class="star">
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-              <span><i class="fa-solid fa-star"></i></span>
-            </div>
-            <div class="comentario">
-              Muy recomendable por la facilidad de ingresar para reclamo y la
-              rápida respuesta. Estoy muy conforme y la recomendaría.
-            </div>
-          </div>
-        </div>
-        <!--<button id="adelante" class="slide-button material-symbol-rounded">
-              <span class="material-symbols-outlined">
-                chevron_left
-                </span></button>-->
-      </div>
-    </div>
-  </section>
-
-  <%- include('./components/footer') %>
-</body>
-<script src="/js/layout.js"></script>
+    myModal.addEventListener("shown.bs.modal", () => {
+      myInput.focus();
+    });
+  </script>

@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const ticketRoutes = require('../routes/ticketsRoutes');
 const userRoutes = require('../routes/usersRoutes');
+const commentRoutes = require('../routes/commentsRoutes');
 const { authenticateToken, checkAdmin, checkUser } = require('../middlewares/auth');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
@@ -36,14 +37,24 @@ app.use('/api-tickets', ticketRoutes);
 // Usar las rutas de la API de usuarios
 app.use('/api-users', userRoutes);
 
+// Usar las rutas de la API de comentarios
+app.use('/api-comments', commentRoutes);
+
+
+
 // Ruta para servir la vista home.ejs como principal desde la carpeta views
 app.get('/', (req, res) => {
   res.render('home', { title: 'Home', css: '/assets/css/home.css', session: req.session });
 });
 
-// Ruta para la vista about-us.ejs
-app.get('/about-us', (req, res) => {
-  res.render('about-us', { title: 'About Us', css: '/assets/css/about-us.css', session: req.session });
+// Ruta para la vista about-us.ejs NO ES NECESARIO LLAMARLA ACA SI EL CONTROLADOR HACE LA MISMA FUNCION
+// app.get('/about-us', (req, res) => {
+//   res.render('about-us', { title: 'About Us', css: '/assets/css/about-us.css', session: req.session });
+// });
+
+// Ruta para servir la vista support.ejs desde la carpeta views
+app.get('/faqs', (req, res) => {
+  res.render('faqs', { title: 'Faqs', css: '/assets/css/faqs.css', session: req.session });
 });
 
 // Ruta para servir la vista dashboard.ejs desde la carpeta views, solo si está autenticado
@@ -66,10 +77,7 @@ app.get('/register', (req, res) => {
   res.render('register', { title: 'Register' , css: '' , session: req.session });
 });
 
-// Ruta para servir la vista support.ejs desde la carpeta views
-app.get('/faqs', (req, res) => {
-  res.render('faqs', { title: 'Faqs', css: '/assets/css/faqs.css', session: req.session });
-});
+
 
 app.get('/dash-home', authenticateToken,checkAdmin, (req, res) => {
   res.render('components/dash-home', { title: 'Home', session: req.session });
