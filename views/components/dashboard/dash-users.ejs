@@ -36,14 +36,19 @@
                             <%= u.cantTickets %>
                         <% } %> </span>
                         <p>Tickets Realizados</p>
+                        <p><%= u.user_id %></p>
                     </div>
                     
                 </div>
                 <div class="card-footer">
-                    <button>Editar</button>
-                    <button>Eliminar</button>
+                    <a href="">Editar</a>
+                    <form action="/api-users/user-delete/<%= u.user_id %>" method="DELETE">
+                        <button type="submit" onclick="return confirm('¿Deseas eliminar este usuario?')">Eliminar</button>
+                    </form>
+                    <a href="/api-users/user-delete/<%= u.user_id %>" onclick="return confirm('¿Deseas eliminar este usuario?')">Eliminar</a>
                 </div>
             </div>
             <% }); %>
     </div>
 </div>
+

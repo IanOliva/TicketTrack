@@ -112,7 +112,7 @@ const userUpdate = async (req, res) => {
 // controlador para eliminar usuario
 const userDelete = (req, res) => {
   const { user_id } = req.params;
-
+  console.log(user_id);
   const query = "DELETE FROM users WHERE user_id = ?";
   db.execute(query, [user_id], (err, results) => {
     if (err) {
