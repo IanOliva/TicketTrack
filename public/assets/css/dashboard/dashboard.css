@@ -21,11 +21,14 @@
     /* ===== Colors ===== */
     --primary-color: #231e39;
     --panel-color: #FFF;
-    --text-color: #ff5100;
-    --black-light-color: #ffffff;
-    --border-color: #e6e5e5;
-    --toggle-color: #DDD;
-    --back-color: linear-gradient(135deg, #6fc5ff, rgb(176, 87, 211));
+    --text-color: #231e39;
+    --black-light-color: #231e39;
+    --border-color: #231e39;
+    --toggle-color: #898499;
+    --th-head: #b2edff;
+    --tr-color: #daf6ff;
+    --tr-color-even: #b5d1f5;
+    --back-color: linear-gradient(170deg, #a2daff, rgb(135, 207, 255));
     --box1-color: #4DA3FF;
     --box2-color: #FFE6AC;
     --box3-color: #E7D1FC;
@@ -49,8 +52,11 @@ body.dark {
     --panel-color: #242526;
     --text-color: #d1c8ec;
     --black-light-color: #CCC;
-    --border-color: #4D4C4C;
+    --border-color: #CCC;
     --toggle-color: #FFF;
+    --th-head: #120e1f;
+    --tr-color: #261e39;
+    --tr-color-even: #171420;
     --back-color: linear-gradient(200deg, #231e39, rgb(46, 11, 59));
     --box1-color: #3A3B3C;
     --box2-color: #3A3B3C;
@@ -82,6 +88,14 @@ body.dark {
 body.dark::-webkit-scrollbar-thumb:hover,
 body.dark .activity-data::-webkit-scrollbar-thumb:hover {
     background: --back-color;
+}
+
+.estiloHr {
+    box-sizing: content-box;
+    height: 1px;
+    overflow: visible;
+    border-color: var(--black-light-color);
+    background: var(--black-light-color);;
 }
 
 nav {
@@ -305,7 +319,7 @@ nav.close~.dashboard .top {
     font-size: 15px;
     font-weight: 400;
     outline: none;
-    
+
 }
 
 .search-box i {
@@ -437,25 +451,12 @@ nav.close~.dashboard .top {
     color: var(--text-color);
 }
 
-.dash-table {
-    width: 100%;
-    font-size: 18px;
-    font-weight: 400;
-    color: var(--text-color);
-    text-align: center;
-    border: 1px solid var(--border-color);
-}
+form {
+    display: grid;
 
-.dash-table th {
-    font-size: 18px;
-    color: var(--text-color);
-    background-color: var(--box1-color);
-}
-
-.dash-table tr:hover {
-    color: black;
-    background-color: var(--black-light-color);
-    transition: var(--tran-05);
+    .etiqueta {
+        margin: 5px 10px;
+    }
 }
 
 @media (max-width: 1000px) {

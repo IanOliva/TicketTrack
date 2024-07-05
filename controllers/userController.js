@@ -17,8 +17,13 @@ const userRegister = async (req, res, next) => {
         console.error("Error durante el registro del usuario:", err);
         return res.status(500).send("Error durante el registro del usuario");
       }
-      req.session.message = "Bienvenido " + username;
-      return res.redirect("/login");
+      if (req.session.userId) {
+        req.session.message = "Usuario agregado correctamente";
+        return res.redirect("/dashboard/dash-users");
+      } else {
+        req.session.message = "Bienvenido " + username;
+        return res.redirect("/login");
+      }
     });
   } catch (error) {
     console.error("Error durante el hash de la contraseña:", error);
@@ -43,7 +48,8 @@ const userLogin = (req, res) => {
     const user = results[0];
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).send("Nombre de usuario o contraseña incorrectos");
+      req.session.message = "Nombre de usuario o contraseña incorrectos";
+      return res.redirect("/login");
     }
 
     // Genera el token JWT
@@ -112,17 +118,17 @@ const userUpdate = async (req, res) => {
 // controlador para eliminar usuario
 const userDelete = (req, res) => {
   const { user_id } = req.params;
-  console.log(user_id);
+
   const query = "DELETE FROM users WHERE user_id = ?";
   db.execute(query, [user_id], (err, results) => {
     if (err) {
       console.error("Error durante la eliminación del usuario:", err);
       return res.status(500).send("Error durante la eliminación del usuario");
     }
-    res.send("Usuario eliminado correctamente");
+    req.session.message = "Usuario eliminado correctamente";
+    res.redirect("/dashboard/dash-users");
   });
 };
-
 
 module.exports = {
   userRegister,

@@ -2,8 +2,6 @@ const db = require("../db/database");
 
 const dashUser = (req, res) => {
   const userId = req.userData.userId;
-  const username = req.userData.username;
-  const urlImg = req.userData.urlImg;
 
   const queryUser = "SELECT * FROM tickets WHERE idUsuario = ? ";
 
@@ -25,6 +23,7 @@ const dashAdmin = (req, res) => {
   const userId = req.userData.userId;
   const username = req.userData.username;
   const urlImg = req.userData.urlImg;
+  const mensaje = req.userData.message;
 
   const queryUsers = "SELECT * FROM users WHERE user_id = ?";
 
@@ -61,6 +60,7 @@ const dashAdmin = (req, res) => {
         res.render("dashboard", {
           username: [username],
           urlImg: [urlImg],
+          message: [mensaje],
           content: "components/dashboard/dash-admin",
           data,
         });
@@ -73,6 +73,7 @@ const dashHome = (req, res) => {
   const userId = req.userData.userId;
   const username = req.userData.username;
   const urlImg = req.userData.urlImg;
+  const mensaje = req.userData.mensajitoQWEQWE;
 
   const queryTickets = "SELECT * FROM tickets";
   const queryCount = "SELECT COUNT(*) AS totalTickets FROM tickets";
@@ -180,6 +181,7 @@ const dashHome = (req, res) => {
           res.render("dashboard", {
             username: [username],
             urlImg: [urlImg],
+            message: [mensaje],
             content: "components/dashboard/dash-home",
             data,
           });
@@ -193,6 +195,7 @@ const dashTickets = (req, res) => {
   const userId = req.userData.userId;
   const username = req.userData.username;
   const urlImg = req.userData.urlImg;
+  const mensaje = req.userData.mensajitoQWEQWE;
 
   const queryTickets = "SELECT * FROM tickets";
 
@@ -209,6 +212,7 @@ const dashTickets = (req, res) => {
     res.render("dashboard", {
       username: [username],
       urlImg: [urlImg],
+      message: [mensaje],
       content: "components/dashboard/dash-tickets",
       data,
     });
@@ -219,6 +223,7 @@ const dashAllUsers = (req, res) => {
   const userId = req.userData.userId;
   const username = req.userData.username;
   const urlImg = req.userData.urlImg;
+  const mensaje = req.userData.mensajitoQWEQWE;
 
   const queryUsers =
     "SELECT *, (select count(*) from tickets where tickets.idUsuario = users.user_id)as cantTickets FROM users";
@@ -235,6 +240,7 @@ const dashAllUsers = (req, res) => {
     res.render("dashboard", {
       username: [username],
       urlImg: [urlImg],
+      message: [mensaje],
       content: "components/dashboard/dash-users",
       data,
     });
@@ -245,6 +251,7 @@ const dashComments = (req, res) => {
   const userId = req.userData.userId;
   const username = req.userData.username;
   const urlImg = req.userData.urlImg;
+  const mensaje = req.userData.mensajitoQWEQWE;
 
   const queryComments = "SELECT * FROM comments";
 
@@ -260,6 +267,7 @@ const dashComments = (req, res) => {
     res.render("dashboard", {
       username: [username],
       urlImg: [urlImg],
+      message: [mensaje],
       content: "components/dashboard/dash-comments",
       data,
     });

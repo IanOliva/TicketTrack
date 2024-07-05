@@ -45,7 +45,7 @@ function checkUser(req, res, next) {
   }
 }
 
-const getUserData =async (req, res, next) => {
+const getUserData = async (req, res, next) => {
   try {
     // Check if userId is stored in the session
     if (!req.session.userId) {
@@ -55,12 +55,15 @@ const getUserData =async (req, res, next) => {
       const userId = req.session.userId;
       const username = req.session.username;
       const urlImg = req.session.url_img;
+      const message = 'valor';
+
 
       // Attach user data to the request object
       req.userData = {
         userId,
         username,
         urlImg,
+        message,
       };
 
       next();
@@ -71,4 +74,9 @@ const getUserData =async (req, res, next) => {
   }
 };
 
-module.exports = { authenticateToken, checkAdmin, checkUser, getUserData };
+module.exports = {
+  authenticateToken,
+  checkAdmin,
+  checkUser,
+  getUserData,
+};

@@ -27,8 +27,6 @@ function cargarTicketSeleccionado(lista) {
   var ticketId = urlParams.get("idTicket");
   var ticket = lista.find((t) => t.id_Ticket == ticketId);
 
-  console.log(ticket);
-
   if (ticket) {
     var ticketDetails = document.getElementById("details");
     var ticketArmado = `

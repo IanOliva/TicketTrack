@@ -1,116 +1,108 @@
 <%- include ('components/partials/header.ejs') %>
 
-<body>
-  <%- include ('components/partials/navbar.ejs') %>
+  <body>
+    <%- include ('components/partials/navbar.ejs') %>
 
-  <header class="header">
-    <h1 class="titulo animate__animated animate__fadeInDown">
-      ¡Bienvenido a nuestro sistema de tickets!
-    </h1>
-    <p class="subTitle animate__animated animate__fadeInUp">
-      TicketTrack ofrece todas las herramientas que los agentes de soporte
-      necesitan para gestionar y resolver los tickets con eficacia. Su interfaz
-      permite a los agentes manejar los tickets con facilidad, brindando un
-      excelente servicio y manteniendo al equipo de soporte funcionando sin
-      problemas.
-    </p>
-    <div class="header-btns animate__animated animate__fadeInUp">
-      <a href="/api-comments/about-us">Saber mas</a>
-    </div>
-  </header>
+      <header class="header">
+        <h1 class="titulo animate__animated animate__fadeInDown">
+          ¡Bienvenido a nuestro sistema de tickets!
+        </h1>
 
-  <section class="devs">
-    <h2>Desarrolladores</h2>
-    <div class="cards-container">
-      <div class="profile-card">
-        <img class="round" src="/assets/img/profile-pics/ian.png" alt="user" />
-        <h3>Ian Oliva</h3>
-        <h6>Buenos Aires</h6>
-        <p>
-          Front-end and <br />
-          back-end developer
+        <p class="subTitle animate__animated animate__fadeInUp">
+          TicketTrack ofrece todas las herramientas que los agentes de soporte
+          necesitan para gestionar y resolver los tickets con eficacia. Su interfaz
+          permite a los agentes manejar los tickets con facilidad, brindando un
+          excelente servicio y manteniendo al equipo de soporte funcionando sin
+          problemas.
         </p>
-        <div class="buttons">
-          <a class="primary" href="https://www.linkedin.com/in/ian-oliva-it/" target="_blank"> Contactar </a>
-          <a class="primary" href="https://www.instagram.com/_ian.olv_/?igsh=ajhsb3BpaHI3amg1" target="_blank"> Following </a>
+        <div class="header-btns animate__animated animate__fadeInUp">
+          <a href="/api-comments/about-us">Saber mas</a>
         </div>
-        <div class="skills">
-          <h6>Skills</h6>
-          <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-            <li>Php</li>
-            <li>Node.js</li>
-            <li>Mysql</li>
-          </ul>
+      </header>
+
+      <section class="devs">
+        <h2>Desarrolladores</h2>
+        <div class="cards-container">
+          <div class="profile-card">
+            <img class="round" src="/assets/img/profile-pics/ian.png" alt="user" />
+            <h3>Ian Oliva</h3>
+            <h6>Buenos Aires</h6>
+            <p>
+              Front-end and <br />
+              back-end developer
+            </p>
+            <div class="buttons">
+              <a class="primary" href="https://www.linkedin.com/in/ian-oliva-it/" target="_blank"> Contactar </a>
+              <a class="primary" href="https://www.instagram.com/_ian.olv_/?igsh=ajhsb3BpaHI3amg1" target="_blank">
+                Following </a>
+            </div>
+            <div class="skills">
+              <h6>Skills</h6>
+              <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>Php</li>
+                <li>Node.js</li>
+                <li>Mysql</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <img class="round" src="./assets/img/profile-pics/Angeles.jpg" alt="user" />
+            <h3>Angeles Licudis</h3>
+            <h6>Jujuy</h6>
+            <p>Web developer <br /></p>
+            <div class="buttons">
+              <a class="primary"> Contactar </a>
+              <a class="primary ghost"> Following </a>
+            </div>
+            <div class="skills">
+              <h6>Skills</h6>
+              <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="profile-card">
+            <img class="round" src="/assets/img/profile-pics/juan.png" alt="user" />
+            <h3>Juan Corso</h3>
+            <h6>Buenos Aires</h6>
+            <p>
+              DBA Backup SQL Server<br />
+              Front-end developer
+            </p>
+            <div class="buttons">
+              <a class="primary"> Contactar </a>
+              <a class="primary ghost"> Following </a>
+            </div>
+            <div class="skills">
+              <h6>Skills</h6>
+              <ul>
+                <li>Desarrollador Front-End</li>
+                <li>JavaScript</li>
+                <li>Stack Net</li>
+                <li>Sql Server</li>
+                <li>Reporting Services</li>
+              </ul>
+            </div>
+          </div>
         </div>
+      </section>
+
+      <div class="maps">
+        <h2>Nuestra Oficina</h2>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2552.259947416647!2d-58.373351154400666!3d-34.60838511234159!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccadb57fd1e5f%3A0xcc737c4eb0a8614b!2sPlaza%20de%20Mayo!5e0!3m2!1ses-419!2sar!4v1716674157515!5m2!1ses-419!2sar"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
 
-      <div class="profile-card">
-        <img
-          class="round"
-          src="./assets/img/profile-pics/Angeles.jpg"
-          alt="user"
-        />
-        <h3>Angeles Licudis</h3>
-        <h6>Jujuy</h6>
-        <p>Web developer <br /></p>
-        <div class="buttons">
-          <a class="primary"> Contactar </a>
-          <a class="primary ghost"> Following </a>
-        </div>
-        <div class="skills">
-          <h6>Skills</h6>
-          <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-          </ul>
-        </div>
-      </div>
+      <%- include('./components/partials/footer') %>
 
-      <div class="profile-card">
-        <img class="round" src="/assets/img/profile-pics/juan.png" alt="user" />
-        <h3>Juan Corso</h3>
-        <h6>Buenos Aires</h6>
-        <p>
-          DBA Backup SQL Server<br />
-          Front-end developer
-        </p>
-        <div class="buttons">
-          <a class="primary"> Contactar </a>
-          <a class="primary ghost"> Following </a>
-        </div>
-        <div class="skills">
-          <h6>Skills</h6>
-          <ul>
-            <li>Desarrollador Front-End</li>
-            <li>JavaScript</li>
-            <li>Stack Net</li>
-            <li>Sql Server</li>
-            <li>Reporting Services</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="maps">
-    <h2>Nuestra Oficina</h2>
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2552.259947416647!2d-58.373351154400666!3d-34.60838511234159!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccadb57fd1e5f%3A0xcc737c4eb0a8614b!2sPlaza%20de%20Mayo!5e0!3m2!1ses-419!2sar!4v1716674157515!5m2!1ses-419!2sar"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
-  </div>
-
-  <%- include('./components/partials/footer') %>
-
-  <script
-    src="https://kit.fontawesome.com/977a02dee3.js"
-    crossorigin="anonymous"
-  ></script>
-  <script src="/js/layout.js"></script>
-</body>
+        <script src="https://kit.fontawesome.com/977a02dee3.js" crossorigin="anonymous"></script>
+        <script src="/js/layout.js"></script>
+  </body>
