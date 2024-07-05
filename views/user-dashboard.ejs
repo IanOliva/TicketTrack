@@ -141,12 +141,7 @@
                     </p>
                   </div>
                   <div class="card-footer-nb">
-                    <form id="deleteForm" action="/api-tickets/borrar/<%= t.id_ticket %>" method="DELETE">
-                      <input type="hidden" name="_method" value="DELETE">
-                      <input type="hidden" name="id_ticket" id="id_ticket">
-                      <button type="submit" class="btn btn-primary borrarBtn"
-                        data-id="<%= t.id_ticket %>">Borrar</button>
-                    </form>
+                    <a href="/api-tickets/borrar/<%= t.id_ticket %>" class="btn btn-primary cargarHtml">Borrar</a>
                     <p id="estado" style="color: red; font-size: 1.2rem; text-transform: capitalize; font-weight: 700;">
                       valorPalabra
                     </p>
