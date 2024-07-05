@@ -86,6 +86,7 @@ const userLogin = (req, res) => {
 const userLogout = (req, res) => {
   res.clearCookie("token"); // Elimina la cookie del token
   req.session.is_admin = null;
+  delete req.session.message;
   res.redirect("/login"); // Redirige al usuario a la página principal
 };
 
