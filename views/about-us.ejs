@@ -42,7 +42,7 @@
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
           aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content" >
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">
                   Escribe tu comentario
@@ -117,7 +117,13 @@
                   <h3>
                     <%= comment.name %>
                   </h3>
-                  <span><i class="fa-solid <%= comment.genIcon %>"></i></span>
+                  <% if (comment.genIcon === 0) { %>
+                  <span><i class="fa-solid fa-person"></i></span>
+                  <% } else if (comment.genIcon === 1) { %>
+                  <span><i class="fa-solid fa-person-dress"></i></span>
+                  <% } else if (comment.genIcon === 2) { %>
+                  <span><i class="fa-solid fa-person"></i></span>
+                  <% } %>
                   <div class="star">
                     <% for (let i=0; i < comment.rating; i++) { %>
                       <span><i class="fa-solid fa-star"></i></span>

@@ -56,7 +56,7 @@ body {
   gap: 3rem;
   /*height: 60vh;*/
   margin: 20px 30px;
-  margin-bottom: 5rem !important;
+  
 }
 
 .heading {
@@ -107,6 +107,7 @@ body {
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 }
+
 
 .container{
   padding-top: 40px;
@@ -180,17 +181,16 @@ width: calc(400px * 10);
 }
 
 .rating input:checked ~ label {
-  color: #ddd; /* Color gris por defecto para todas las estrellas */
+  color: #ddd; 
 }
 
 .rating input:checked + label,
 .rating input:checked + label ~ label,
 .rating label:hover,
 .rating label:hover ~ label {
-  color: gold; /* Color dorado para las estrellas seleccionadas y al pasar el ratón */
+  color: gold; 
 }
 
 .rating label:hover ~ label {
-  color: gold; /* Color dorado para todas las estrellas a la izquierda cuando se pasa el ratón */
+  color: gold; 
 }
-
