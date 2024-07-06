@@ -5,14 +5,18 @@ const jwt = require("jsonwebtoken");
 // controlador de registro
 const userRegister = async (req, res, next) => {
   const { username, email, password } = req.body;
+  const image = req.file;
 
   try {
     // Hash de la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Verificar si el archivo de imagen está presente
+    const imagePath = image ? image.path : null;
+
     const query =
-      "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-    db.execute(query, [username, email, hashedPassword], (err, results) => {
+      "INSERT INTO users (username, email, password, url_img) VALUES (?, ?, ?, ?)";
+    db.execute(query, [username, email, hashedPassword, imagePath], (err, results) => {
       if (err) {
         console.error("Error durante el registro del usuario:", err);
         return res.status(500).send("Error durante el registro del usuario");
