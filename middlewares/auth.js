@@ -32,16 +32,17 @@ function checkAdmin(req, res, next) {
       return res.redirect("/user-dashboard");
     }
   } else {
-    res.redirect("/login");
+    return userLogout(req, res);
+    // res.redirect("/login");
   }
 }
 
 // Middleware para verificar si no es admin
 function checkUser(req, res, next) {
-  if (req.user && req.user.is_admin === "false") {
+  if ( req.userData.is_admin === "true") {
     return next();
   } else {
-    return res.redirect("/dashboard");
+    return res.redirect("/dashboard/user");
   }
 }
 
@@ -55,11 +56,13 @@ const getUserData = async (req, res, next) => {
       const userId = req.session.userId;
       const username = req.session.username;
       const urlImg = req.session.url_img;
+      const is_admin = req.session.is_admin;
       const message = 'valor';
 
 
       // Attach user data to the request object
       req.userData = {
+        is_admin,
         userId,
         username,
         urlImg,

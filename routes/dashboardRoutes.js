@@ -13,6 +13,7 @@ router.get(
 router.get(
   "/dash-admin",
   auth.getUserData,
+  auth.checkUser,
   auth.authenticateToken,
   dashboardController.dashAdmin
 );
@@ -20,6 +21,7 @@ router.get(
 router.get(
   "/dash-home",
   auth.getUserData,
+  auth.checkUser,
   auth.authenticateToken,
   dashboardController.dashHome
 );
@@ -27,6 +29,7 @@ router.get(
 router.get(
   "/dash-tickets",
   auth.getUserData,
+  auth.checkUser,
   auth.authenticateToken,
   dashboardController.dashTickets
 );
@@ -34,6 +37,7 @@ router.get(
 router.get(
   "/dash-users",
   auth.getUserData,
+  auth.checkUser,
   auth.authenticateToken,
   dashboardController.dashAllUsers
 );
@@ -41,6 +45,7 @@ router.get(
 router.get(
   "/dash-comments",
   auth.getUserData,
+  auth.checkUser,
   auth.authenticateToken,
   dashboardController.dashComments
 );

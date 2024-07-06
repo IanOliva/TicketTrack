@@ -55,6 +55,28 @@ const createComment = (req, res) => {
     }
 }
 
+const borrar = (req, res) => {
+    const userId = req.userData.userId;
+    const is_admin = req.userData.is_admin;
+  
+    const { comment_id } = req.params;
+  
+    const query = "DELETE FROM comments where comment_id = ? ";
+  
+    db.execute(query, [comment_id] , (err, results) => {
+      if (err) {
+        console.error("Error al borrar el ticket:", err);
+        return res.status(500).send("Error al borrar el ticket");
+      }
+      req.session.message = "Ticket borrado correctamente";
+      
+      if (is_admin === "true") {
+        res.redirect("/dashboard/dash-comments");
+      } else {
+        res.redirect("/api-user/logout");
+      }
+  
+    });
+  };
 
-
-module.exports = { getLastComments , createComment , getAllComments }
+module.exports = { getLastComments , createComment , getAllComments, borrar }

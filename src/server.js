@@ -4,7 +4,7 @@ const ticketRoutes = require('../routes/ticketsRoutes');
 const userRoutes = require('../routes/usersRoutes');
 const dashboardRoutes = require('../routes/dashboardRoutes');
 const commentRoutes = require('../routes/commentsRoutes');
-const { authenticateToken, checkUser } = require('../middlewares/auth');
+
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const session = require('express-session');

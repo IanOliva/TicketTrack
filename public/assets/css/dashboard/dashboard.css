@@ -1,8 +1,8 @@
 /* ===== Importo las clases de las otras vistas - Poppins ===== */
-@import url('./dash-home.css');
+/* @import url('./dash-home.css'); */
 @import url('./dash-tickets.css');
 @import url('./dash-user.css');
-@import url('./dash-comments.css');
+/* @import url('./dash-comments.css'); */
 @import url('./dash-admin.css');
 
 
@@ -27,6 +27,7 @@
     --toggle-color: #898499;
     --th-head: #b2edff;
     --tr-color: #daf6ff;
+    --tr-color-hover: #aac4ff!important;
     --tr-color-even: #b5d1f5;
     --back-color: linear-gradient(170deg, #a2daff, rgb(135, 207, 255));
     --box1-color: #4DA3FF;
@@ -56,6 +57,7 @@ body.dark {
     --toggle-color: #FFF;
     --th-head: #120e1f;
     --tr-color: #261e39;
+    --tr-color-hover: #443763!important;
     --tr-color-even: #171420;
     --back-color: linear-gradient(200deg, #231e39, rgb(46, 11, 59));
     --box1-color: #3A3B3C;
@@ -449,14 +451,6 @@ nav.close~.dashboard .top {
     margin-top: 20px;
     white-space: nowrap;
     color: var(--text-color);
-}
-
-form {
-    display: grid;
-
-    .etiqueta {
-        margin: 5px 10px;
-    }
 }
 
 @media (max-width: 1000px) {

@@ -62,7 +62,7 @@ const userLogin = (req, res) => {
         url_img: user.url_img,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1w" }
+      { expiresIn: "1h" }
     );
 
     // Configura la cookie con el token

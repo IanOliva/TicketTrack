@@ -1,5 +1,64 @@
 /* ES CSS ANIDADO, TENE CUIDADO CON LO QUE TOCAS DE ESTE ARCHIVO. */
 
+form label {
+    color: var(--text-color);
+}
+
+.etiqueta {
+    margin: 5px 10px;
+}
+
+label,
+input,
+button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+label {
+    margin-bottom: 4px;
+}
+
+label:nth-of-type(2) {
+    margin-top: 12px;
+}
+
+input::placeholder {
+    color: gray;
+}
+
+input {
+    background: #ecf0f3;
+    padding: 10px;
+    padding-left: 20px;
+    height: 50px;
+    font-size: 14px;
+    border-radius: 50px;
+    box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+}
+
+button {
+    width: 100px;
+    color: var(--text-color);
+    margin-top: 20px;
+    background: var(--th-head);
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 900;
+    transition: 0.5s;
+}
+
+button:hover {
+    box-shadow: 6px 6px 6px var(--toggle-color);
+
+}
+
+
 .users {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -15,7 +74,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.card-body{
+.card-body {
     color: var(--text-color);
 }
 
@@ -24,7 +83,7 @@
     text-align: center;
     border-radius: 2em;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(16px) saturate(180%)!important;
+    backdrop-filter: blur(16px) saturate(180%) !important;
     position: relative;
 }
 
@@ -33,31 +92,47 @@
     font-size: 1.5em;
 }
 
-.cant-tickets {
+.card-footer {
+    display: flex;
+    justify-content: center;
+
+}
+
+/* .cant-tickets {
     border-radius: 2em;
     padding: 0.5em 1.5em;
+} */
+
+.card i {
+    margin: 1rem;
+    font-size: 1.5em;
 }
 
-.card i{
+.fa-crown,
+.fa-user {
     position: absolute;
     top: 7%;
-    position: absolute;
     right: 6%;
+    color: var(--text-color);
 }
 
-.fa-crown {
-    color: #efb810
+.fa-user-pen,
+.fa-delete-left {
+    color: var(--text-color);
 }
 
-.fa-user {
-    color: #70C9C2
+.fa-user-pen:hover {
+    color: rgb(80, 226, 43);
 }
 
+.fa-delete-left:hover {
+    color: rgb(245, 59, 46);
+}
 
 .total {
-    span{font-size: 1.3rem!important;}
+    span {
+        font-size: 1.3rem !important;
+    }
 }
 
 ;
-
-

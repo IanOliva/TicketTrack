@@ -15,7 +15,14 @@ const dashUser = (req, res) => {
       tickets: userTicketsResults,
     };
 
-    res.render('user-dashboard',{ title: 'Usuario', css: '/assets/css/user-dashboard.css', session: req.session , data: data, message : req.session.message,});
+    res.render("user-dashboard", {
+      title: "Usuario",
+      css: "/assets/css/user-dashboard.css",
+      session: req.session,
+      data: data,
+      message: req.session.message,
+      idUsuario: req.session.userId,
+    });
   });
 };
 
@@ -73,7 +80,7 @@ const dashHome = (req, res) => {
   const userId = req.userData.userId;
   const username = req.userData.username;
   const urlImg = req.userData.urlImg;
-  const mensaje = req.userData.mensajitoQWEQWE;
+  const mensaje = req.userData.message;
 
   const queryTickets = "SELECT * FROM tickets";
   const queryCount = "SELECT COUNT(*) AS totalTickets FROM tickets";
@@ -192,7 +199,6 @@ const dashHome = (req, res) => {
 };
 
 const dashTickets = (req, res) => {
-  const userId = req.userData.userId;
   const username = req.userData.username;
   const urlImg = req.userData.urlImg;
   const mensaje = req.userData.mensajitoQWEQWE;

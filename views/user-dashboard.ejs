@@ -35,30 +35,15 @@
                 <div class="modal-body">
 
                   <!-- FORMULARIO -->
-                  <form action="/api-tickets/create" method="post" id="formTicketModal" class="row g-3 needs-validation"
+                  <form action="/api-tickets/create" method="POST" id="formTicketModal" class="row g-3 needs-validation"
                     validate>
                     <div class="col-md-4 d-none">
-                      <label for="idTicketCalculado" class="form-label">idTicket</label>
-                      <input type="text" class="form-control" id="idTicketCalculado" name="idTicketCalculado" value=""
-                        required>
-                    </div>
-                    <div class="col-md-4 d-none">
-                      <label for="idEstado" class="form-label">idEstado</label>
-                      <input type="text" class="form-control" id="idEstado" name="idEstado" value="0" required>
+                      <label for="idUsuario" class="form-label"></label>
+                      <input type="text" class="form-control" id="idUsuario" name="idUsuario" value=" <%= idUsuario %> ">
                     </div>
                     <div class="col-md-4">
-                      <label for="user" class="form-label">Usuario</label>
-                      <input type="text" class="form-control" id="user" name="user" required>
-                      <div class="valid-feedback">
-                        Completado!
-                      </div>
-                      <div class="invalid-feedback">
-                        Ingrese un usuario.
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <label for="idPrioridad" class="form-label">Prioridad</label>
-                      <select class="form-select" id="prioridad" name="idPrioridad" required>
+                      <label for="prioridad" class="form-label">Prioridad</label>
+                      <select class="form-select" id="prioridad" name="prioridad" required>
                         <option selected disabled value="">Seleccione</option>
                         <option value="1">Alta</option>
                         <option value="2">Media</option>
@@ -82,8 +67,8 @@
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <label for="detalle" class="form-label">Descripcion del Pedido</label>
-                      <textarea type="text" class="form-control" style="height: 100px" id="detalle" name="detalle"
+                      <label for="descripcion" class="form-label">Descripcion del Pedido</label>
+                      <textarea type="text" class="form-control" style="height: 100px" id="descripcion" name="descripcion"
                         required></textarea>
                       <div class="valid-feedback">
                         Completado!
@@ -103,9 +88,6 @@
 
                 </div>
                 <div class="modal-footer" style="justify-content: space-between!important;">
-                  <div class="fechaAfter">
-                    <p id="fechaActual"></p>
-                  </div>
                   <div>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" onclick="eventoReal()" class="btn btn-primary"
@@ -180,22 +162,5 @@
       const botonReal = document.getElementById("submitFormularioModal");
       botonReal.click();
     }
-
-    document.getElementById("formTicketModal").addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      var formModal = document.getElementById("formTicketModal");
-      var datosDelForm = tomarDatosDelForm(formModal);
-      mostrarTicketCreadoRecien(datosDelForm);
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const toastLiveExample = document.getElementById('liveToast');
-      const toastBootstrap = new bootstrap.Toast(toastLiveExample, {
-        delay: 2000
-      });
-      toastBootstrap.show();
-
-    });
 
   </script>

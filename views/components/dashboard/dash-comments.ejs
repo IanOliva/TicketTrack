@@ -31,6 +31,10 @@
                         <td>
                             <%= c.text %>
                         </td>
+                        <td>
+                            <a href="/api-comments/borrar/<%= c.comment_id %>"><i
+                                    class="fa-regular fa-trash-can"></i></a>
+                        </td>
                     </tr>
                     <% }); %>
 
