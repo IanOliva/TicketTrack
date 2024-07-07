@@ -3,16 +3,25 @@ const db = require("../db/database");
 const dashUser = (req, res) => {
   const userId = req.userData.userId;
 
-  const queryUser = "SELECT * FROM tickets WHERE idUsuario = ? ";
+  const queryTicketsUser = "SELECT * FROM tickets WHERE idUsuario = ? ";
 
-  db.query(queryUser, [userId], (err, userTicketsResults) => {
+  const queryUser = "SELECT * FROM users WHERE user_id = ? ";
+
+  db.query(queryTicketsUser, [userId], (err, userTicketsResults) => {
     if (err) {
       console.error("Error al obtener tickets:", err);
       return res.status(500).send("Error al obtener datos del usuario");
     }
-
+    
+    db.query(queryUser, [userId], (err, userData) => {
+      if (err) {
+        console.error("Error al obtener tickets:", err);
+        return res.status(500).send("Error al obtener datos del usuario");
+      }
+    
     const data = {
       tickets: userTicketsResults,
+      user: userData[0],
     };
 
     res.render("user-dashboard", {
@@ -20,11 +29,9 @@ const dashUser = (req, res) => {
       css: "/assets/css/user-dashboard.css",
       session: req.session,
       data: data,
-      message: req.session.message,
-      idUsuario: req.session.userId,
     });
   });
-};
+})};
 
 const dashAdmin = (req, res) => {
   const userId = req.userData.userId;

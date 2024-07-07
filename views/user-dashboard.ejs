@@ -3,7 +3,7 @@
   <body>
     <%- include ('components/partials/navbar.ejs') %>
 
-      <% if (message) { %>
+      <% if (session.message !== "") { %>
         <div class="toast-container position-fixed top-0 end-0 p-5 mt-5" data-bs-delay="2000">
           <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
@@ -13,7 +13,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-              <%- message %>
+              <%= session.message %>
             </div>
           </div>
         </div>
@@ -39,7 +39,8 @@
                     validate>
                     <div class="col-md-4 d-none">
                       <label for="idUsuario" class="form-label"></label>
-                      <input type="text" class="form-control" id="idUsuario" name="idUsuario" value=" <%= idUsuario %> ">
+                      <input type="text" class="form-control" id="idUsuario" name="idUsuario"
+                        value=" <%= session.idUsuario %> ">
                     </div>
                     <div class="col-md-4">
                       <label for="prioridad" class="form-label">Prioridad</label>
@@ -68,8 +69,8 @@
                     </div>
                     <div class="col-md-12">
                       <label for="descripcion" class="form-label">Descripcion del Pedido</label>
-                      <textarea type="text" class="form-control" style="height: 100px" id="descripcion" name="descripcion"
-                        required></textarea>
+                      <textarea type="text" class="form-control" style="height: 100px" id="descripcion"
+                        name="descripcion" required></textarea>
                       <div class="valid-feedback">
                         Completado!
                       </div>
@@ -104,33 +105,82 @@
               <div class="sombraIcono"><i class="fa-solid fa-circle-plus"></i></div>
               <span>Agregar</span>
             </div>
-            <h1 class="title">Tickets Recientes</h1>
-            <div id="cont-tickets" class="container-nb">
-              <% data.tickets.forEach((t)=> { %>
-                <div class="card-nb" data-id="<%= t.id_ticket %>" data-bs-theme="dark">
-                  <div class="alert alert-valorAlerta"
-                    style="display: flex !important; justify-content: space-between;">
-                    <p id="t-detalle" style="font-size:1rem">
-                      <%= t.motivo %>
-                    </p>
-                    <p id="t-id">
-                      <%= t.id_ticket %>
-                    </p>
+
+            <!-- VALIDAMOS PARA MOSTRAR EL PANEL DE DATOS USUARIO -->
+            <%if (session.editar===true) { %>
+              <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="<%= data.user.url_img %>" class="img-fluid rounded-start" alt="...">
                   </div>
-                  <div class="card-body-nb">
-                    <p id="t-detalle">
-                      <%= t.descripcion %>
-                    </p>
-                  </div>
-                  <div class="card-footer-nb">
-                    <a href="/api-tickets/borrar/<%= t.id_ticket %>" class="btn btn-primary cargarHtml">Borrar</a>
-                    <p id="estado" style="color: red; font-size: 1.2rem; text-transform: capitalize; font-weight: 700;">
-                      valorPalabra
-                    </p>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <form class="col-md-12" method="post" action="/api-users/user-update/<%= session.userId %>" enctype="multipart/form-data" >
+                        <div class="form-floating">
+                          <input name="username" type="text" class="form-control" id="floatingInputValue" placeholder=""
+                            value="">
+                          <label for="floatingInputValue">Nombre: <%= data.user.username %></label>
+                        </div>
+                        <div class="form-floating">
+                          <input name="email" type="email" class="form-control" id="floatingInputValue" placeholder=""
+                            value="">
+                          <label for="floatingInputValue">Email: <%= data.user.email %></label>
+                        </div>
+                        <div class="form-floating">
+                          <input name="password" type="password" class="form-control" id="floatingInputValue" placeholder=""
+                            value="">
+                          <label for="floatingInputValue">Contraseña</label>
+                        </div>
+                        <div class="form-floating">
+                          <input name="image" type="file" class="form-control" id="floatingInputValue" placeholder=""
+                            value="">
+                          <label for="floatingInputValue">Avatar:</label>
+                        </div>
+                        <button type="submit" style="position: absolute;" class="btn btn-primary mt-4">Guardar cambios</button>
+                      </form>
+                    </div>
                   </div>
                 </div>
-                <% }); %>
-            </div>
+              </div>
+              <% } else { %>
+                <div class="card" style="width: 18rem;">
+                  <img src="<%= data.user.url_img %>" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h4 class="card-title"><span><%= data.user.username %> </span> </h4>
+                    <p class="card-text"><%= data.user.email %> </p>
+                    <a href="/api-users/user-habilitar-update" class="btn btn-primary">Editar</a>
+                  </div>
+                </div>
+                <% } %>
+
+                  <h1 class="title">Tickets Recientes</h1>
+                  <div id="cont-tickets" class="container-nb">
+                    <% data.tickets.forEach((t)=> { %>
+                      <div class="card-nb" data-id="<%= t.id_ticket %>" data-bs-theme="dark">
+                        <div class="alert alert-valorAlerta"
+                          style="display: flex !important; justify-content: space-between;">
+                          <p id="t-detalle" style="font-size:1rem">
+                            <%= t.motivo %>
+                          </p>
+                          <p id="t-id">
+                            <%= t.id_ticket %>
+                          </p>
+                        </div>
+                        <div class="card-body-nb">
+                          <p id="t-detalle">
+                            <%= t.descripcion %>
+                          </p>
+                        </div>
+                        <div class="card-footer-nb">
+                          <a href="/api-tickets/borrar/<%= t.id_ticket %>" class="btn btn-primary cargarHtml">Borrar</a>
+                          <p id="estado"
+                            style="color: red; font-size: 1.2rem; text-transform: capitalize; font-weight: 700;">
+                            valorPalabra
+                          </p>
+                        </div>
+                      </div>
+                      <% }); %>
+                  </div>
           </section>
           <%- include('./components/partials/footer.ejs') %>
   </body>
@@ -162,5 +212,14 @@
       const botonReal = document.getElementById("submitFormularioModal");
       botonReal.click();
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const toastLiveExample = document.getElementById('liveToast');
+      const toastBootstrap = new bootstrap.Toast(toastLiveExample, {
+        delay: 2000
+      });
+      toastBootstrap.show();
+
+    });
 
   </script>

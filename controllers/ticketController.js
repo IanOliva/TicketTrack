@@ -5,7 +5,8 @@ const db = require("../db/database");
 const create = (req, res) => {
   const resueltoPor = 0;
   const estate = 1;
-  const { motivo, descripcion, idUsuario, prioridad } = req.body;
+  const idUsuario = req.session.userId;
+  const { motivo, descripcion, prioridad } = req.body;
   const query =
     "INSERT INTO tickets ( motivo, descripcion, idUsuario, prioridad, resueltoPor, estate ) VALUES (?, ?, ?, ?, ?, ?)";
   db.execute(
@@ -16,7 +17,7 @@ const create = (req, res) => {
         console.error("Error al crear el ticket:", err);
         return res.status(500).send("Error al crear el ticket");
       }
-      // req.session.message = "Ticket creado correctamente";
+      req.session.message = "Ticket creado correctamente";
       res.redirect("/dashboard/user");
     }
   );

@@ -10,11 +10,13 @@ function authenticateToken(req, res, next) {
 
   if (!token) {
     // No hay token, redirije a la ruta de login
+    req.session.message = "No hay token";
     return res.redirect("/login");
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
+      req.session.message = "Tocken invalido";
       return userLogout(req, res); // Token inválido
     }
     req.user = user; // Almacena la información del usuario decodificado en req.user
@@ -48,19 +50,19 @@ function checkUser(req, res, next) {
 
 const getUserData = async (req, res, next) => {
   try {
-    // Check if userId is stored in the session
+    //revisamos que exista userID en la session
     if (!req.session.userId) {
       req.session.message = "Sesión cerrada";
       return res.redirect("/login");
     } else {
+      req.session.message = "";
+
       const userId = req.session.userId;
       const username = req.session.username;
       const urlImg = req.session.url_img;
       const is_admin = req.session.is_admin;
-      const message = 'valor';
+      const message = req.session.message;
 
-
-      // Attach user data to the request object
       req.userData = {
         is_admin,
         userId,
