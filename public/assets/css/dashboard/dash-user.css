@@ -103,18 +103,21 @@ button:hover {
     padding: 0.5em 1.5em;
 } */
 
-.card i {
+.itemrole {
     margin: 1rem;
     font-size: 1.5em;
-}
-
-.fa-crown,
-.fa-user {
     position: absolute;
     top: 7%;
     right: 6%;
     color: var(--text-color);
+    
+    p{
+        position: absolute;
+        
+        font-size: .7rem;}
 }
+
+
 
 .fa-user-pen,
 .fa-delete-left {
@@ -135,4 +138,7 @@ button:hover {
     }
 }
 
+a{
+    color:var(--text-color);
+}
 ;

@@ -5,10 +5,10 @@
             <span class="text">Recientes</span>
 
         </div>
-        <div class="search-box">
+        <!-- <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" placeholder="Buscar..." />
-        </div>
+        </div> -->
 
         <table class="dash-table">
             <thead>
@@ -32,18 +32,29 @@
                             <%= t.descripcion %>
                         </td>
                         <td>
-                            <%= t.prioridad %>
+                            <% if (t.prioridad === 1) { %>
+                                baja
+                              <% } else if (t.prioridad === 2) { %>
+                                media
+                              <% } else if (t.prioridad === 3) { %>
+                                alta
+                              <% } %>   
+                           
                         </td>
                         <td>
-                            <%= t.fechaOpen %>
+                            <%= t.fechaOpen.toLocaleDateString() %> <%= t.fechaOpen.toLocaleTimeString() %>
                         </td>
                         <td>
-                            <%= t.estate %>
+                            <% if (t.estate === 1) { %>
+                                En espera
+                              <% } else if (t.estate === 2) { %>
+                                Resuelto
+                              <% } %>
                         </td>
                         <td>
-                            <a href=""><i class="fa-solid fa-circle-check"></i></a>
+                            <!-- <a href=""><i class="fa-solid fa-circle-check"></i></a> -->
                             <a href="/api-tickets/borrar/<%= t.id_ticket %>"><i class="fa-regular fa-trash-can"></i></a>
-                            <a href=""><i class="fa-solid fa-circle-xmark"></i></a>
+                            <!-- <a href=""><i class="fa-solid fa-circle-xmark"></i></a> -->
                         </td>
                     </tr>
                     <% }); %>
