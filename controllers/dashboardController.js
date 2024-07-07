@@ -210,7 +210,7 @@ const dashTickets = (req, res) => {
   const urlImg = req.userData.urlImg;
   const mensaje = req.userData.mensajitoQWEQWE;
 
-  const queryTickets = "SELECT * FROM tickets";
+  const queryTickets = "SELECT * FROM tickets t left join users u on t.idUsuario = u.user_id";
 
   db.query(queryTickets, (err, ticketResults) => {
     if (err) {

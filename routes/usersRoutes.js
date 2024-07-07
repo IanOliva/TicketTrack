@@ -28,6 +28,9 @@ router.post("/login", userController.userLogin);
 // Ruta para cerrar sesión
 router.get("/logout", userController.userLogout);
 
+router.get("/volver", userController.volver);
+
+
 //Ruta para Habilitar la edicion
 router.get(
   "/user-habilitar-update",

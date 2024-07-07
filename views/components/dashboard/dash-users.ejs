@@ -63,23 +63,16 @@
   <div class="users">
     <% data.users.forEach((u)=> { %>
     <div class="card" style="width: 18rem">
-      <% if (u.url_img) { %>
       <img src="<%= u.url_img %>" class="card-img-top" />
-      <% } else { %>
-      <img
-        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-        class="card-img-top"
-      />
-      <% } %>
       <div class="card-body">
         <h5 class="card-title">
           <div class="itemrole">
             <% if (u.is_admin==="true" ) { %>
             <i class="fa-solid fa-crown"></i>
-                <p style="bottom: -3px;">Admin</p>
+                <p style="bottom: -8px;">Admin</p>
             <% } else { %>
             <i class="fa-solid fa-user"></i>
-                <p style="bottom: -5px; left: 0; right: 0;">User</p>
+                <p style="bottom: -10px; left: 0; right: 0;">User</p>
             <% } %>
           </div>
           <%= u.username %>
@@ -98,7 +91,7 @@
         <a
           href="/api-users/user-delete/<%= u.user_id %>"
           title="Borrar"
-          onclick="return confirm('¿Deseas eliminar este usuario?')"
+          onclick="return confirm('Al eliminar este usuario se eliminaran los tickets asociados \n¿Deseas eliminar este usuario?')"
           ><i class="fa-solid fa-trash-can"></i
         ></a>
       </div>

@@ -18,9 +18,27 @@ const create = (req, res) => {
         return res.status(500).send("Error al crear el ticket");
       }
       req.session.message = "Ticket creado correctamente";
-      res.redirect("/dashboard/user");
+      return res.redirect("/dashboard/user");
     }
   );
+};
+
+const update = (req, res) => {
+  const { id_ticket } = req.params;
+  const aceptar = '2';
+  let query;
+
+  query = "Update tickets set estate = ? WHERE id_ticket = ?";
+
+  db.execute(query, [aceptar, id_ticket, ] , (err, results) => {
+    if (err) {
+      console.error("Error al aceptar el ticket:", err);
+      return res.status(500).send("Error al aceptar el ticket");
+    }
+    req.session.message = "Ticket Aceptado";
+    return res.redirect("/dashboard/dash-tickets");
+
+  });
 };
 
 const borrar = (req, res) => {
@@ -43,9 +61,9 @@ const borrar = (req, res) => {
     req.session.message = "Ticket borrado correctamente";
     
     if (is_admin === "true") {
-      res.redirect("/dashboard/dash-tickets");
+      return res.redirect("/dashboard/dash-tickets");
     } else {
-      res.redirect("/dashboard/user");
+      return res.redirect("/dashboard/user");
     }
 
   });
@@ -53,5 +71,6 @@ const borrar = (req, res) => {
 
 module.exports = {
   create,
+  update,
   borrar,
 };

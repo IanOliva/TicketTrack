@@ -6,7 +6,7 @@ const path = require('path');
 
 const habilitarEdicion = (req, res) => {
   req.session.editar = true;
-  res.redirect("/dashboard/user");
+  return res.redirect("/dashboard/user");
 };
 
 const deleteFile = (filePath) => {
@@ -22,20 +22,24 @@ const deleteFile = (filePath) => {
 // controlador de registro
 const userRegister = async (req, res, next) => {
   const { username, email, password } = req.body;
-  const image = req.file;
+  let image = req.file;
+
+  if (image === undefined ) {
+    image = 'https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg'
+  }else{
+    image = req.session.ruta;
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
     // Hash de la contraseña
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Verificar si el archivo de imagen está presente
-    const imagePath = image ? req.session.ruta : null;
 
     const query =
       "INSERT INTO users (username, email, password, url_img) VALUES (?, ?, ?, ?)";
     db.execute(
       query,
-      [username, email, hashedPassword, imagePath],
+      [username, email, hashedPassword, image],
       (err, results) => {
         if (err) {
           console.error("Error durante el registro del usuario:", err);
@@ -51,7 +55,7 @@ const userRegister = async (req, res, next) => {
       }
     );
   } catch (error) {
-    console.error("Error durante el hash de la contraseña:", error);
+    console.error("Error :", error);
     res.status(500).send("Error durante el registro del usuario");
   }
 };
@@ -67,7 +71,8 @@ const userLogin = (req, res) => {
       return res.status(500).send("Error durante el inicio de sesión");
     }
     if (results.length === 0) {
-      return res.status(401).send("Nombre de usuario o contraseña incorrectos");
+      req.session.message = "No existe el usuario";
+      return res.redirect("/login");
     }
 
     const user = results[0];
@@ -75,7 +80,7 @@ const userLogin = (req, res) => {
 
     if (!isPasswordValid) {
       req.session.message = "Nombre de usuario o contraseña incorrectos";
-      res.redirect("/login");
+      return res.redirect("/login");
     }
 
     // Genera el token JWT
@@ -104,9 +109,9 @@ const userLogin = (req, res) => {
     req.session.passUser = user.password;
 
     if (user.is_admin === "true") {
-      res.redirect("/dashboard/dash-admin");
+      return res.redirect("/dashboard/dash-admin");
     } else {
-      res.redirect("/dashboard/user");
+      return res.redirect("/dashboard/user");
     }
   });
 };
@@ -117,22 +122,22 @@ const userLogout = (req, res) => {
   req.session.is_admin = null;
   delete req.session.message;
   delete req.session.editar;
-  res.redirect("/login"); // Redirige al usuario a la página principal
+  return res.redirect("/login"); // Redirige al usuario a la página principal
 };
 
 // controlador para modificar usuario
-const userUpdate = async (req, res) => {
+const userUpdate =  async (req, res) => {
   delete req.session.editar;
   const { user_id } = req.params;
-  let image = req.file;
   let { username, password, email } = req.body;
+  let image = req.file;
 
   let hashedPassword = "";
 
   try {
     username = username === "" ? req.session.username : username;
     email = email === "" ? req.session.email : email;
-    image = image === undefined ? req.session.url_img : image;
+    image = image === undefined ? req.session.url_img : req.session.ruta;
     hashedPassword = password === "" ? req.session.passUser : await bcrypt.hash(password, 10);
 
     // verificamos si la imagen es diferente a la que ya tenia el usuario
@@ -142,10 +147,9 @@ const userUpdate = async (req, res) => {
       req.session.url_img = req.session.ruta
     }
 
-
     const query =
-      "UPDATE users SET username = ?, password = ?, url_img = ? WHERE user_id = ?";
-    db.execute(query, [username, hashedPassword, req.session.ruta, user_id ], (err, results) => {
+      "UPDATE users SET username = ?, email = ? ,password = ?, url_img = ? WHERE user_id = ?";
+    db.execute(query, [username, email, hashedPassword, image, user_id ], (err, results) => {
       if (err) {
         console.error("Error durante la actualización del usuario:", err);
         return res
@@ -153,7 +157,7 @@ const userUpdate = async (req, res) => {
           .send("Error durante la actualización del usuario");
       }
       req.session.message = "Datos actualizado correctamente";
-      res.redirect("/dashboard/user");
+      return res.redirect("/dashboard/user");
     });
   } catch (error) {
     console.error("Se encontro error", error);
@@ -172,8 +176,13 @@ const userDelete = (req, res) => {
       return res.status(500).send("Error durante la eliminación del usuario");
     }
     req.session.message = "Usuario eliminado correctamente";
-    res.redirect("/dashboard/dash-users");
+    return res.redirect("/dashboard/dash-users");
   });
+};
+
+const volver = (req, res) => {
+  req.session.editar = false;
+  return res.redirect("/dashboard/dash-users");
 };
 
 module.exports = {
@@ -183,4 +192,5 @@ module.exports = {
   habilitarEdicion,
   userUpdate,
   userDelete,
+  volver,
 };

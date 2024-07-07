@@ -10,9 +10,10 @@
             <input type="text" placeholder="Buscar..." />
         </div> -->
 
-        <table class="dash-table">
+        <table class="dash-table dash-table-tickets">
             <thead>
                 <tr>
+                    <th>Autor</th>
                     <th>Titulo</th>
                     <th>Descripción</th>
                     <th>Prioridad</th>
@@ -26,35 +27,46 @@
                 <% data.tickets.forEach((t)=> { %>
                     <tr>
                         <td>
+                            <%= t.username %>
+                        </td>
+                        <td>
                             <%= t.motivo %>
                         </td>
                         <td>
                             <%= t.descripcion %>
                         </td>
                         <td>
-                            <% if (t.prioridad === 1) { %>
+                            <% if (t.prioridad===1) { %>
                                 baja
-                              <% } else if (t.prioridad === 2) { %>
-                                media
-                              <% } else if (t.prioridad === 3) { %>
-                                alta
-                              <% } %>   
-                           
+                                <% } else if (t.prioridad===2) { %>
+                                    media
+                                    <% } else if (t.prioridad===3) { %>
+                                        alta
+                                        <% } %>
+
                         </td>
                         <td>
-                            <%= t.fechaOpen.toLocaleDateString() %> <%= t.fechaOpen.toLocaleTimeString() %>
+                            <%= t.fechaOpen.toLocaleDateString() %>
+                                <%= t.fechaOpen.toLocaleTimeString() %>
                         </td>
                         <td>
-                            <% if (t.estate === 1) { %>
+                            <% if (t.estate===1) { %>
                                 En espera
-                              <% } else if (t.estate === 2) { %>
-                                Resuelto
-                              <% } %>
+                                <% } else if (t.estate===2) { %>
+                                    Resuelto
+                                    <% } %>
                         </td>
                         <td>
-                            <!-- <a href=""><i class="fa-solid fa-circle-check"></i></a> -->
-                            <a href="/api-tickets/borrar/<%= t.id_ticket %>"><i class="fa-regular fa-trash-can"></i></a>
-                            <!-- <a href=""><i class="fa-solid fa-circle-xmark"></i></a> -->
+                            
+                            <a href="/api-tickets/borrar/<%= t.id_ticket %>"
+                            onclick="return confirm('¿Deseas eliminar este ticket?')"><i
+                            class="fa-regular fa-trash-can"></i></a>
+                            <% if (t.estate===1) { %>
+                                <a href="/api-tickets/update/<%= t.id_ticket %>"
+                                    onclick="return confirm('¿Deseas aceptar este ticket?')" style="text-decoration: none;" >
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </a>
+                            <% } %>
                         </td>
                     </tr>
                     <% }); %>

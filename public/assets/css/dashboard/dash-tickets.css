@@ -167,42 +167,66 @@ tbody tr:hover {
         top: 0
     }
 
-    table tbody tr td:nth-child(1):before {
+    .dash-table-tickets tbody tr td:nth-child(1):before {
+        content: "Autor"
+    }
+
+    .dash-table-tickets tbody tr td:nth-child(2):before {
         content: "Titulo"
     }
 
-    table tbody tr td:nth-child(2):before {
+    .dash-table-tickets tbody tr td:nth-child(3):before {
         content: "Descripción"
     }
 
-    table tbody tr td:nth-child(3):before {
+    .dash-table-tickets tbody tr td:nth-child(4):before {
         content: "Prioridad"
     }
 
-    table tbody tr td:nth-child(4):before {
+    .dash-table-tickets tbody tr td:nth-child(5):before {
         content: "Fecha"
     }
 
-    table tbody tr td:nth-child(5):before {
+    .dash-table-tickets tbody tr td:nth-child(6):before {
         content: "Estado"
     }
 
-    table tbody tr td:nth-child(6):before {
+    .dash-table-tickets tbody tr td:nth-child(7):before {
+        content: "Accion"
+    }
+
+
+    /*ventanda de comentarios*/
+    .dash-table-comments tbody tr td:nth-child(1):before {
+        content: "Autor"
+    }
+
+    .dash-table-comments tbody tr td:nth-child(2):before {
+        content: "Puntaje"
+    }
+
+    .dash-table-comments tbody tr td:nth-child(3):before {
+        content: "Descripción"
+    }
+
+    .dash-table-comments tbody tr td:nth-child(4):before {
         content: "Accion"
     }
 
     .column4,
     .column5,
-    .column6 {
+    .column6,
+    .column7 {
         text-align: left
     }
 
+    .column1,
+    .column2,
+    .column3, 
     .column4,
     .column5,
     .column6,
-    .column1,
-    .column2,
-    .column3 {
+    .column7{
         width: 100%
     }
 

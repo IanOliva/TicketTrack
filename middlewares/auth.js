@@ -11,13 +11,13 @@ function authenticateToken(req, res, next) {
   if (!token) {
     // No hay token, redirije a la ruta de login
     req.session.message = "No hay token";
-    return res.redirect("/login");
+    res.redirect("/login");
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
       req.session.message = "Tocken invalido";
-      return userLogout(req, res); // Token inválido
+      userLogout(req, res); // Token inválido
     }
     req.user = user; // Almacena la información del usuario decodificado en req.user
     next(); // Continúa con el siguiente middleware o controlador
@@ -29,22 +29,21 @@ function authenticateToken(req, res, next) {
 function checkAdmin(req, res, next) {
   if (req.user) {
     if (req.user.is_admin === "true") {
-      return next();
+      next();
     } else {
-      return res.redirect("/user-dashboard");
+      res.redirect("/user-dashboard");
     }
   } else {
-    return userLogout(req, res);
-    // res.redirect("/login");
+    userLogout(req, res);
   }
 }
 
 // Middleware para verificar si no es admin
 function checkUser(req, res, next) {
   if ( req.userData.is_admin === "true") {
-    return next();
+    next();
   } else {
-    return res.redirect("/dashboard/user");
+    res.redirect("/dashboard/user");
   }
 }
 
@@ -53,7 +52,7 @@ const getUserData = async (req, res, next) => {
     //revisamos que exista userID en la session
     if (!req.session.userId) {
       req.session.message = "Sesión cerrada";
-      return res.redirect("/login");
+      res.redirect("/login");
     } else {
       req.session.message = "";
 

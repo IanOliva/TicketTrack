@@ -3,7 +3,7 @@
   <body>
     <%- include ('components/partials/navbar.ejs') %>
 
-      <% if (session.message !== "") { %>
+      <% if (session.message !=="" ) { %>
         <div class="toast-container position-fixed top-0 end-0 p-5 mt-5" data-bs-delay="2000">
           <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
@@ -108,6 +108,7 @@
 
             <!-- VALIDAMOS PARA MOSTRAR EL PANEL DE DATOS USUARIO -->
             <%if (session.editar===true) { %>
+              <a href="/api-users/volver" class="btn btn-primary">Volver</a>
               <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                   <div class="col-md-4">
@@ -115,7 +116,8 @@
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
-                      <form class="col-md-12" method="post" action="/api-users/user-update/<%= session.userId %>" enctype="multipart/form-data" >
+                      <form id="guardarDatos" class="col-md-12" method="post"
+                        action="/api-users/user-update/<%= session.userId %>" enctype="multipart/form-data">
                         <div class="form-floating">
                           <input name="username" type="text" class="form-control" id="floatingInputValue" placeholder=""
                             value="">
@@ -127,8 +129,8 @@
                           <label for="floatingInputValue">Email: <%= data.user.email %></label>
                         </div>
                         <div class="form-floating">
-                          <input name="password" type="password" class="form-control" id="floatingInputValue" placeholder=""
-                            value="">
+                          <input name="password" type="password" class="form-control" id="floatingInputValue"
+                            placeholder="" value="">
                           <label for="floatingInputValue">Contraseña</label>
                         </div>
                         <div class="form-floating">
@@ -136,7 +138,10 @@
                             value="">
                           <label for="floatingInputValue">Avatar:</label>
                         </div>
-                        <button type="submit" style="position: absolute;" class="btn btn-primary mt-4">Guardar cambios</button>
+                        <div class="card-footer d-flex justify-content-between">
+                          <button id="guardarBtn" type="submit" class="btn btn-primary" disabled>Guardar
+                            cambios</button>
+                        </div>
                       </form>
                     </div>
                   </div>
@@ -146,8 +151,12 @@
                 <div class="card" style="width: 18rem;">
                   <img src="<%= data.user.url_img %>" class="card-img-top" alt="...">
                   <div class="card-body">
-                    <h4 class="card-title"><span><%= data.user.username %> </span> </h4>
-                    <p class="card-text"><%= data.user.email %> </p>
+                    <h4 class="card-title"><span>
+                        <%= data.user.username %>
+                      </span> </h4>
+                    <p class="card-text">
+                      <%= data.user.email %>
+                    </p>
                     <a href="/api-users/user-habilitar-update" class="btn btn-primary">Editar</a>
                   </div>
                 </div>
@@ -220,6 +229,24 @@
       });
       toastBootstrap.show();
 
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('guardarDatos');
+      const saveButton = document.getElementById('guardarBtn');
+
+      form.addEventListener('input', function () {
+        const inputs = form.querySelectorAll('input');
+        let anyFilled = false;
+
+        inputs.forEach(function (input) {
+          if (input.value.trim().length > 0) {
+            anyFilled = true;
+          }
+        });
+
+        saveButton.disabled = !anyFilled;
+      });
     });
 
   </script>
