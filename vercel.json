@@ -19,5 +19,6 @@
     "DB_NAME": "tickettrack2024_database_prod",
     "SESSION_SECRET": "tu_clave_secreta_para_sesion",
     "JWT_SECRET": "tu_secreto_super_seguro"
+    
   }
 } 
