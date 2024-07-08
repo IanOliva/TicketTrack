@@ -15,7 +15,7 @@ const getAllComments = (req, res) => {
         });
     } catch (error) {
         console.error("Error al obtener los comentarios:", error);
-        res.status(500).send("Error al obtener los comentarios");
+        return res.status(500).send("Error al obtener los comentarios");
     }
 }
 
@@ -29,11 +29,11 @@ const getLastComments = (req, res) => {
                 console.error("Error al obtener los comentarios:", err);
                 return res.status(500).send("Error al obtener los comentarios");
             }
-            res.render('about-us', { title: 'About Us', css: '/assets/css/about-us.css', session: req.session, comments: results });
+            return res.render('about-us', { title: 'About Us', css: '/assets/css/about-us.css', session: req.session, comments: results });
         });
     } catch (error) {
         console.error("Error al obtener los comentarios:", error);
-        res.status(500).send("Error al obtener los comentarios");
+        return res.status(500).send("Error al obtener los comentarios");
     }
 }
 
@@ -47,11 +47,11 @@ const createComment = (req, res) => {
                 console.error("Error al crear el comentario:", err);
                 return res.status(500).send("Error al crear el comentario");
             }
-            res.redirect('/api-comments/about-us');
+            return res.redirect('/api-comments/about-us');
         });
     } catch (error) {
         console.error("Error al crear el comentario:", error);
-        res.status(500).send("Error al crear el comentario");
+        return res.status(500).send("Error al crear el comentario");
     }
 }
 
@@ -71,9 +71,9 @@ const borrar = (req, res) => {
       req.session.message = "Ticket borrado correctamente";
       
       if (is_admin === "true") {
-        res.redirect("/dashboard/dash-comments");
+        return res.redirect("/dashboard/dash-comments");
       } else {
-        res.redirect("/api-user/logout");
+        return res.redirect("/api-user/logout");
       }
   
     });
