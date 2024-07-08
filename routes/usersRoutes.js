@@ -7,21 +7,10 @@ const path = require("path");
 
 const storage = multer.memoryStorage();
 
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "public/avatars/"); // Directorio donde se guardarán los archivos
-//   },
-//   filename: function (req, file, cb) {
-//     const ruta = file.fieldname + "-" + Date.now();
-//     req.session.ruta = "/avatars/" + ruta + path.extname(file.originalname); // ruta para la base de datos
-//     cb(null, ruta + path.extname(file.originalname)); // Nombre del archivo
-//   },
-// });
-
 const upload = multer({ 
   storage: storage,
   fileFilter: function(req, file, cb) {
-    const filetypes = /jpeg|jpg|png/;
+    const filetypes = /jpeg|jpg|png|jfif/;
     const mimetype = filetypes.test(file.mimetype);
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 
@@ -33,8 +22,6 @@ const upload = multer({
 });
 
 
-// const upload = multer({ storage: storage });
-
 // Ruta de registro
 router.post("/register", upload.single("image"), userController.userRegister);
 
@@ -45,7 +32,6 @@ router.post("/login", userController.userLogin);
 router.get("/logout", userController.userLogout);
 
 router.get("/volver", userController.volver);
-
 
 //Ruta para Habilitar la edicion
 router.get(

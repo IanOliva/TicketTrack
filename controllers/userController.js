@@ -3,13 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const path = require("path");
+const { Readable } = require("stream");
 const { Client } = require("basic-ftp");
 const ftpClient = new Client();
-
-ftpClient.ftp.verbose = true; // Puedes habilitar esto para ver detalles de la conexión en la consola
-ftpClient.ftp.overwrite = 'all';
-ftpClient.ftp.secure = true;
-ftpClient.ftp.authType = 'tls';
 
 const habilitarEdicion = (req, res) => {
   req.session.editar = true;
@@ -31,68 +27,69 @@ const userRegister = async (req, res, next) => {
   const { username, email, password } = req.body;
   let image = req.file;
 
+  ftpClient.ftp.verbose = true;
+
+  const stream = Readable.from(image.buffer);
+
+  const archivo = image.fieldname + "-" + Date.now() + path.extname(image.originalname);
+
   const ruta =
-    "avatars/" +
-    image.fieldname +
-    "-" +
-    Date.now() +
-    path.extname(image.originalname);
-  ftpClient
+    "/www/avatars/" + archivo;
+  await ftpClient
     .access({
       host: "ftp-tickettrack2024.alwaysdata.net",
       user: "tickettrack2024_ftp",
       password: "2C@WjbiUv!n!zX6",
+      secure: true,
     })
     .then(() => {
-      return ftpClient.upload(image.buffer, ruta);
+      ftpClient.uploadFrom(stream, ruta);
     })
     .then(() => {
       console.log("Archivo subido exitosamente al servidor FTP");
       // Guardar la ruta en la sesión o en la base de datos
-      req.session.ruta = "/" + ruta; // Ruta para la base de datos
-      // Llamar al controlador para procesar el registro con la ruta del archivo
-      userController.userRegister(req, res);
+      req.session.ruta = 'https://tickettrack2024.alwaysdata.net/avatars/' + archivo; // Ruta para la base de datos
     })
     .catch((err) => {
       console.error("Error al subir archivo al servidor FTP:", err);
       res.status(500).send("Error interno al subir archivo al servidor FTP.");
     });
 
-  // if (image === undefined) {
-  //   image =
-  //     "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg";
-  // } else {
-  //   image = req.session.ruta;
-  // }
+  if (image === undefined) {
+    image =
+      "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg";
+  } else {
+    image = req.session.ruta;
+  }
 
-  // const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  // try {
-  //   // Hash de la contraseña
+  try {
+    // Hash de la contraseña
 
-  //   const query =
-  //     "INSERT INTO users (username, email, password, url_img) VALUES (?, ?, ?, ?)";
-  //   db.execute(
-  //     query,
-  //     [username, email, hashedPassword, image],
-  //     (err, results) => {
-  //       if (err) {
-  //         console.error("Error durante el registro del usuario:", err);
-  //         return res.status(500).send("Error durante el registro del usuario");
-  //       }
-  //       if (req.session.userId) {
-  //         req.session.message = "Usuario agregado correctamente";
-  //         return res.redirect("/dashboard/dash-users");
-  //       } else {
-  //         req.session.message = "Bienvenido " + username;
-  //         return res.redirect("/login");
-  //       }
-  //     }
-  //   );
-  // } catch (error) {
-  //   console.error("Error :", error);
-  //   res.status(500).send("Error durante el registro del usuario");
-  // }
+    const query =
+      "INSERT INTO users (username, email, password, url_img) VALUES (?, ?, ?, ?)";
+    db.execute(
+      query,
+      [username, email, hashedPassword, image],
+      (err, results) => {
+        if (err) {
+          console.error("Error durante el registro del usuario:", err);
+          return res.status(500).send("Error durante el registro del usuario");
+        }
+        if (req.session.userId) {
+          req.session.message = "Usuario agregado correctamente";
+          return res.redirect("/dashboard/dash-users");
+        } else {
+          req.session.message = "Bienvenido " + username;
+          return res.redirect("/login");
+        }
+      }
+    );
+  } catch (error) {
+    console.error("Error :", error);
+    res.status(500).send("Error durante el registro del usuario");
+  }
 };
 
 // controlador de login
