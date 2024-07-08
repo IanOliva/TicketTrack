@@ -1,8 +1,10 @@
 const db = require("../db/database");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
+const { Client } = require("basic-ftp");
+const ftpClient = new Client();
 
 const habilitarEdicion = (req, res) => {
   req.session.editar = true;
@@ -24,40 +26,68 @@ const userRegister = async (req, res, next) => {
   const { username, email, password } = req.body;
   let image = req.file;
 
-  if (image === undefined ) {
-    image = 'https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg'
-  }else{
-    image = req.session.ruta;
-  }
+  const ruta =
+    "avatars/" +
+    image.fieldname +
+    "-" +
+    Date.now() +
+    path.extname(image.originalname);
+  ftpClient
+    .access({
+      host: "ftp-tickettrack2024.alwaysdata.net",
+      user: "tickettrack2024_ftp",
+      password: "2C@WjbiUv!n!zX6",
+    })
+    .then(() => {
+      return ftpClient.upload(image.buffer, ruta);
+    })
+    .then(() => {
+      console.log("Archivo subido exitosamente al servidor FTP");
+      // Guardar la ruta en la sesión o en la base de datos
+      req.session.ruta = "/" + ruta; // Ruta para la base de datos
+      // Llamar al controlador para procesar el registro con la ruta del archivo
+      userController.userRegister(req, res);
+    })
+    .catch((err) => {
+      console.error("Error al subir archivo al servidor FTP:", err);
+      res.status(500).send("Error interno al subir archivo al servidor FTP.");
+    });
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  // if (image === undefined) {
+  //   image =
+  //     "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg";
+  // } else {
+  //   image = req.session.ruta;
+  // }
 
-  try {
-    // Hash de la contraseña
+  // const hashedPassword = await bcrypt.hash(password, 10);
 
-    const query =
-      "INSERT INTO users (username, email, password, url_img) VALUES (?, ?, ?, ?)";
-    db.execute(
-      query,
-      [username, email, hashedPassword, image],
-      (err, results) => {
-        if (err) {
-          console.error("Error durante el registro del usuario:", err);
-          return res.status(500).send("Error durante el registro del usuario");
-        }
-        if (req.session.userId) {
-          req.session.message = "Usuario agregado correctamente";
-          return res.redirect("/dashboard/dash-users");
-        } else {
-          req.session.message = "Bienvenido " + username;
-          return res.redirect("/login");
-        }
-      }
-    );
-  } catch (error) {
-    console.error("Error :", error);
-    res.status(500).send("Error durante el registro del usuario");
-  }
+  // try {
+  //   // Hash de la contraseña
+
+  //   const query =
+  //     "INSERT INTO users (username, email, password, url_img) VALUES (?, ?, ?, ?)";
+  //   db.execute(
+  //     query,
+  //     [username, email, hashedPassword, image],
+  //     (err, results) => {
+  //       if (err) {
+  //         console.error("Error durante el registro del usuario:", err);
+  //         return res.status(500).send("Error durante el registro del usuario");
+  //       }
+  //       if (req.session.userId) {
+  //         req.session.message = "Usuario agregado correctamente";
+  //         return res.redirect("/dashboard/dash-users");
+  //       } else {
+  //         req.session.message = "Bienvenido " + username;
+  //         return res.redirect("/login");
+  //       }
+  //     }
+  //   );
+  // } catch (error) {
+  //   console.error("Error :", error);
+  //   res.status(500).send("Error durante el registro del usuario");
+  // }
 };
 
 // controlador de login
@@ -126,7 +156,7 @@ const userLogout = (req, res) => {
 };
 
 // controlador para modificar usuario
-const userUpdate =  async (req, res) => {
+const userUpdate = async (req, res) => {
   delete req.session.editar;
   const { user_id } = req.params;
   let { username, password, email } = req.body;
@@ -138,27 +168,36 @@ const userUpdate =  async (req, res) => {
     username = username === "" ? req.session.username : username;
     email = email === "" ? req.session.email : email;
     image = image === undefined ? req.session.url_img : req.session.ruta;
-    hashedPassword = password === "" ? req.session.passUser : await bcrypt.hash(password, 10);
+    hashedPassword =
+      password === "" ? req.session.passUser : await bcrypt.hash(password, 10);
 
     // verificamos si la imagen es diferente a la que ya tenia el usuario
     if (image !== req.session.url_img) {
-      const oldImagePath = path.join(__dirname,"../public",req.session.url_img);
+      const oldImagePath = path.join(
+        __dirname,
+        "../public",
+        req.session.url_img
+      );
       deleteFile(oldImagePath);
-      req.session.url_img = req.session.ruta
+      req.session.url_img = req.session.ruta;
     }
 
     const query =
       "UPDATE users SET username = ?, email = ? ,password = ?, url_img = ? WHERE user_id = ?";
-    db.execute(query, [username, email, hashedPassword, image, user_id ], (err, results) => {
-      if (err) {
-        console.error("Error durante la actualización del usuario:", err);
-        return res
-          .status(500)
-          .send("Error durante la actualización del usuario");
+    db.execute(
+      query,
+      [username, email, hashedPassword, image, user_id],
+      (err, results) => {
+        if (err) {
+          console.error("Error durante la actualización del usuario:", err);
+          return res
+            .status(500)
+            .send("Error durante la actualización del usuario");
+        }
+        req.session.message = "Datos actualizado correctamente";
+        return res.redirect("/dashboard/user");
       }
-      req.session.message = "Datos actualizado correctamente";
-      return res.redirect("/dashboard/user");
-    });
+    );
   } catch (error) {
     console.error("Se encontro error", error);
     res.status(500).send("Error durante la actualización del usuario");
