@@ -46,12 +46,12 @@ app.use('/dashboard', dashboardRoutes);
 
 // Ruta para servir la vista home.ejs como principal desde la carpeta views
 app.get('/', (req, res) => {
-  res.render('home', { title: 'Home', css: '/assets/css/home.css', session: req.session });
+  res.render('home', { title: 'Home', css: '.public/assets/css/home.css', session: req.session });
 });
 
 // Ruta para servir la vista support.ejs desde la carpeta views
 app.get('/faqs', (req, res) => {
-  res.render('faqs', { title: 'Faqs', css: '/assets/css/faqs.css', session: req.session });
+  res.render('faqs', { title: 'Faqs', css: '.public/assets/css/faqs.css', session: req.session });
 });
 
 // Ruta para servir la vista login.ejs desde la carpeta views || sin css porque esta hecho con bootstrap
@@ -67,7 +67,7 @@ app.get('/register', (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).render('404', { title: '404', css: '/assets/css/404.css', session: req.session });
+  res.status(404).render('404', { title: '404', css: './assets/css/404.css', session: req.session });
 })
 
 // Iniciar el servidor
