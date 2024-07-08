@@ -22,7 +22,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET, // Debes agregar SESSION_SECRET en tu archivo .env
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }, // Cambia a true si se usa en produccion
+  cookie: { secure: false }, // Cambia a true si se usa en produccion
 }));
 
 // Configurar EJS como el motor de plantillas
