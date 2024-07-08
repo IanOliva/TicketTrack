@@ -6,6 +6,11 @@ const path = require("path");
 const { Client } = require("basic-ftp");
 const ftpClient = new Client();
 
+ftpClient.ftp.verbose = true; // Puedes habilitar esto para ver detalles de la conexión en la consola
+ftpClient.ftp.overwrite = 'all';
+ftpClient.ftp.secure = true;
+ftpClient.ftp.authType = 'tls';
+
 const habilitarEdicion = (req, res) => {
   req.session.editar = true;
   return res.redirect("/dashboard/user");
