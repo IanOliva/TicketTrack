@@ -1,9 +1,9 @@
 const express = require('express');
 const path = require('path');
-const ticketRoutes = require('../routes/ticketsRoutes');
-const userRoutes = require('../routes/usersRoutes');
-const dashboardRoutes = require('../routes/dashboardRoutes');
-const commentRoutes = require('../routes/commentsRoutes');
+const ticketRoutes = require('./routes/ticketsRoutes');
+const userRoutes = require('./routes/usersRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
+const commentRoutes = require('./routes/commentsRoutes');
 
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
@@ -27,10 +27,10 @@ app.use(session({
 
 // Configurar EJS como el motor de plantillas
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, './views'));
 
 // Middleware para servir archivos estáticos (HTML, CSS, JS)
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, './public')));
 
 // Usar las rutas de la API de tickets
 app.use('/api-tickets', ticketRoutes);
