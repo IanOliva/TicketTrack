@@ -7,7 +7,7 @@ router.get(
   "/user",
   auth.getUserData,
   auth.authenticateToken,
-  dashboardController.dashUser
+  dashboardController.dashUser,
 );
 
 router.get(
@@ -15,7 +15,7 @@ router.get(
   auth.getUserData,
   auth.checkUser,
   auth.authenticateToken,
-  dashboardController.dashAdmin
+  dashboardController.dashAdmin,
 );
 
 router.get(

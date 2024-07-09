@@ -54,20 +54,16 @@ const getUserData = async (req, res, next) => {
       req.session.message = "Sesión cerrada";
       return res.redirect("/login");
     } else {
-      req.session.message = "";
-
       const userId = req.session.userId;
       const username = req.session.username;
       const urlImg = req.session.url_img;
       const is_admin = req.session.is_admin;
-      const message = req.session.message;
 
       req.userData = {
         is_admin,
         userId,
         username,
         urlImg,
-        message,
       };
 
       next();

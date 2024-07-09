@@ -8,29 +8,82 @@
         <div class="box box1">
             <i class="fa-solid fa-list-check"></i>
             <span class="text">Total</span>
-            <span class="number" id="ticket-count"> <%= data.totalTickets %> </span>
+            <span class="number" id="ticket-count">
+                <%= data.totalTickets %>
+            </span>
         </div>
         <div class="box box2">
             <i class="fa-solid fa-hourglass-half"></i>
             <span class="text">En espera</span>
-            <span class="number" id="waiting-count"><%= data.totalWaiting %></span>
+            <span class="number" id="waiting-count">
+                <%= data.totalWaiting %>
+            </span>
         </div>
         <div class="box box3">
             <i class="fa-regular fa-circle-check"></i>
             <span class="text">Resueltos</span>
-            <span class="number" id="resolved-count"><%= data.totalResolved %></span>
+            <span class="number" id="resolved-count">
+                <%= data.totalResolved %>
+            </span>
         </div>
         <div class="box box4">
             <i class="fa-solid fa-chart-line"></i>
             <span class="text">Tiempo Estimado</span>
-            <span class="number" id="promedio"><%= data.promedio %></span>
+            <span class="number" id="promedio">
+                <%= data.promedio %>
+            </span>
         </div>
         <div class="box box5">
             <i class="fa-regular fa-calendar-xmark"></i>
             <span class="text">Más Antiguo</span>
-            <span class="number" id="atraso"><%= data.diasAtraso %></span>
+            <span class="number" id="atraso">
+                <%= data.diasAtraso %>
+            </span>
+        </div>
+    </div>
+    <hr style="margin-top: 1rem;">
+    <div class="title">
+        <i class="fa-solid fa-chart-simple"></i>
+        <span class="text">Total Administradores</span>
+    </div>
+    <!-- esta box es para la cantidad de tickets -->
+    <div class="boxes">
+        <div class="box box1">
+            <i class="fa-solid fa-crown"></i>
+            <span class="text">Admin</span>
+            <span class="number" id="ticket-count">
+                <%= data.totalAdmin %>
+            </span>
+        </div>
+    </div>
+    <hr style="margin-top: 1rem;">
+    <div class="title">
+        <i class="fa-solid fa-chart-simple"></i>
+        <span class="text">Total Usuarios</span>
+    </div>
+    <!-- esta box es para la cantidad de tickets -->
+    <div class="boxes">
+        <div class="box box2">
+            <i class="fa-solid fa-user"></i>
+            <span class="text">Usuarios</span>
+            <span class="number" id="waiting-count">
+                <%= data.totalUsers %>
+            </span>
+        </div>
+    </div>
+    <hr style="margin-top: 1rem;">
+    <div class="title">
+        <i class="fa-solid fa-chart-simple"></i>
+        <span class="text">Total Comentarios</span>
+    </div>
+    <!-- esta box es para la cantidad de tickets -->
+    <div class="boxes">
+        <div class="box box3">
+            <i class="fa-solid fa-comment"></i>
+            <span class="text">Comentarios</span>
+            <span class="number" id="resolved-count">
+                <%= data.totalComments %>
+            </span>
         </div>
     </div>
 </div>
-
-<script src="./js/dash-home.js"></script>

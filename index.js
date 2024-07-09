@@ -46,11 +46,13 @@ app.use('/dashboard', dashboardRoutes);
 
 // Ruta para servir la vista home.ejs como principal desde la carpeta views
 app.get('/', (req, res) => {
+  req.session.editar = false;
   res.render('./home', { title: 'Home', css: './assets/css/home.css', session: req.session });
 });
 
 // Ruta para servir la vista support.ejs desde la carpeta views
 app.get('/faqs', (req, res) => {
+  req.session.editar = false;
   res.render('./faqs', { title: 'Faqs', css: './assets/css/faqs.css', session: req.session });
 });
 
@@ -58,16 +60,17 @@ app.get('/faqs', (req, res) => {
 app.get('/login', (req, res) => {
   const message = req.session.message;
   delete req.session.message;
-  res.render('./login', { title: 'Login' , css: './public/assets/css/login-register.css' , session: req.session , message : message});
+  res.render('./login', { title: 'Login' , css: './assets/css/login-register.css' , session: req.session , message : message});
 });
 
 // Ruta para servir la vista register.ejs desde la carpeta views || sin css porque esta hecho con bootstrap
 app.get('/register', (req, res) => {
-  res.render('./register', { title: 'Register' , css: './public/assets/css/login-register.css' , session: req.session });
+  res.render('./register', { title: 'Register' , css: './assets/css/login-register.css' , session: req.session });
 });
 
 app.use((req, res) => {
-  res.status(404).render('./404', { title: '404', css: './public/assets/css/404.css', session: req.session });
+  req.session.editar = false;
+  res.status(404).render('./404', { title: '404', css: './assets/css/404.css', session: req.session });
 })
 
 // Iniciar el servidor

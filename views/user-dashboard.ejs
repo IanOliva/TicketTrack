@@ -3,7 +3,193 @@
   <body>
     <%- include ('components/partials/navbar.ejs') %>
 
-      <% if (session.message !=="" ) { %>
+      <!-- Button trigger modal -->
+      <button id="botonModal" type="button" class="btn btn-primary d-none" data-bs-toggle="modal"
+        data-bs-target="#exampleModal"></button>
+
+      <!-- Modal -->
+      <div class="modal fade" style="color:white" data-bs-theme="dark" id="exampleModal" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg d-flex justify-content-center" id="modalPadre">
+          <div class="modal-content" id="modalContenido">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="idTicketModal">Crea tu Ticket!</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+              <!-- FORMULARIO -->
+              <form action="/api-tickets/create" method="POST" id="formTicketModal" class="row g-3 needs-validation"
+                validate>
+                <div class="col-md-4 d-none">
+                  <label for="idUsuario" class="form-label"></label>
+                  <input type="text" class="form-control" id="idUsuario" name="idUsuario"
+                    value=" <%= session.idUsuario %> ">
+                </div>
+                <div class="col-md-4">
+                  <label for="prioridad" class="form-label">Prioridad</label>
+                  <select class="form-select" id="prioridad" name="prioridad" required>
+                    <option selected disabled value="">Seleccione</option>
+                    <option value="1">Alta</option>
+                    <option value="2">Media</option>
+                    <option value="3">Baja</option>
+                  </select>
+                  <div class="valid-feedback">
+                    Completado!
+                  </div>
+                  <div class="invalid-feedback">
+                    Seleccione prioridad
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label for="motivo" class="form-label">Motivo</label>
+                  <input type="text" class="form-control" id="validationCustom02" name="motivo" required>
+                  <div class="valid-feedback">
+                    Completado!
+                  </div>
+                  <div class="invalid-feedback">
+                    Ingrese un motivo.
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label for="descripcion" class="form-label">Descripcion del Pedido</label>
+                  <textarea type="text" class="form-control" style="height: 100px" id="descripcion" name="descripcion"
+                    required></textarea>
+                  <div class="valid-feedback">
+                    Completado!
+                  </div>
+                  <div class="invalid-feedback">
+                    Ingrese detalle del pedido
+                  </div>
+                </div>
+
+                <!--onclick="enviarFormulario()"-->
+                <!-- ENVIAR REALMENTE EL FORM -->
+                <div class="col-12" style="display: none;">
+                  <button class="btn btn-primary" type="submit" id="submitFormularioModal"></button>
+                </div>
+              </form>
+              <!-- final form -->
+
+            </div>
+            <div class="modal-footer" style="justify-content: space-between!important;">
+              <div>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" onclick="eventoReal()" class="btn btn-primary"
+                  id="dispararBtnRealEnviar">Enviar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <section class="ticket-section">
+        <div class="addTicketButton">
+          <div class="sombraIcono"><i class="fa-solid fa-circle-plus"></i></div>
+          <span>Agregar</span>
+        </div>
+
+        <!-- VALIDAMOS PARA MOSTRAR EL PANEL DE DATOS USUARIO -->
+        <%if (session.editar===true) { %>
+          <a href="/api-users/volver" class="btn btn-primary">Volver</a>
+          <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="<%= data.user.url_img %>" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <form id="guardarDatos" class="col-md-12" method="post"
+                    action="/api-users/user-update/<%= session.userId %>" enctype="multipart/form-data">
+                    <div class="form-floating">
+                      <input name="username" type="text" class="form-control" placeholder="" value="">
+                      <label for="floatingInputValue">Nombre: <%= data.user.username %></label>
+                    </div>
+                    <div class="form-floating">
+                      <input name="email" type="email" class="form-control" placeholder="" value="">
+                      <label for="floatingInputValue">Email: <%= data.user.email %></label>
+                    </div>
+                    <div class="form-floating">
+                      <input name="password" type="password" class="form-control" placeholder="" value="">
+                      <label for="floatingInputValue">Contraseña</label>
+                    </div>
+                    <div class="form-floating">
+                      <input name="image" type="file" class="form-control" placeholder="" value="">
+                      <label for="floatingInputValue">Avatar:</label>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                      <button id="guardarBtn" type="submit" class="btn btn-primary" disabled>Guardar
+                        cambios</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% } else { %>
+
+            <div class="perfil d-flex flex-row align-items-center">
+              <img src="<%= data.user.url_img %>" alt="img-profile">
+              <div class="perfil-texto">
+                <span>
+                  usuario: <%= data.user.username %>
+                </span>
+                <br>
+                <hr  style="margin:0 !important">
+                <p class="texto">
+                  mail: <%= data.user.email %>
+                </p>
+              </div>
+              <a href="/api-users/user-habilitar-update" class="btn btn-primary">Editar</a>
+            </div>
+
+            <h1 class="title">Tickets Recientes</h1>
+            <div id="cont-tickets" class="container-nb">
+              <% data.tickets.forEach((t)=> { %>
+                <div class="card-nb" data-id="<%= t.id_ticket %>" data-bs-theme="dark">
+                  <div class="
+                  <% switch (t.prioridad) { 
+                    case 1 : %>
+                      alert alert-success d-flex justify-content-between
+                    <% break; 
+                    case 2: %>
+                      alert alert-warning d-flex justify-content-between
+                    <% break; 
+                    case 3: %>
+                      alert alert-danger d-flex justify-content-between
+                    <% break; 
+                    default: %>
+                      alert alert-primary d-flex justify-content-between
+                  <% } %>
+                ">
+                    <p id="t-detalle" style="font-size:1rem">
+                      <%= t.motivo %>
+                    </p>
+                    <p id="t-id">
+                      N° <%= t.id_ticket %>
+                    </p>
+                  </div>
+                  <div class="card-body-nb">
+                    <p id="t-detalle">
+                      <%= t.descripcion %>
+                    </p>
+                  </div>
+                  <div class="card-footer-nb">
+                    <a href="/api-tickets/borrar/<%= t.id_ticket %>" class="btn btn-primary cargarHtml  <%= t.estate === 2 ? 'invisible' : '' %> ">Borrar</a>
+                    <p id="estado" class="fw-bold alert
+                      <%= t.estate === 1 ? 'text-body-tertiary' : 'text-success' %>">
+                      <%= t.estate === 1 ? 'En espera' : 'Resuelto' %>
+                    </p>
+                  </div>
+                </div>
+                <% }); %>
+            </div>
+            <% } %>
+
+
+      </section>
+      <% if (message) { %>
         <div class="toast-container position-fixed top-0 end-0 p-5 mt-5" data-bs-delay="2000">
           <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
@@ -13,240 +199,20 @@
               <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-              <%= session.message %>
+              <% if (session.editar===true) { %>
+                <p>Modo edición</p>
+                <% } else { %>
+                  <p>
+                    <%= message %>
+                  </p>
+                  <% } %>
             </div>
           </div>
         </div>
         <% } %>
-
-          <!-- Button trigger modal -->
-          <button id="botonModal" type="button" class="btn btn-primary d-none" data-bs-toggle="modal"
-            data-bs-target="#exampleModal"></button>
-
-          <!-- Modal -->
-          <div class="modal fade" style="color:white" data-bs-theme="dark" id="exampleModal" tabindex="-1"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg d-flex justify-content-center" id="modalPadre">
-              <div class="modal-content" id="modalContenido">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="idTicketModal">Crea tu Ticket!</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                  <!-- FORMULARIO -->
-                  <form action="/api-tickets/create" method="POST" id="formTicketModal" class="row g-3 needs-validation"
-                    validate>
-                    <div class="col-md-4 d-none">
-                      <label for="idUsuario" class="form-label"></label>
-                      <input type="text" class="form-control" id="idUsuario" name="idUsuario"
-                        value=" <%= session.idUsuario %> ">
-                    </div>
-                    <div class="col-md-4">
-                      <label for="prioridad" class="form-label">Prioridad</label>
-                      <select class="form-select" id="prioridad" name="prioridad" required>
-                        <option selected disabled value="">Seleccione</option>
-                        <option value="1">Alta</option>
-                        <option value="2">Media</option>
-                        <option value="3">Baja</option>
-                      </select>
-                      <div class="valid-feedback">
-                        Completado!
-                      </div>
-                      <div class="invalid-feedback">
-                        Seleccione prioridad
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <label for="motivo" class="form-label">Motivo</label>
-                      <input type="text" class="form-control" id="validationCustom02" name="motivo" required>
-                      <div class="valid-feedback">
-                        Completado!
-                      </div>
-                      <div class="invalid-feedback">
-                        Ingrese un motivo.
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <label for="descripcion" class="form-label">Descripcion del Pedido</label>
-                      <textarea type="text" class="form-control" style="height: 100px" id="descripcion"
-                        name="descripcion" required></textarea>
-                      <div class="valid-feedback">
-                        Completado!
-                      </div>
-                      <div class="invalid-feedback">
-                        Ingrese detalle del pedido
-                      </div>
-                    </div>
-
-                    <!--onclick="enviarFormulario()"-->
-                    <!-- ENVIAR REALMENTE EL FORM -->
-                    <div class="col-12" style="display: none;">
-                      <button class="btn btn-primary" type="submit" id="submitFormularioModal"></button>
-                    </div>
-                  </form>
-                  <!-- final form -->
-
-                </div>
-                <div class="modal-footer" style="justify-content: space-between!important;">
-                  <div>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" onclick="eventoReal()" class="btn btn-primary"
-                      id="dispararBtnRealEnviar">Enviar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <section class="ticket-section">
-            <div class="addTicketButton">
-              <div class="sombraIcono"><i class="fa-solid fa-circle-plus"></i></div>
-              <span>Agregar</span>
-            </div>
-
-            <!-- VALIDAMOS PARA MOSTRAR EL PANEL DE DATOS USUARIO -->
-            <%if (session.editar===true) { %>
-              <a href="/api-users/volver" class="btn btn-primary">Volver</a>
-              <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                  <div class="col-md-4">
-                    <img src="<%= data.user.url_img %>" class="img-fluid rounded-start" alt="...">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <form id="guardarDatos" class="col-md-12" method="post"
-                        action="/api-users/user-update/<%= session.userId %>" enctype="multipart/form-data">
-                        <div class="form-floating">
-                          <input name="username" type="text" class="form-control" id="floatingInputValue" placeholder=""
-                            value="">
-                          <label for="floatingInputValue">Nombre: <%= data.user.username %></label>
-                        </div>
-                        <div class="form-floating">
-                          <input name="email" type="email" class="form-control" id="floatingInputValue" placeholder=""
-                            value="">
-                          <label for="floatingInputValue">Email: <%= data.user.email %></label>
-                        </div>
-                        <div class="form-floating">
-                          <input name="password" type="password" class="form-control" id="floatingInputValue"
-                            placeholder="" value="">
-                          <label for="floatingInputValue">Contraseña</label>
-                        </div>
-                        <div class="form-floating">
-                          <input name="image" type="file" class="form-control" id="floatingInputValue" placeholder=""
-                            value="">
-                          <label for="floatingInputValue">Avatar:</label>
-                        </div>
-                        <div class="card-footer d-flex justify-content-between">
-                          <button id="guardarBtn" type="submit" class="btn btn-primary" disabled>Guardar
-                            cambios</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <% } else { %>
-                <div class="card" style="width: 18rem;">
-                  <img src="<%= data.user.url_img %>" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h4 class="card-title"><span>
-                        <%= data.user.username %>
-                      </span> </h4>
-                    <p class="card-text">
-                      <%= data.user.email %>
-                    </p>
-                    <a href="/api-users/user-habilitar-update" class="btn btn-primary">Editar</a>
-                  </div>
-                </div>
-                <% } %>
-
-                  <h1 class="title">Tickets Recientes</h1>
-                  <div id="cont-tickets" class="container-nb">
-                    <% data.tickets.forEach((t)=> { %>
-                      <div class="card-nb" data-id="<%= t.id_ticket %>" data-bs-theme="dark">
-                        <div class="alert alert-valorAlerta"
-                          style="display: flex !important; justify-content: space-between;">
-                          <p id="t-detalle" style="font-size:1rem">
-                            <%= t.motivo %>
-                          </p>
-                          <p id="t-id">
-                            <%= t.id_ticket %>
-                          </p>
-                        </div>
-                        <div class="card-body-nb">
-                          <p id="t-detalle">
-                            <%= t.descripcion %>
-                          </p>
-                        </div>
-                        <div class="card-footer-nb">
-                          <a href="/api-tickets/borrar/<%= t.id_ticket %>" class="btn btn-primary cargarHtml">Borrar</a>
-                          <p id="estado"
-                            style="color: red; font-size: 1.2rem; text-transform: capitalize; font-weight: 700;">
-                            valorPalabra
-                          </p>
-                        </div>
-                      </div>
-                      <% }); %>
-                  </div>
-          </section>
           <%- include('./components/partials/footer.ejs') %>
   </body>
 
-  <script src="/js/userDashboard.js"></script>
-  <script src="/js/layout.js"></script>
-  <script>
-    (function () {
-      "use strict";
-
-      var forms = document.querySelectorAll(".needs-validation");
-
-      Array.prototype.slice.call(forms).forEach(function (form) {
-        form.addEventListener(
-          "submit",
-          function (event) {
-            if (!form.checkValidity()) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            form.classList.add("was-validated");
-          },
-          false
-        );
-      });
-    })();
-
-    function eventoReal() {
-      const botonReal = document.getElementById("submitFormularioModal");
-      botonReal.click();
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const toastLiveExample = document.getElementById('liveToast');
-      const toastBootstrap = new bootstrap.Toast(toastLiveExample, {
-        delay: 2000
-      });
-      toastBootstrap.show();
-
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const form = document.getElementById('guardarDatos');
-      const saveButton = document.getElementById('guardarBtn');
-
-      form.addEventListener('input', function () {
-        const inputs = form.querySelectorAll('input');
-        let anyFilled = false;
-
-        inputs.forEach(function (input) {
-          if (input.value.trim().length > 0) {
-            anyFilled = true;
-          }
-        });
-
-        saveButton.disabled = !anyFilled;
-      });
-    });
-
-  </script>
+  <script defer src="/js/userDashboard.js"></script>
+  <script defer src="/js/layout.js"></script>
+  <script defer src="/js/user-dashboard.js"></script>

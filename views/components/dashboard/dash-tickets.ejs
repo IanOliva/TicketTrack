@@ -9,7 +9,6 @@
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" placeholder="Buscar..." />
         </div> -->
-
         <table class="dash-table dash-table-tickets">
             <thead>
                 <tr>
@@ -22,58 +21,61 @@
                     <th>Accion</th>
                 </tr>
             </thead>
-            <tbody id="table-body">
-
+            <% if (data.tickets.length> 0) { %>
                 <% data.tickets.forEach((t)=> { %>
-                    <tr>
-                        <td>
-                            <%= t.username %>
-                        </td>
-                        <td>
-                            <%= t.motivo %>
-                        </td>
-                        <td>
-                            <%= t.descripcion %>
-                        </td>
-                        <td>
-                            <% if (t.prioridad===1) { %>
-                                baja
-                                <% } else if (t.prioridad===2) { %>
-                                    media
-                                    <% } else if (t.prioridad===3) { %>
-                                        alta
+
+                    <tbody id="table-body">
+                        <tr>
+                            <td>
+                                <%= t.username %>
+                            </td>
+                            <td>
+                                <%= t.motivo %>
+                            </td>
+                            <td>
+                                <%= t.descripcion %>
+                            </td>
+                            <td>
+                                <% if (t.prioridad===1) { %>
+                                    baja
+                                    <% } else if (t.prioridad===2) { %>
+                                        media
+                                        <% } else if (t.prioridad===3) { %>
+                                            alta
+                                            <% } %>
+
+                            </td>
+                            <td>
+                                <%= t.fechaOpen.toLocaleDateString() %>
+                                    <%= t.fechaOpen.toLocaleTimeString() %>
+                            </td>
+                            <td>
+                                <% if (t.estate===1) { %>
+                                    En espera
+                                    <% } else if (t.estate===2) { %>
+                                        Resuelto
                                         <% } %>
+                            </td>
+                            <td>
 
-                        </td>
-                        <td>
-                            <%= t.fechaOpen.toLocaleDateString() %>
-                                <%= t.fechaOpen.toLocaleTimeString() %>
-                        </td>
-                        <td>
-                            <% if (t.estate===1) { %>
-                                En espera
-                                <% } else if (t.estate===2) { %>
-                                    Resuelto
+                                <a href="/api-tickets/borrar/<%= t.id_ticket %>"
+                                    onclick="return confirm('¿Deseas eliminar este ticket?')"><i
+                                        class="fa-regular fa-trash-can"></i></a>
+                                <% if (t.estate===1) { %>
+                                    <a href="/api-tickets/update/<%= t.id_ticket %>"
+                                        onclick="return confirm('¿Deseas aceptar este ticket?')"
+                                        style="text-decoration: none;">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </a>
                                     <% } %>
-                        </td>
-                        <td>
-                            
-                            <a href="/api-tickets/borrar/<%= t.id_ticket %>"
-                            onclick="return confirm('¿Deseas eliminar este ticket?')"><i
-                            class="fa-regular fa-trash-can"></i></a>
-                            <% if (t.estate===1) { %>
-                                <a href="/api-tickets/update/<%= t.id_ticket %>"
-                                    onclick="return confirm('¿Deseas aceptar este ticket?')" style="text-decoration: none;" >
-                                    <i class="fa-solid fa-circle-check"></i>
-                                </a>
-                            <% } %>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    </tbody>
                     <% }); %>
-
-            </tbody>
-        </table>
-
+                </table>
+            <% } else { %>
+                <span style="color: var(--text-color);">No hay tickets</span>
+                <% } %>
     </div>
 
 </body>

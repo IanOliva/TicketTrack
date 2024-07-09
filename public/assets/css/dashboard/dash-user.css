@@ -110,11 +110,12 @@ button:hover {
     top: 7%;
     right: 6%;
     color: var(--text-color);
-    
-    p{
+
+    p {
         position: absolute;
-        
-        font-size: .7rem;}
+
+        font-size: .7rem;
+    }
 }
 
 
@@ -138,7 +139,9 @@ button:hover {
     }
 }
 
-a{
-    color:var(--text-color);
+a {
+    color: var(--text-color);
 }
+
 ;
+

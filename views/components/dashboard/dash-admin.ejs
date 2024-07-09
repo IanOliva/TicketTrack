@@ -9,39 +9,27 @@
             <h6>
                 <%= data.datosUsuario.email %>
             </h6>
-            <!-- <p>
-                Datos
-            </p> -->
+            
             <div class="skills">
                 <h6>Tickets Propios</h6>
-                <!-- <ul>
-                    <li>Desarrollador Front-End</li>
-                    <li>JavaScript</li>
-                    <li>Stack Net</li>
-                    <li>Sql Server</li>
-                    <li>Reporting Services</li>
-                </ul> -->
-
-                <% data.ticketsUsuario.forEach((t)=> { %>
-                    <tr>
-                        <td>
-                            <%= t.motivo %>
-                        </td>
-                        <td>
-                            <%= t.descripcion %>
-                        </td>
-                        <td>
-                            <%= t.prioridad %>
-                        </td>
-                        <td>
-                            <%= t.fechaOpen %>
-                        </td>
-                        <td>
-                            <%= t.estate %>
-                        </td>
-                    </tr>
-                    <% }); %>
-
+                <% if (data.ticketsUsuario.length > 0) { %>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Motivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% data.ticketsUsuario.forEach((t) => { %>
+                                <tr>
+                                    <td><%= t.motivo %></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                <% } else { %>
+                    0
+                <% } %>
             </div>
 
             <div class="skills">
@@ -50,10 +38,6 @@
                     <li>
                         <%= data.ticketsResueltos.total %>
                     </li>
-                    <!-- <li>JavaScript</li>
-                    <li>Stack Net</li>
-                    <li>Sql Server</li>
-                    <li>Reporting Services</li> -->
                 </ul>
             </div>
         </div>

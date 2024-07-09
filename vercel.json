@@ -18,7 +18,11 @@
     "DB_PASS": "2C@WjbiUv!n!zX6",
     "DB_NAME": "tickettrack2024_database_prod",
     "SESSION_SECRET": "tu_clave_secreta_para_sesion",
-    "JWT_SECRET": "tu_secreto_super_seguro"
-    
+    "JWT_SECRET": "tu_secreto_super_seguro",
+    "FTP_PATH":"/www/avatars/",
+    "FTP_PATH_WWW":"https://tickettrack2024.alwaysdata.net/avatars/",
+    "FTP_HOST":"ftp-tickettrack2024.alwaysdata.net",
+    "FTP_USER":"tickettrack2024_ftp",
+    "FTP_PASSWORD":"2C@WjbiUv!n!zX6"
   }
 } 
