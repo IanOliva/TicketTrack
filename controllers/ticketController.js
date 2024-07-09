@@ -29,14 +29,15 @@ const create = async (req, res) => {
 };
 
 const update = async (req, res) => {
+  const userId = req.session.userId;
   const { id_ticket } = req.params;
   const aceptar = "2";
   let query;
 
-  query = "Update tickets set estate = ? WHERE id_ticket = ?";
+  query = "Update tickets set estate = ?, resueltoPor = ? WHERE id_ticket = ?";
 
   try {
-    const [results] = await db.query(query, [aceptar, id_ticket]);
+    const [results] = await db.query(query, [aceptar, userId, id_ticket]);
     req.session.message = "Ticket Aceptado";
     return res.redirect("/dashboard/dash-tickets");
   } catch (err) {

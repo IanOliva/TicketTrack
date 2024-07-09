@@ -32,7 +32,7 @@ const userRegister = async (req, res) => {
   ftpClient.ftp.verbose = true;
 
   if (image === undefined) {
-    image =
+    req.session.ruta =
       "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg";
   } else {
     const stream = Readable.from(image.buffer);
