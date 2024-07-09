@@ -28,25 +28,25 @@ const create = async (req, res) => {
   }
 };
 
-const update = (req, res) => {
+const update = async (req, res) => {
   const { id_ticket } = req.params;
   const aceptar = "2";
   let query;
 
   query = "Update tickets set estate = ? WHERE id_ticket = ?";
 
-  db.execute(query, [aceptar, id_ticket], (err, results) => {
-    if (err) {
-      console.error("Error al aceptar el ticket:", err);
-      return res.status(500).send("Error al aceptar el ticket");
-    }
+  try {
+    const [results] = await db.query(query, [aceptar, id_ticket]);
     req.session.message = "Ticket Aceptado";
     return res.redirect("/dashboard/dash-tickets");
-  });
+  } catch (err) {
+    console.error("Error al aceptar el ticket:", err);
+    return res.status(500).send("Error al aceptar el ticket");
+  }
 };
 
 const borrar = async (req, res) => {
-  const userId = req.userData.userId;
+  const userId = req.session.userId;
 
   const { id_ticket } = req.params;
 
@@ -59,7 +59,7 @@ const borrar = async (req, res) => {
   try {
     const [results] = await db.query(query, queryParams);
     req.session.message = "Ticket borrado correctamente";
-    if (req.userData.is_admin === "true") {
+    if (req.session.is_admin === "true") {
       return res.redirect("/dashboard/dash-tickets");
     } else {
       return res.redirect("/dashboard/user");

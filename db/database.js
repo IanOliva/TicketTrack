@@ -17,8 +17,8 @@ try {
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
     waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
+    connectionLimit: 10000,
+    queueLimit: 100,
   });
   db = pool.promise();
   console.log("Pool de conexiones creado exitosamente");
