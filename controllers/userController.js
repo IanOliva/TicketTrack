@@ -32,7 +32,7 @@ const userRegister = async (req, res) => {
   ftpClient.ftp.verbose = true;
 
   if (image === undefined) {
-    req.session.ruta =
+    image =
       "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg";
   } else {
     const stream = Readable.from(image.buffer);
@@ -121,7 +121,7 @@ const userLogin = async (req, res) => {
         passUser: user.password,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "15m" }
     );
 
     // Configura la cookie con el token

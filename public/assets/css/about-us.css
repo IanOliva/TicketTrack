@@ -114,7 +114,7 @@ body {
   position: relative;
   height: auto;
   overflow: hidden;
-  
+  margin-bottom: 4rem;
 }
 
 .caja{
@@ -126,6 +126,7 @@ body {
   border-radius: 1rem;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
   background-color:lightpink;
+  flex-shrink: 0; 
 }
 
 .container .caja-contenedor{
@@ -133,27 +134,24 @@ body {
 display: flex;
 gap: 3rem;
 animation: scroll 40s linear infinite;
--webkit-animation: scroll 40s linear infinite;
-width: calc(400px * 10);
+-webkit-animation: scroll 10s linear infinite;
+width: calc(450px * 10);
 }
 
 .container .caja{
-  width: 400px;
-
+  width: 350px;
 }
 
 .container .usuario{
   width: 100%;
 }
 
-@keyframes scroll{
+@keyframes scroll {
   0% {
-    -webkit-transform: translateX(0);
     transform: translateX(0);
   }
   100% {
-    -webkit-transform: translateX(calc(-400px * 5));
-    transform: translateX(calc(-400px * 5));
+    transform: translateX(calc(-400px * 3));
   }
 }
 
@@ -167,7 +165,7 @@ width: calc(400px * 10);
 .rating {
   display: flex;
   justify-content: center;
-  flex-direction: row-reverse; /* Aseguramos que las estrellas se muestren en fila de izquierda a derecha */
+  flex-direction: row-reverse;
 }
 
 .rating input {

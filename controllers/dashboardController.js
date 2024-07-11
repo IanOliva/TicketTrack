@@ -152,7 +152,7 @@ const dashHome = async (req, res) => {
 
           totalDiasTranscurridos += diasTranscurridos;
         }
-        atrasados = calcularDiasAtraso(mostOlder(ticketResults[0]));
+        atrasados = calcularDiasAtraso(mostOlder(ticketResults[0][0]));
       });
 
       // Calcula el promedio de días transcurridos
