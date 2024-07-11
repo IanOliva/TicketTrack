@@ -85,13 +85,9 @@
 
 
       <section class="ticket-section">
-        <div class="addTicketButton">
-          <div class="sombraIcono"><i class="fa-solid fa-circle-plus"></i></div>
-          <span>Agregar</span>
-        </div>
 
-        <!-- VALIDAMOS PARA MOSTRAR EL PANEL DE DATOS USUARIO -->
         <%if (session.editar===true) { %>
+          <!-- VALIDAMOS PARA MOSTRAR EL PANEL DE DATOS USUARIO -->
           <a href="/api-users/volver" class="btn btn-primary">Volver</a>
           <div class="card mb-3" style="max-width: 540px;">
             <div class="row g-0">
@@ -129,6 +125,10 @@
           </div>
           <% } else { %>
 
+            <div class="addTicketButton">
+              <div class="sombraIcono"><i class="fa-solid fa-circle-plus"></i></div>
+              <span>Agregar</span>
+            </div>
             <div class="perfil d-flex flex-row align-items-center">
               <img src="<%= data.user.url_img %>" alt="img-profile">
               <div class="perfil-texto">
@@ -136,7 +136,7 @@
                   usuario: <%= data.user.username %>
                 </span>
                 <br>
-                <hr  style="margin:0 !important">
+                <hr style="margin:0 !important">
                 <p class="texto">
                   mail: <%= data.user.email %>
                 </p>
@@ -176,10 +176,11 @@
                     </p>
                   </div>
                   <div class="card-footer-nb">
-                    <a href="/api-tickets/borrar/<%= t.id_ticket %>" class="btn btn-primary cargarHtml  <%= t.estate === 2 ? 'invisible' : '' %> ">Borrar</a>
+                    <a href="/api-tickets/borrar/<%= t.id_ticket %>"
+                      class="btn btn-primary cargarHtml  <%= t.estate === 2 ? 'invisible' : '' %> ">Borrar</a>
                     <p id="estado" class="fw-bold alert
                       <%= t.estate === 1 ? 'text-body-tertiary' : 'text-success' %>">
-                      <%= t.estate === 1 ? 'En espera' : 'Resuelto' %>
+                      <%= t.estate===1 ? 'En espera' : 'Resuelto' %>
                     </p>
                   </div>
                 </div>

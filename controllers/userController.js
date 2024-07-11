@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const path = require("path");
 const { Readable } = require("stream");
 const { Client } = require("basic-ftp");
-const ftpClient = new Client();
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -14,13 +13,45 @@ const habilitarEdicion = (req, res) => {
   return res.redirect("/dashboard/user");
 };
 
+const subirAvatar = async (stream, ruta) => {
+  const ftpClient = new Client();
+  ftpClient.ftp.verbose = true;
+  await ftpClient
+    .access({
+      host: process.env.FTP_HOST,
+      user: process.env.FTP_USER,
+      password: process.env.FTP_PASSWORD,
+      secure: true,
+    })
+    .then(() => {
+      ftpClient.uploadFrom(stream, ruta);
+    })
+    .then(() => {
+      console.log("Archivo subido exitosamente al servidor FTP");
+    })
+    .catch((err) => {
+      console.error("Error al subir archivo al servidor FTP:", err);
+      res.status(500).send("Error interno al subir archivo al servidor FTP.");
+    });
+};
+
 const deleteFile = async (filePath) => {
+  const ftpClient = new Client();
+  ftpClient.ftp.verbose = true;
   try {
+    await ftpClient.access({
+      host: process.env.FTP_HOST,
+      user: process.env.FTP_USER,
+      password: process.env.FTP_PASSWORD,
+      secure: true,
+    });
+
+    console.log("Conectado al servidor FTP");
+
     await ftpClient.remove(filePath);
-    console.log("Archivo borrado correctamente:", filePath);
+    console.log("Archivo borrado en el servidor FTP");
   } catch (err) {
-    console.error("Error al borrar el archivo:", err);
-    throw err;
+    console.error("Error al borrar el archivo en el servidor FTP:", err);
   }
 };
 
@@ -28,8 +59,6 @@ const deleteFile = async (filePath) => {
 const userRegister = async (req, res) => {
   const { username, email, password } = req.body;
   let image = req.file;
-
-  ftpClient.ftp.verbose = true;
 
   if (image === undefined) {
     image =
@@ -41,27 +70,10 @@ const userRegister = async (req, res) => {
       image.fieldname + "-" + Date.now() + path.extname(image.originalname);
 
     const ruta = process.env.FTP_PATH + archivo;
-    await ftpClient
-      .access({
-        host: process.env.FTP_HOST,
-        user: process.env.FTP_USER,
-        password: process.env.FTP_PASSWORD,
-        secure: true,
-      })
-      .then(() => {
-        ftpClient.uploadFrom(stream, ruta);
-      })
-      .then(() => {
-        console.log("Archivo subido exitosamente al servidor FTP");
-        // Guardar la ruta en la sesión o en la base de datos
-        delete req.session.ruta;
-        req.session.ruta = process.env.FTP_PATH_WWW + archivo; // Ruta para la base de datos
-      })
-      .catch((err) => {
-        console.error("Error al subir archivo al servidor FTP:", err);
-        res.status(500).send("Error interno al subir archivo al servidor FTP.");
-      });
+    await subirAvatar(stream, ruta);
+    req.session.ruta = process.env.FTP_PATH_WWW + archivo;
   }
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
@@ -165,17 +177,38 @@ const userUpdate = async (req, res) => {
   let hashedPassword = "";
 
   try {
+    if (
+      image &&
+      req.session.url_img ===
+        "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg"
+    ) {
+      const stream = Readable.from(image.buffer);
+
+      const archivo =
+        image.fieldname + "-" + Date.now() + path.extname(image.originalname);
+
+      const ruta = process.env.FTP_PATH + archivo;
+      await subirAvatar(stream, ruta);
+      req.session.ruta = process.env.FTP_PATH_WWW + archivo;
+    } else if (image) {
+      //borrar la vieja
+      await deleteFile('.' + process.env.FTP_PATH + req.session.url_img.substring(req.session.url_img.lastIndexOf('/') + 1));
+
+      //cargar nueva
+      const stream = Readable.from(image.buffer);
+
+      const archivo =
+        image.fieldname + "-" + Date.now() + path.extname(image.originalname);
+
+      const ruta = process.env.FTP_PATH + archivo;
+      await subirAvatar(stream, ruta);
+      req.session.ruta = process.env.FTP_PATH_WWW + archivo;
+    }
+
     username = username === "" ? req.session.username : username;
     email = email === "" ? req.session.email : email;
-    image = image === undefined ? req.session.url_img : req.session.ruta;
     hashedPassword =
       password === "" ? req.session.passUser : await bcrypt.hash(password, 10);
-
-    // verificamos si la imagen es diferente a la que ya tenia el usuario
-    if (image !== req.session.url_img) {
-      deleteFile(req.session.url_img);
-      req.session.url_img = req.session.ruta;
-    }
 
     const query =
       "UPDATE users SET username = ?, email = ? ,password = ?, url_img = ? WHERE user_id = ?";
@@ -184,7 +217,7 @@ const userUpdate = async (req, res) => {
       username,
       email,
       hashedPassword,
-      image,
+      req.session.ruta,
       user_id,
     ]);
 
