@@ -176,8 +176,13 @@ const userUpdate = async (req, res) => {
 
   let hashedPassword = "";
 
-  try {
-    if (
+  try { 
+
+    if (image === undefined) {
+     return req.session.ruta = req.session.url_img;
+      
+    }else{
+      if (
       image &&
       req.session.url_img ===
         "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg"
@@ -204,6 +209,9 @@ const userUpdate = async (req, res) => {
       await subirAvatar(stream, ruta);
       req.session.ruta = process.env.FTP_PATH_WWW + archivo;
     }
+    }
+
+  
 
     username = username === "" ? req.session.username : username;
     email = email === "" ? req.session.email : email;
