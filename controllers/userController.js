@@ -179,7 +179,7 @@ const userUpdate = async (req, res) => {
   try { 
 
     if (image === undefined) {
-     return req.session.ruta = req.session.url_img;
+      req.session.ruta = req.session.url_img;
       
     }else{
       if (
