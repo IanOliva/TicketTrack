@@ -124,9 +124,14 @@ body {
   border-radius: 8px !important;
 
   img {
+    background-color: #ed5d1f !important;
     position: absolute;
+    overflow: hidden;
+    object-fit: cover;
+    display: flex;
     left: -50px;
     width: 150px !important;
+    height: 150px!important;
     border-radius: 50% !important;
     border: 5px solid #D4AF37;
     /* Define el grosor, estilo y color del borde */
@@ -217,7 +222,6 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
-
 
 section {
   margin-bottom: 4rem;

@@ -92,7 +92,7 @@
           <div class="card mb-3" style="max-width: 540px;">
             <div class="row g-0">
               <div class="col-md-4">
-                <img src="<%= data.user.url_img %>" class="img-fluid rounded-start" alt="...">
+                <img src="<%= data.user.url_img %>" class="img-fluid rounded-start" alt="avatar">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
@@ -111,7 +111,7 @@
                       <label for="floatingInputValue">Contraseña</label>
                     </div>
                     <div class="form-floating">
-                      <input name="image" type="file" class="form-control" placeholder="" value="">
+                      <input name="image" id="avatar" type="file" class="form-control" placeholder="" value="">
                       <label for="floatingInputValue">Avatar:</label>
                     </div>
                     <div class="card-footer d-flex justify-content-between">
@@ -217,3 +217,21 @@
   <script defer src="/js/userDashboard.js"></script>
   <script defer src="/js/layout.js"></script>
   <script defer src="/js/user-dashboard.js"></script>
+  <script>
+    document.getElementById('guardarDatos').addEventListener('submit', async (event) => {
+      event.preventDefault(); // Evitar el envío automático del formulario
+
+      const fileInput = document.getElementById('avatar');
+      const file = fileInput.files[0];
+
+      if (file) {
+        if (file.size > 1024 * 1024) { // 1MB en bytes
+          alert('Tamaño de archivo excedido. Máximo permitido: 1MB.');
+          return; // Detener el envío del formulario
+        }
+      }
+
+      // Si pasa la validación, enviar el formulario
+      event.target.submit();
+    })
+  </script>

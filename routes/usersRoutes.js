@@ -17,7 +17,7 @@ const upload = multer({
     if (mimetype && extname) {
       return cb(null, true);
     }
-    cb("Error: Solo se permiten imágenes jpeg/jpg/png!");
+    cb("Error: Solo se permiten imágenes webp/gif/jpeg/jpg/png!");
   }
 });
 
