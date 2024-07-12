@@ -63,6 +63,7 @@ const userRegister = async (req, res) => {
   if (image === undefined) {
     image =
       "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg";
+    req.session.ruta = image;
   } else {
     const stream = Readable.from(image.buffer);
 
@@ -164,7 +165,22 @@ const userLogout = (req, res) => {
   req.session.is_admin = null;
   req.session.message = "Sesión cerrada";
   req.session.editar = "false";
-  return res.redirect("/login"); // Redirige al usuario a la página principal
+
+  req.session.save((err) => {
+    if (err) {
+      console.error("Error al guardar la sesión:", err);
+      return res.status(500).send("Error al cerrar sesión");
+    }
+
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Error al destruir la sesión:", err);
+        return res.status(500).send("Error al cerrar sesión");
+      }
+
+      return res.redirect("/login"); // Redirige al usuario a la página de login
+    });
+  });
 };
 
 // controlador para modificar usuario
@@ -177,13 +193,8 @@ const userUpdate = async (req, res) => {
   let hashedPassword = "";
 
   try {
-    if (
-      image &&
-      req.session.url_img ===
-        "https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg"
-    ) {
+    if (image &&req.session.url_img ==="https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg") {
       const stream = Readable.from(image.buffer);
-
       const archivo =
         image.fieldname + "-" + Date.now() + path.extname(image.originalname);
 
@@ -192,7 +203,13 @@ const userUpdate = async (req, res) => {
       req.session.ruta = process.env.FTP_PATH_WWW + archivo;
     } else if (image) {
       //borrar la vieja
-      await deleteFile('.' + process.env.FTP_PATH + req.session.url_img.substring(req.session.url_img.lastIndexOf('/') + 1));
+      await deleteFile(
+        "." +
+          process.env.FTP_PATH +
+          req.session.url_img.substring(
+            req.session.url_img.lastIndexOf("/") + 1
+          )
+      );
 
       //cargar nueva
       const stream = Readable.from(image.buffer);
