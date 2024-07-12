@@ -1,41 +1,46 @@
 const db = require("../db/database");
 
 //funciones que vamos a usar en la parte de dash-home
-const calcularDiasEntreFechas = (fechaInicio, fechaCierre) => {
-  // Parsear las fechas asegurando que estén en el formato adecuado
-  const inicio = new Date(fechaInicio);
-  const cierre = new Date(fechaCierre);
+// const calcularDiasEntreFechas = (fechaInicio, fechaCierre) => {
+//   // Parsear las fechas asegurando que estén en el formato adecuado
+//   const inicio = new Date(fechaInicio);
+//   const cierre = new Date(fechaCierre);
 
-  // Verificar si las fechas son válidas
-  if (isNaN(inicio) || isNaN(cierre)) {
-    return 0; // Si alguna fecha no es válida, retornar 0 días
-  }
+//   // Verificar si las fechas son válidas
+//   if (isNaN(inicio) || isNaN(cierre)) {
+//     return 0; // Si alguna fecha no es válida, retornar 0 días
+//   }
 
-  const diffTime = Math.abs(cierre - inicio);
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+//   const diffTime = Math.abs(cierre - inicio);
+//   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-  return diffDays;
-};
+//   return diffDays;
+// };
 
 //saber el mas viejo
-const mostOlder = (lista) => {
-  let actual = new Date();
-  lista.forEach((t) => {
-    if (t.estate === 1 && t.fechaOpen < actual) {
-      // 1 en espera
-      actual = t.fechaOpen;
-    }
-  });
-  return actual;
-};
+// const mostOlder = (lista) => {
+//   let actual = new Date();
+//   if(lista.length > 0) {
+//     lista.forEach((t) => {
+//       if (t.estate === 1 && t.fechaOpen < actual) {
+//         // 1 en espera
+//         actual = t.fechaOpen;
+//       }
+//     });
+//     return actual;
+//   }
+//   else{
+//     return 0;
+//   }
+// };
 
-const calcularDiasAtraso = (fechaInicio) => {
-  // Parsear las fechas asegurando que estén en el formato adecuado
-  const inicio = new Date(fechaInicio);
-  const cantDias = calcularDiasEntreFechas(inicio, new Date());
+// const calcularDiasAtraso = (fechaInicio) => {
+//   // Parsear las fechas asegurando que estén en el formato adecuado
+//   const inicio = new Date(fechaInicio);
+//   const cantDias = calcularDiasEntreFechas(inicio, new Date());
 
-  return cantDias;
-};
+//   return cantDias;
+// };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,10 +119,10 @@ const dashHome = async (req, res) => {
   const mensaje = req.userData.message;
 
   //variables para calcular abajo
-  let totalTickets = 0,
-    promedioDiasTranscurridos = 0,
-    totalDiasTranscurridos = 0,
-    atrasados = 0;
+  let totalTickets = 0;
+  // promedioDiasTranscurridos = 0,
+  //totalDiasTranscurridos = 0,
+  //atrasados = 0;
 
   const queryTickets = "SELECT * FROM tickets";
   const queryCount = "SELECT COUNT(*) AS totalTickets FROM tickets";
@@ -141,31 +146,31 @@ const dashHome = async (req, res) => {
     const countUsers = await db.query(queryCountUsers);
     const countComments = await db.query(queryCountComments);
 
-    if (ticketResults[0].length > 0) {
-      ticketResults[0].forEach((ticket) => {
-        if (ticket.estate === 2) {
-          // Verificar estado igual a 2 (resuelto)
-          const diasTranscurridos = calcularDiasEntreFechas(
-            ticket.fechaOpen,
-            ticket.fechaUpdate
-          );
+    // if (ticketResults[0].length > 0) {
+    //   ticketResults[0].forEach((ticket) => {
+    //     if (ticket.estate === 2) {
+    //       // Verificar estado igual a 2 (resuelto)
+    //       const diasTranscurridos = calcularDiasEntreFechas(
+    //         ticket.fechaOpen,
+    //         ticket.fechaUpdate
+    //       );
 
-          totalDiasTranscurridos += diasTranscurridos;
-        }
-        atrasados = calcularDiasAtraso(mostOlder(ticketResults[0][0]));
-      });
+    //       totalDiasTranscurridos += diasTranscurridos;
+    //     }
+    //     atrasados = calcularDiasAtraso(mostOlder(ticketResults[0][0]));
+    //   });
 
-      // Calcula el promedio de días transcurridos
-      totalTickets = ticketResults[0].filter((a) => a.estate === 2).length; // 2 resuelto
-      promedioDiasTranscurridos = totalDiasTranscurridos / totalTickets;
-    }
+    //   // Calcula el promedio de días transcurridos
+    //   totalTickets = ticketResults[0].filter((a) => a.estate === 2).length; // 2 resuelto
+    //   promedioDiasTranscurridos = totalDiasTranscurridos / totalTickets;
+    // }
 
     const data = {
       totalTickets: countResults[0][0].totalTickets,
       totalWaiting: waitingResults[0][0].totalWaiting,
       totalResolved: resolvedResults[0][0].totalResolved,
-      promedio: Math.ceil(promedioDiasTranscurridos),
-      diasAtraso: atrasados,
+      //promedio: Math.ceil(promedioDiasTranscurridos),
+      // diasAtraso: atrasados,
       totalAdmin: countAdmin[0][0].totalAdmin,
       totalUsers: countUsers[0][0].totalUsers,
       totalComments: countComments[0][0].totalComments,

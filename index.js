@@ -33,7 +33,7 @@ app.use(
     store: sessionStore,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }, // Cambia a true si se usa en produccion
+    cookie: { secure: false }, // Cambia a true si se usa en produccion
   })
 );
 

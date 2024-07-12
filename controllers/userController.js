@@ -164,22 +164,7 @@ const userLogout = (req, res) => {
   req.session.is_admin = null;
   req.session.message = "Sesión cerrada";
   req.session.editar = "false";
-
-  req.session.save((err) => {
-    if (err) {
-      console.error("Error al guardar la sesión:", err);
-      return res.status(500).send("Error al cerrar sesión");
-    }
-
-    req.session.destroy((err) => {
-      if (err) {
-        console.error("Error al destruir la sesión:", err);
-        return res.status(500).send("Error al cerrar sesión");
-      }
-
-      return res.redirect("/login"); // Redirige al usuario a la página de login
-    });
-  });
+  return res.redirect("/login"); // Redirige al usuario a la página de login
 };
 
 // controlador para modificar usuario
