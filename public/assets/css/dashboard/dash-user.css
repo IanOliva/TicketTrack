@@ -10,6 +10,7 @@ form label {
 
 label,
 input,
+select,
 button {
     display: block;
     width: 100%;
@@ -27,11 +28,11 @@ label:nth-of-type(2) {
     margin-top: 12px;
 }
 
-input::placeholder {
+select::placeholder ,input::placeholder {
     color: gray;
 }
 
-input {
+input,select {
     background: #ecf0f3;
     padding: 10px;
     padding-left: 20px;

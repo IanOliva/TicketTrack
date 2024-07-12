@@ -56,7 +56,7 @@ const deleteFile = async (filePath) => {
 
 // controlador de registro
 const userRegister = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, admin } = req.body;
   let image = req.file;
 
   if (image === undefined) {
@@ -78,13 +78,14 @@ const userRegister = async (req, res) => {
 
   try {
     const query =
-      "INSERT INTO users (username, email, password, url_img) VALUES (?, ?, ?, ?)";
+      "INSERT INTO users (username, email, password, url_img, is_admin) VALUES (?, ?, ?, ?, ?)";
 
     const [results] = await db.query(query, [
       username,
       email,
       hashedPassword,
       req.session.ruta,
+      admin,
     ]);
 
     if (req.session.is_admin === "true") {

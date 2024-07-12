@@ -44,6 +44,15 @@
         />
       </div>
     </div>
+    <div class="etiqueta">
+      <div class="form-floating mb-3">
+        <label for="admin" class="form-label">Rol</label>
+        <select name="admin" id="admin" style="width: 150px;">
+          <option value="true">Admin</option>
+          <option value="false">Usuario</option>
+        </select>
+      </div>
+    </div>
   </div>
   <div class="etiqueta">
     <div class="col-12">
@@ -63,6 +72,7 @@
   <div class="users">
     <% data.users.forEach((u)=> { %>
     <div class="card" style="width: 18rem">
+      
       <img src="<%= u.url_img %>" class="card-img-top" />
       <div class="card-body">
         <h5 class="card-title">
@@ -88,12 +98,16 @@
       </div>
       <div class="card-footer">
         <!-- <a href="/api-users/user-update/<%= u.user_id %>" title="Editar" ><i class="fa-solid fa-user-pen"></i></a> -->
-        <a
-          href="/api-users/user-delete/<%= u.user_id %>"
-          title="Borrar"
-          onclick="return confirm('Al eliminar este usuario se eliminaran los tickets asociados \n¿Deseas eliminar este usuario?')"
-          ><i class="fa-solid fa-trash-can"></i
-        ></a>
+        <% if (u.user_id != userId) { %>
+          <a href="/api-users/user-delete/<%= u.user_id %>"
+             title="Borrar"
+             onclick="return confirm('Al eliminar este usuario se eliminarán los tickets asociados.\n¿Deseas eliminar este usuario?')">
+            <i class="fa-solid fa-trash-can"></i>
+          </a>
+        <% } %>
+        <% if (u.user_id == userId) { %>
+          <p style="color: var(--text-color);">No puede eliminarte a ti mismo</p>
+        <% } %>
       </div>
     </div>
     <% }); %>

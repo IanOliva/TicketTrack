@@ -220,7 +220,8 @@ const dashTickets = async (req, res) => {
 const dashAllUsers = async (req, res) => {
   const username = req.userData.username;
   const urlImg = req.userData.urlImg;
-  const mensaje = req.userData.mensajitoQWEQWE;
+  const userId = req.userData.userId;
+  const mensaje = req.userData.mensajito;
 
   const queryUsers =
     "SELECT *, (select count(*) from tickets where tickets.idUsuario = users.user_id)as cantTickets FROM users";
@@ -234,6 +235,7 @@ const dashAllUsers = async (req, res) => {
 
     return res.render("dashboard", {
       username: [username],
+      userId: [userId],
       urlImg: [urlImg],
       message: [mensaje],
       content: "components/dashboard/dash-users",
