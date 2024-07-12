@@ -10,7 +10,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ 
   storage: storage,
   fileFilter: function(req, file, cb) {
-    const filetypes = /jpeg|jpg|png|jfif/;
+    const filetypes = /webp|gif|jpeg|jpg|png|jfif/;
     const mimetype = filetypes.test(file.mimetype);
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 

@@ -22,10 +22,9 @@ const subirAvatar = async (stream, ruta) => {
       user: process.env.FTP_USER,
       password: process.env.FTP_PASSWORD,
       secure: true,
-    })
-    .then(() => {
-      ftpClient.uploadFrom(stream, ruta);
-    })
+    });
+    
+    await ftpClient.uploadFrom(stream, ruta)
     .then(() => {
       console.log("Archivo subido exitosamente al servidor FTP");
     })
@@ -191,61 +190,54 @@ const userUpdate = async (req, res) => {
   let image = req.file;
 
   let hashedPassword = "";
+  const defaulImg = 'https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg';
 
-  try {
-    if (image &&req.session.url_img ==="https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg") {
+  try { 
+    if (image === undefined)
+    { req.session.ruta = req.session.url_img;}
+    
+    else if( image && req.session.url_img === defaulImg) 
+    {
       const stream = Readable.from(image.buffer);
-      const archivo =
-        image.fieldname + "-" + Date.now() + path.extname(image.originalname);
-
-      const ruta = process.env.FTP_PATH + archivo;
-      await subirAvatar(stream, ruta);
-      req.session.ruta = process.env.FTP_PATH_WWW + archivo;
-    } else if (image) {
-      //borrar la vieja
-      await deleteFile(
-        "." +
-          process.env.FTP_PATH +
-          req.session.url_img.substring(
-            req.session.url_img.lastIndexOf("/") + 1
-          )
-      );
-
-      //cargar nueva
-      const stream = Readable.from(image.buffer);
-
-      const archivo =
-        image.fieldname + "-" + Date.now() + path.extname(image.originalname);
-
+      const archivo = image.fieldname + "-" + Date.now() + path.extname(image.originalname);
       const ruta = process.env.FTP_PATH + archivo;
       await subirAvatar(stream, ruta);
       req.session.ruta = process.env.FTP_PATH_WWW + archivo;
     }
-
+    else if (image) {
+      //borrar la vieja
+      if (req.session.url_img && typeof req.session.url_img === 'string') {
+        await deleteFile("." + process.env.FTP_PATH + req.session.url_img.substring(req.session.url_img.lastIndexOf("/") + 1));
+      } else {
+        console.error("req.session.url_img no es una cadena válida.");
+        // Aquí puedes manejar el error o registrar un mensaje de error adecuado.
+      }
+      //cargar nueva
+      const stream = Readable.from(image.buffer);
+      const archivo = image.fieldname + "-" + Date.now() + path.extname(image.originalname);
+      const ruta = process.env.FTP_PATH + archivo;
+      await subirAvatar(stream, ruta);
+      req.session.ruta = process.env.FTP_PATH_WWW + archivo;
+    }
+    
     username = username === "" ? req.session.username : username;
     email = email === "" ? req.session.email : email;
-    hashedPassword =
-      password === "" ? req.session.passUser : await bcrypt.hash(password, 10);
+    hashedPassword = password === "" ? req.session.passUser : await bcrypt.hash(password, 10);
 
-    const query =
-      "UPDATE users SET username = ?, email = ? ,password = ?, url_img = ? WHERE user_id = ?";
 
-    const [results] = await db.query(query, [
-      username,
-      email,
-      hashedPassword,
-      req.session.ruta,
-      user_id,
-    ]);
+    req.session.url_img = req.session.ruta;
+
+    const query = "UPDATE users SET username = ?, email = ? ,password = ?, url_img = ? WHERE user_id = ?";
+    const [results] = await db.query(query, [username, email, hashedPassword, req.session.ruta, user_id,]);
 
     req.session.username = username;
     req.session.email = email;
-    req.session.url_img = image;
+    req.session.url_img = req.session.ruta;
     req.session.passUser = hashedPassword;
 
     req.session.message = "Datos actualizado correctamente";
     return res.redirect("/dashboard/user");
-  } catch (err) {
+  }catch(err) {
     console.error("Error durante la actualización del usuario:", err);
     return res.status(500).send("Error durante la actualización del usuario");
   }
