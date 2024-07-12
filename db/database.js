@@ -17,7 +17,7 @@ try {
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
     waitForConnections: true,
-    connectionLimit: 10000,
+    connectionLimit: 100,
     queueLimit: 100,
   });
   db = pool.promise();
